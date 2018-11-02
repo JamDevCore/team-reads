@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from '../components/_common/Button';
-import CreateBookForm from '../components/CreateBookForm';
-import Card from '../components/Card';
-import Navbar from '../components/Navbar';
-import { BrowserRouter } from 'react-router-dom';
 import styled from 'styled-components';
+import CreateBookForm from '../components/CreateBookForm';
+import Select from '../components/_common/form-components/Select';
+import Card from '../components/Card';
 import theme from '../theme';
 
 
@@ -55,9 +53,15 @@ class YourBooksView extends React.Component {
         <h1>Your books</h1>
         <Container>
         <CreateBookForm />
-        <div style={{width:'800px', margin: '40px'}}>
+        <div style={{'min-width':'800px', margin: '40px'}}>
+          <Select
+            id="shelf"
+          >
+            <option>Select a shelf</option>
+          </Select>
           {books.map(book => (
             <Card
+              key={book.title}
               title={book.title}
               readers={book.readers}
               lightbulbs={book.lightbulbs}
