@@ -58,18 +58,6 @@ CreateBookForm.defaultProps = {
 export default withFormik({
   mapPropsToValues: () => ({}),
 })(styled(CreateBookForm)`
-  max-width: 400px;
-  min-width: 300px;
-  height: 70%;
-  margin: ${theme.baseMargin * 2}px;
-  box-sizing: border-box;
-  background-color: white;
-  border: 1px solid ${theme.colors.grey};
-  border-radius: ${theme.borderRadius}px;
-  box-shadow: ${theme.boxShadow};
-  h2 {
-    margin: 40px 40px 0px 40px;
-    font-family: 'Playfair Display', serif;
-  }
+  margin: 0;
 
 `);

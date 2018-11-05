@@ -36,14 +36,15 @@ Button.defaultProps = {
 
 export default styled(Button)`
   @import url('https://fonts.googleapis.com/css?family=Maven+Pro');
-  background: ${theme.colors.primary};
+  background: ${theme.colors.success};
   font-size: ${theme.fontSize}px;
   margin-top: ${theme.baseMargin / 2}px;
   border: none;
   color: white;
   border-radius: 3px;
   font-weight: bold;
-  padding: 10px 30px;
+  min-width: 50px;
+  padding: 10px;
   cursor: pointer;
   font-family: 'Maven Pro', sans-serif;
 `;

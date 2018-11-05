@@ -41,13 +41,14 @@ Select.defaultProps = {
 };
 
 export default styled(Select)`
-margin: 0 0 ${theme.baseMargin}px;
-width: 100%;
+width: 95%;
 box-sizing: border-box;
+
 select {
+  margin: ${theme.baseMargin}px 10px;
   box-sizing: border-box;
   height: 40px;
-  background-color: transparent;
+  background-color: white;
   padding: 10px 10px;
   color: ${theme.colors.black}
   border-radius: ${theme.borderRadius}px;

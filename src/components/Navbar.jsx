@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import theme from '../theme';
-import Logo from '../logo.png';
+import Logo from '../logo-green.png';
 
 const MobileNav = styled.div`
   position: fixed;
@@ -17,15 +17,22 @@ const MobileNav = styled.div`
   padding: 20px;
   color: ${theme.colors.black};
   .mobileNavLink {
+    padding: 5px 0px;
+    border-bottom: 2px solid white;
     display: block !important;
     margin: 20px;
-    font-size: 32px;
+    font-size: 28px;
     font-weight: bold;
     color: ${theme.colors.black};
+  }
+  .mobileNavLink:focus,
+  .mobileNavLink:active {
+    border-bottom: 2px solid white;
   }
   i {
     display: block !important;
     font-size: 24px;
+    color: ${theme.colors.black} !important;
   }
 `;
 
@@ -59,9 +66,9 @@ class Navbar extends React.Component {
           className="fas fa-times"
           onClick={() => this.toggleMobileNav()}
         />
-      <Link className="mobileNavLink" to="/">Your books</Link>
-        <Link className="mobileNavLink" to="/">Team view</Link>
-        <Link className="mobileNavLink" to="/">Settings</Link>
+        <Link className="mobileNavLink" to="/">Your books</Link>
+        <Link className="mobileNavLink" to="/team">Team view</Link>
+        <Link className="mobileNavLink" to="/account">Settings</Link>
       </MobileNav>);
   }
 
@@ -79,8 +86,8 @@ class Navbar extends React.Component {
           <img src={Logo} alt="team-reads-logo"></img>
         </Link>
         <Link className="navLink" to="/">Your books</Link>
-        <Link className="navLink" to="/">Team view</Link>
-        <Link className="navLink" to="/">Settings</Link>
+        <Link className="navLink" to="/team">Team view</Link>
+        <Link className="navLink" to="/account">Settings</Link>
         <i
           className="fas fa-bars"
           onClick={() => this.toggleMobileNav()}
@@ -109,12 +116,12 @@ export default styled(Navbar)`
   flex-direction: row;
   justify-content: flex-end;
   box-shadow: ${theme.boxShadow};
-  background-color: white;
+  background-color: ${theme.colors.primary};
   i {
     display: none;
     font-size: 24px;
     cursor: pointer;
-    color: ${theme.colors.black};
+    color: white;
     font-weight: bold;
     margin: auto 20px;
   }
@@ -130,14 +137,20 @@ export default styled(Navbar)`
     }
   }
   .navLink {
-    color: ${theme.colors.black};
+    color: white;
     font-weight: bold;
     margin: auto 20px;
+    padding: 5px 0px;
+    border-bottom: 2px solid ${theme.colors.primary};
+  }
   }
   .navLink:last-of-type {
     margin-right: 40px;
   }
-
+  .navLink:focus,
+  .navLink:active {
+    border-bottom: 2px solid white;
+  }
   img {
     width: 200px;
     position: absolute;

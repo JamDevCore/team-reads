@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import CreateBookForm from '../components/CreateBookForm';
 import Select from '../components/_common/form-components/Select';
 import Card from '../components/Card';
+import Panel from '../components/_common/Panel';
 import theme from '../theme';
 
 
@@ -37,12 +38,6 @@ const books = [
     author:"Homer",
   },
 ]
-const Container = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-
-`;
 
 class YourBooksView extends React.Component {
 
@@ -50,10 +45,12 @@ class YourBooksView extends React.Component {
     const { className } = this.props;
     return (
       <div className={className}>
-        <h1>Your books</h1>
-        <Container>
+        <div className="container left">
+        <Panel>
         <CreateBookForm />
-        <div style={{'min-width':'800px', margin: '40px'}}>
+        </Panel>
+        </div>
+        <div className="container right">
           <Select
             id="shelf"
           >
@@ -69,7 +66,6 @@ class YourBooksView extends React.Component {
               author={book.author}
             />))}
         </div>
-      </Container>
       </div>
     );
   }
@@ -84,10 +80,29 @@ YourBooksView.defaultProps = {
 };
 
 export default styled(YourBooksView)`
-  h1 {
-  margin: 20px ${theme.baseMargin * 3}px 0 0;
-  font-family: 'Playfair Display', serif;
-  font-size: 54px;
-  text-align: right;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  .left {
+    margin: 40px auto;
+    width: 400px;
+    min-width: 300px;
+  }
+  .right {
+    box-sizing: border-box;
+    width: 60%;
+    margin: 20px auto;
+  }
+  @media(max-width: 1000px) {
+    .right {
+      margin: 30px auto;
+      width: 100%;
+    }
+    .left {
+      width: 500px;
+      min-width: 300px;
+      margin: 40px auto;
+    }
   }
 `;

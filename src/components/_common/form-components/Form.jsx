@@ -25,6 +25,5 @@ export default styled(Form)`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding: 0 ${theme.baseMargin * 2}px ${theme.baseMargin * 2}px ${theme.baseMargin * 2}px;
-  box-sizing: border-box;
+  margin-top: 20px;
 `;
