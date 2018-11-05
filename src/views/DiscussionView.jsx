@@ -95,14 +95,10 @@ class DiscussionView extends React.Component {
           <AmazonLink href="http://www.amazon.co.uk">Purchase on Amazon</AmazonLink>
         </div>
         <div className="right">
-        <ButtonGroup>
-          <Button
-            label="All notes"
-          />
-          <Button
-            label="My notes"
-          />
-        </ButtonGroup>
+          <Select>
+            <option>All notes</option>
+            <option>My notes</option>
+         </Select>
           {discussions.length > 0 ? discussions.map(d =>
           <Card
             title={d.title}
@@ -145,14 +141,14 @@ h3 {
   .right {
     box-sizing: border-box;
     width: 60%;
-    margin: 40px auto;
+    margin: 20px auto;
     button {
       margin: 0px 0px 20px 10px;
     }
   }
   @media(max-width: 1000px) {
     .right {
-      margin: 30px auto;
+      margin: 20px auto;
       width: 100%;
 
     }

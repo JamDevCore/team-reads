@@ -59,5 +59,4 @@ export default withFormik({
   mapPropsToValues: () => ({}),
 })(styled(CreateBookForm)`
   margin: 0;
-
 `);

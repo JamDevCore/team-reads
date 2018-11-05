@@ -12,7 +12,7 @@ const Select = ({
 }) => {
   return (
     <div className={className}>
-      <InputLabel>{label}</InputLabel>
+      {label ? <InputLabel>{label}</InputLabel> : null}
         <select
           id={id}
         >
@@ -49,7 +49,7 @@ select {
   box-sizing: border-box;
   height: 40px;
   background-color: white;
-  padding: 10px 10px;
+  padding: 0px 10px;
   color: ${theme.colors.black}
   border-radius: ${theme.borderRadius}px;
   border: 1px solid #d3d3d3;
