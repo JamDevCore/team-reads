@@ -28,7 +28,7 @@ export default styled(Panel)`
   border: 1px solid ${theme.colors.grey};
   border-radius: ${theme.borderRadius}px;
   box-shadow: ${theme.boxShadow};
-  margin: 0px 10px;
+  margin: 0px 10px 30px 10px;
   h2 {
     font-family: 'Playfair Display', serif;
   }

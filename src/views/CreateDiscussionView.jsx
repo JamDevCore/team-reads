@@ -8,11 +8,33 @@ import Button from '../components/_common/Button';
 import HighlightButton from '../components/_common/HighlightButton';
 import Select from '../components/_common/form-components/Select';
 import CreateDiscussionForm from '../components/forms/CreateDiscussionForm';
+import AddCommentForm from '../components/forms/AddCommentForm';
 
 
 const comments = [
-  1: {
+  {
     user: 'James',
+    text: 'Maecenas elementum nisl laoreet, tristique arcu ut, mattis urna. Etiam aliquam viverra pharetra. Suspendisse eu pretium eros, in rutrum leo. Donec sed ex porttitor, posuere felis ut, vulputate felis. Praesent porta vulputate varius. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.',
+  },
+  {
+    user: 'Harry',
+    text: 'Phasellus accumsan feugiat nulla a malesuada. Vivamus suscipit tincidunt odio, eu euismod mi congue at. Vivamus condimentum dui at dolor ultricies pharetra.',
+  },
+  {
+    user: 'Michelle',
+    text: 'Proin semper dapibus arcu, ac porta tortor aliquam tempor. Sed id lectus sem. Quisque hendrerit elit at urna feugiat, id pharetra tortor faucibus. Nam a tellus turpis.',
+  },
+  {
+    user: 'James',
+    text: 'Maecenas elementum nisl laoreet, tristique arcu ut, mattis urna. Etiam aliquam viverra pharetra. Suspendisse eu pretium eros, in rutrum leo. Donec sed ex porttitor, posuere felis ut, vulputate felis. Praesent porta vulputate varius. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.',
+  },
+  {
+    user: 'Harry',
+    text: 'Phasellus accumsan feugiat nulla a malesuada. Vivamus suscipit tincidunt odio, eu euismod mi congue at. Vivamus condimentum dui at dolor ultricies pharetra.',
+  },
+  {
+    user: 'Michelle',
+    text: 'Proin semper dapibus arcu, ac porta tortor aliquam tempor. Sed id lectus sem. Quisque hendrerit elit at urna feugiat, id pharetra tortor faucibus. Nam a tellus turpis.',
   }
 ]
 
@@ -67,7 +89,18 @@ constructor() {
         <div className="right">
           <Panel>
             <CreateDiscussionForm />
+
           </Panel>
+          {comments && comments.length > 0 ?
+          comments.map(comment =>
+            <Panel>
+              <h3>{comment.user}</h3>
+              <p>{comment.text}</p>
+            </Panel>
+          ) : null}
+            <Panel>
+              <AddCommentForm />
+            </Panel>
         </div>
       </div>
     );
@@ -102,6 +135,7 @@ li {
   box-sizing: border-box;
   width: 60%;
   margin: 40px auto;
+
 }
 @media(max-width: 1000px) {
   .right {

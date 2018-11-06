@@ -9,9 +9,11 @@ const Button = (props) => {
     label,
     icon,
     onClick,
+    type,
   } = props;
   return (
     <button
+      type={type}
       className={className}
       onClick={onClick}
     >
@@ -25,6 +27,7 @@ Button.propTypes = {
   onClick: PropTypes.func,
   icon: PropTypes.string,
   className: PropTypes.string,
+  type: PropTypes.string,
 };
 
 Button.defaultProps = {
@@ -32,6 +35,7 @@ Button.defaultProps = {
   onClick: undefined,
   icon: undefined,
   className: undefined,
+  type: undefined,
 };
 
 export default styled(Button)`

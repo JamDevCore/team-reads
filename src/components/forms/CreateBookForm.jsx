@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TextInput from './_common/form-components/TextInput';
-import Form from './_common/form-components/Form';
-import { Field, withFormik } from 'formik';
 import styled from 'styled-components';
-import Button from './_common/Button';
-import SelectInput from './_common/form-components/SelectInput';
-import Divider from './_common/Divider';
-import theme from '../theme';
+import TextInput from '../_common/form-components/TextInput';
+import Form from '../_common/form-components/Form';
+import { Field, withFormik } from 'formik';
+import Button from '../_common/Button';
+import SelectInput from '../_common/form-components/SelectInput';
+import Divider from '../_common/Divider';
+import theme from '../../theme';
 
 class CreateBookForm extends React.Component {
   render() {

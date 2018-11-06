@@ -30,6 +30,7 @@ class CreateDiscussionForm extends React.Component {
               rows={5}
               />
             <Button
+              type="submit"
               label="Update notes"
             />
           </Form>
