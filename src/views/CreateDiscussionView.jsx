@@ -5,6 +5,7 @@ import Panel from '../components/_common/Panel';
 import Divider from '../components/_common/Divider';
 import ButtonGroup from '../components/_common/ButtonGroup';
 import Button from '../components/_common/Button';
+import IconButton from '../components/_common/IconButton';
 import HighlightButton from '../components/_common/HighlightButton';
 import Select from '../components/_common/form-components/Select';
 import CreateDiscussionForm from '../components/forms/CreateDiscussionForm';
@@ -14,29 +15,35 @@ import AddCommentForm from '../components/forms/AddCommentForm';
 const comments = [
   {
     user: 'James',
+    lightbulbs: 1,
     text: 'Maecenas elementum nisl laoreet, tristique arcu ut, mattis urna. Etiam aliquam viverra pharetra. Suspendisse eu pretium eros, in rutrum leo. Donec sed ex porttitor, posuere felis ut, vulputate felis. Praesent porta vulputate varius. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.',
   },
   {
     user: 'Harry',
+    lightbulbs: 9,
     text: 'Phasellus accumsan feugiat nulla a malesuada. Vivamus suscipit tincidunt odio, eu euismod mi congue at. Vivamus condimentum dui at dolor ultricies pharetra.',
   },
   {
     user: 'Michelle',
+    lightbulbs: 5,
     text: 'Proin semper dapibus arcu, ac porta tortor aliquam tempor. Sed id lectus sem. Quisque hendrerit elit at urna feugiat, id pharetra tortor faucibus. Nam a tellus turpis.',
   },
   {
     user: 'James',
+    lightbulbs: 2,
     text: 'Maecenas elementum nisl laoreet, tristique arcu ut, mattis urna. Etiam aliquam viverra pharetra. Suspendisse eu pretium eros, in rutrum leo. Donec sed ex porttitor, posuere felis ut, vulputate felis. Praesent porta vulputate varius. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.',
   },
   {
     user: 'Harry',
+    lightbulbs: 0,
     text: 'Phasellus accumsan feugiat nulla a malesuada. Vivamus suscipit tincidunt odio, eu euismod mi congue at. Vivamus condimentum dui at dolor ultricies pharetra.',
   },
   {
     user: 'Michelle',
+    lightbulbs: 1,
     text: 'Proin semper dapibus arcu, ac porta tortor aliquam tempor. Sed id lectus sem. Quisque hendrerit elit at urna feugiat, id pharetra tortor faucibus. Nam a tellus turpis.',
   }
-]
+];
 
 const AmazonLink = styled.a`
   text-decoration: underline;
@@ -96,10 +103,21 @@ constructor() {
             <Panel>
               <h3>{comment.user}</h3>
               <p>{comment.text}</p>
+                  <IconButton
+                    icon="fas fa-lightbulb"
+                  />
+                <p className="lightbulbs">{comment.lightbulbs}</p>
+                {comment.user === 'James' &&
+                  <div className="editButton">
+                    <Button
+                      label="Edit"
+                    />
+                  </div>}
             </Panel>
           ) : null}
             <Panel>
-              <AddCommentForm />
+              <AddCommentForm
+                />
             </Panel>
         </div>
       </div>
@@ -120,6 +138,10 @@ display: flex;
 flex-direction: row;
 flex-wrap: wrap;
 width: 100%;
+.editButton {
+  float: right;
+  display: inline-block;
+}
 li {
   margin-right: 10px;
 }
@@ -135,7 +157,13 @@ li {
   box-sizing: border-box;
   width: 60%;
   margin: 40px auto;
-
+  .lightbulbs {
+    display: inline-block !important;
+    margin-left: 10px;
+    font-size: 16px;
+    font-family: 'Maven Pro';
+    font-weight: bold;
+  }
 }
 @media(max-width: 1000px) {
   .right {
