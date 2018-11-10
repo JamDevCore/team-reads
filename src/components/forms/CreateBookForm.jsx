@@ -54,7 +54,8 @@ CreateBookForm.propTypes = {
   className: PropTypes.string,
   shelves: PropTypes.arrayOf(PropTypes.object),
   userId: PropTypes.string,
-  isSubmitting: PropTypes.bool
+  isSubmitting: PropTypes.bool,
+  addBookToState: PropTypes.func,
 };
 
 CreateBookForm.defaultProps = {
@@ -62,6 +63,7 @@ CreateBookForm.defaultProps = {
   shelves: undefined,
   userId: undefined,
   isSubmitting: undefined,
+  addBookToState: undefined,
 };
 
 export default withFormik({
@@ -76,6 +78,7 @@ export default withFormik({
     author: Yup.string().required('Let us know who wrote it'),
     shelf: Yup.string().required('Select a shelf to store it'),
   }),
+  enableReinitialize: true,
   handleSubmit: (values, { setSubmitting, props }) => {
     console.log('submitting')
     setSubmitting(true);
@@ -88,7 +91,11 @@ export default withFormik({
       .then((response) => {
         openAlert({ message: 'Success! You added a book to your shelf', type: 'success' });
         setSubmitting(false);
-        const booksList = values.shelves.books;
+        const book = response.data
+        props.addBookToState(response.data);
+        const currentShelf = props.shelves.filter(shelf => shelf._id === values.shelf)
+        const booksList = currentShelf[0].books;
+        booksList.push(book._id);
         api.put(`shelf/${values.shelf}`, {
           books: booksList,
         })

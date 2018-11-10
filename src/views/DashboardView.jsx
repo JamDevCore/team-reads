@@ -9,7 +9,7 @@ import Loading from '../components/Loading';
 import theme from '../theme';
 import api from '../modules/api-call';
 
-class YourBooksView extends React.Component {
+class DashboardView extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -18,6 +18,7 @@ class YourBooksView extends React.Component {
       currentShelf: 'all',
       isLoading: false,
     }
+    this.addBookToState = this.addBookToState.bind(this);
   }
   componentDidMount() {
     const { userId } = this.props;
@@ -46,11 +47,21 @@ class YourBooksView extends React.Component {
     })
   }
 
+  addBookToState(book) {
+    const { books } = this.state;
+    const newBooks = books;
+    newBooks.push(book);
+    this.setState({
+      books: newBooks,
+    });
+  }
+
   renderBooks() {
     const { books } = this.state;
     return books.length > 0 ? books.map(book => (
       <Card
         key={book._id}
+        bookId={book._id}
         title={book.name}
         readers={book.readers || ["Not read"]}
         lightbulbs={book.lightbulbs || 0}
@@ -67,7 +78,11 @@ class YourBooksView extends React.Component {
       <div className={className}>
         <div className="container left">
         <Panel>
-        <CreateBookForm shelves={shelves} userId={userId}/>
+        <CreateBookForm
+          shelves={shelves}
+          userId={userId}
+          addBookToState={this.addBookToState}
+          />
         </Panel>
         </div>
         <div className="container right">
@@ -84,17 +99,17 @@ class YourBooksView extends React.Component {
   }
 }
 
-YourBooksView.propTypes = {
+DashboardView.propTypes = {
   className: PropTypes.string,
   userId: PropTypes.string,
 };
 
-YourBooksView.defaultProps = {
+DashboardView.defaultProps = {
   className: undefined,
   userId: undefined,
 };
 
-export default styled(YourBooksView)`
+export default styled(DashboardView)`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

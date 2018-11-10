@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import theme from '../../theme';
 
 const Button = (props) => {
@@ -11,8 +12,9 @@ const Button = (props) => {
     onClick,
     type,
     isLoading,
+    link,
   } = props;
-  return (
+  return !link ? (
     <button
       type={type}
       className={className}
@@ -21,7 +23,19 @@ const Button = (props) => {
       {icon && !isLoading ? <i className={icon} /> : null}
       {isLoading && <i className="fas fa-spinner fa-spin" />}
       {label}
-    </button>)
+    </button>) :
+      <button
+        type={type}
+        className={className}
+        onClick={onClick}
+      >
+        <Link to={link}>
+        {icon && !isLoading ? <i className={icon} /> : null}
+        {isLoading && <i className="fas fa-spinner fa-spin" />}
+        {label}
+        </Link>
+      </button>
+
 };
 
 Button.propTypes = {
@@ -31,6 +45,7 @@ Button.propTypes = {
   className: PropTypes.string,
   type: PropTypes.string,
   isLoading: PropTypes.bool,
+  link: PropTypes.string,
 };
 
 Button.defaultProps = {
@@ -40,6 +55,7 @@ Button.defaultProps = {
   className: undefined,
   type: undefined,
   isLoading: undefined,
+  link: undefined,
 };
 
 export default styled(Button)`
@@ -57,6 +73,13 @@ export default styled(Button)`
   padding: 10px;
   cursor: pointer;
   font-family: 'Maven Pro', sans-serif;
+  a {
+    margin: 0;
+    padding: 0;
+    color: white;
+    width: 100%;
+    height: 100%;
+  }
   i {
     margin-right: 10px;
   }

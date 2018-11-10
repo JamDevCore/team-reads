@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import history from '../modules/history';
 import styled from 'styled-components';
 import theme from '../theme'
 import HighlightButton from './_common/HighlightButton';
@@ -7,7 +8,15 @@ import HighlightButton from './_common/HighlightButton';
 
 class Card extends React.Component {
   render() {
-    const { className, title, author, readers, lightbulbs, comments } = this.props;
+    const {
+      className,
+      title,
+      author,
+      readers,
+      lightbulbs,
+      comments,
+      bookId,
+    } = this.props;
     return (
       <div className={className}>
         <div className="column-1">
@@ -26,6 +35,7 @@ class Card extends React.Component {
         <div className="column-2">
           <HighlightButton
             label="View"
+            link={`book/${bookId}`}
           />
         </div>
       </div>);
@@ -34,6 +44,7 @@ class Card extends React.Component {
 
 Card.propTypes = {
   className: PropTypes.string,
+  bookId: PropTypes.string,
   title: PropTypes.string,
   readers: PropTypes.arrayOf(PropTypes.string),
   lightbulbs: PropTypes.number,
@@ -43,6 +54,7 @@ Card.propTypes = {
 
 Card.defaultProps = {
   className: undefined,
+  bookId: undefined,
   title: undefined,
   readers: undefined,
   lightbulbs: undefined,

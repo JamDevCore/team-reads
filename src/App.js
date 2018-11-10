@@ -3,9 +3,9 @@ import { Router, Switch, Route } from 'react-router-dom';
 import Alert from 'simple-react-alert';
 import history from './modules/history';
 import AuthenticatedRoute from './AuthenticatedRoute';
-import YourBooksView from './views/YourBooksView';
+import DashboardView from './views/DashboardView';
 import DiscussionView from './views/DiscussionView';
-import CreateDiscussionView from './views/CreateDiscussionView';
+import BookView from './views/BookView';
 import Fallback from './views/Fallback';
 import LoginView from './views/LoginView';
 import Callback from './components/Callback';
@@ -57,9 +57,9 @@ class App extends Component {
               handleAuthentication(props);
               return <Callback {...props} />
             }}/>
-            <AuthenticatedRoute exact path="/"  auth={auth} user={userProfile} pathName="home" component={YourBooksView}/>
-            <AuthenticatedRoute exact path="/book/:id" auth={auth} user={userProfile} pathName="discussionView" component={DiscussionView}/>
-            <AuthenticatedRoute exact path="/book/:id/discussion/:id" auth={auth} user={userProfile} pathName="createDiscu" component={CreateDiscussionView} />
+            <AuthenticatedRoute exact path="/"  auth={auth} user={userProfile} pathName="home" component={DashboardView}/>
+            <AuthenticatedRoute exact path="/book/:id" auth={auth} user={userProfile} pathName="bookView" component={BookView}/>
+            <AuthenticatedRoute exact path="/book/:id/discussion/:id" auth={auth} user={userProfile} pathName="discussionView" component={DiscussionView} />
             <AuthenticatedRoute exact path="*" user={userProfile} pathName="404" auth={auth} component={Fallback}/>
           </Switch>
         </Router>
