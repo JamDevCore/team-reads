@@ -1,15 +1,24 @@
 import React, { Component } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Router, Switch, Route } from 'react-router-dom';
+import Alert from 'simple-react-alert';
 import history from './modules/history';
-import Navbar from './components/Navbar';
+import AuthenticatedRoute from './AuthenticatedRoute';
 import YourBooksView from './views/YourBooksView';
 import DiscussionView from './views/DiscussionView';
 import CreateDiscussionView from './views/CreateDiscussionView';
 import Fallback from './views/Fallback';
 import LoginView from './views/LoginView';
+import Callback from './components/Callback';
 import Auth from './modules/Auth';
-import formatId from './modules/format-id';
 import './App.css';
+
+const auth = new Auth();
+
+const handleAuthentication = (nextState, replace) => {
+  if (/access_token|id_token|error/.test(nextState.location.hash)) {
+    auth.handleAuthentication();
+  }
+}
 
 class App extends Component {
   constructor() {
@@ -22,14 +31,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const { auth } = this.props;
-    if (this.props.auth.isAuthenticated()) {
-      const profile = auth.getProfile();
-      console.log(formatId(profile.sub));
-      this.setState({
-        userId: formatId(profile.sub)
-      });
-    }
   }
 
   goTo(route) {
@@ -37,31 +38,32 @@ class App extends Component {
   }
 
   login() {
-    this.props.auth.login();
+    auth.login();
   }
 
   logout() {
-    this.props.auth.logout();
+    auth.logout();
   }
 
   render() {
-    const { auth } = this.props;
-    const { userId } = this.state;
     const userProfile = auth.getProfile();
     console.log(userProfile);
     return (
       <div className="App">
-        {auth.isAuthenticated() ?
-          <React.Fragment>
-          <Navbar handleLogout={this.logout}/>
+        <Router history={history} component={App}>
           <Switch>
-            <Route exact path="/" render={(props) => <YourBooksView userId={formatId(userProfile.sub)} { ...props }/>}/>
-            <Route exact path="/book/:id" render={(props) => <DiscussionView userId={userId} { ...props }/> }/>
-            <Route exact path="/book/:id/discussion/:id" render={(props) => <CreateDiscussionView userId={userId} { ...props }/> }/>
-            <Route exact path="*" render={() => <Fallback />}/>
+            <Route path="/login" render={(props) => <LoginView handleLogin={this.login} auth={auth} {...props}/>} />
+            <Route path="/callback" render={(props) => {
+              handleAuthentication(props);
+              return <Callback {...props} />
+            }}/>
+            <AuthenticatedRoute exact path="/"  auth={auth} user={userProfile} pathName="home" component={YourBooksView}/>
+            <AuthenticatedRoute exact path="/book/:id" auth={auth} user={userProfile} pathName="discussionView" component={DiscussionView}/>
+            <AuthenticatedRoute exact path="/book/:id/discussion/:id" auth={auth} user={userProfile} pathName="createDiscu" component={CreateDiscussionView} />
+            <AuthenticatedRoute exact path="*" user={userProfile} pathName="404" auth={auth} component={Fallback}/>
           </Switch>
-        </React.Fragment> :
-        <LoginView handleLogin={this.login}/>}
+        </Router>
+        <Alert />
       </div>
     );
   }

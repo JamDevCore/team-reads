@@ -31,6 +31,7 @@ const Textarea = ({
     <div className={className}>
       <InputLabel>{label}</InputLabel>
         <Input
+          id={name}
           placeholder={placeholder}
           hasError={error && touch}
           rows={rows}

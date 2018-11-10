@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components'
 import InputLabel from './InputLabel';
+import InputError from './InputError';
 import theme from '../../../theme';
 
 const Select = styled.select`
@@ -32,15 +33,18 @@ const SelectInput = ({
   const touch = touched[name];
   return (
     <div className={className}>
-      <InputLabel>{label}</InputLabel>
+      <InputLabel htmlFor={name} error={error}>{label}</InputLabel>
         <Select
+          id={name}
           placeholder={placeholder}
           hasError={error && touch}
           {...field}
           {...props}
         >
+        <option value={undefined}>Select one</option>
         {children}
       </Select>
+      {touch && error && <InputError>{error}</InputError>}
     </div>);
 }
 

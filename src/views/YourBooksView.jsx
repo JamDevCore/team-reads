@@ -36,6 +36,14 @@ class YourBooksView extends React.Component {
       console.log(err)
       this.setState({ isLoading: false });
     });
+    api.get(`shelf?ownerId=${userId}`)
+    .then((response) => {
+      console.log(response)
+      const shelves = response.data.data;
+      this.setState({
+        shelves,
+      })
+    })
   }
 
   renderBooks() {
@@ -51,22 +59,23 @@ class YourBooksView extends React.Component {
       />)) : <Panel><h2>You don't have any books on this shelf</h2></Panel>
   }
   render() {
-    const { className } = this.props;
+    const { className, userId } = this.props;
     const { isLoading, books, shelves } = this.state;
+    console.log(shelves)
     console.log(books, isLoading)
     return (
       <div className={className}>
         <div className="container left">
         <Panel>
-        <CreateBookForm />
+        <CreateBookForm shelves={shelves} userId={userId}/>
         </Panel>
         </div>
         <div className="container right">
           <Select
             id="shelf"
           >
-          <option>All books</option>
-            {shelves > 0 ? shelves.map(shelf => <option value={shelf.label}>{shelf.label}</option>) : null}
+          <option value="all">All books</option>
+            {shelves.length > 0 ? shelves.map(shelf => <option key={shelf._id} value={shelf._id}>{shelf.name}</option>) : null}
           </Select>
           {isLoading ? <Panel><Loading /></Panel> : this.renderBooks()}
         </div>
