@@ -9,7 +9,6 @@ import Loading from '../components/Loading';
 import theme from '../theme';
 import api from '../modules/api-call';
 
-
 class YourBooksView extends React.Component {
   constructor() {
     super();
@@ -22,6 +21,7 @@ class YourBooksView extends React.Component {
   }
   componentDidMount() {
     const { userId } = this.props;
+    this.setState({ isLoading: true })
     console.log(userId)
     api.get(`book?ownerId=${userId}`)
     .then((response) => {
