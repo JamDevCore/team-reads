@@ -51,7 +51,7 @@ const IconButton =  styled(Button)`
   &:hover,
   &:active,
   &:focus {
-    animation: ${pulse} 1s 1; /* animation set */
+    animation: ${pulse} 1s 1;
   }
 `;
 

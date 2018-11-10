@@ -5,44 +5,55 @@ import CreateBookForm from '../components/forms/CreateBookForm';
 import Select from '../components/_common/form-components/Select';
 import Card from '../components/Card';
 import Panel from '../components/_common/Panel';
+import Loading from '../components/Loading';
 import theme from '../theme';
+import api from '../modules/api-call';
 
-
-const books = [
-  {
-    title:"The Lean Startup",
-    readers: ['James', 'Mike', 'Rachel'],
-    lightbulbs:"16",
-    comments:"22",
-    author:"Eric Reis",
-  },
-  {
-    title:"Principles",
-    readers: ['James', 'Mike', 'Rachel'],
-    lightbulbs:"16",
-    comments:"22",
-    author:"Ray Dalio",
-  },
-  {
-    title:"Gettings Things Done: The Art of Stress Free Time Management",
-    readers: ['James', 'Mike', 'Rachel'],
-    lightbulbs:"16",
-    comments:"22",
-    author:"Gavin White",
-  },
-  {
-    title:"The Odyssey",
-    readers: ['James', 'Mike', 'Rachel'],
-    lightbulbs:"16",
-    comments:"22",
-    author:"Homer",
-  },
-]
 
 class YourBooksView extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      books: [],
+      shelves: [],
+      currentShelf: 'all',
+      isLoading: false,
+    }
+  }
+  componentDidMount() {
+    const { userId } = this.props;
+    console.log(userId)
+    api.get(`book?ownerId=${userId}`)
+    .then((response) => {
+      console.log(response);
+      const books = response.data.data;
+      this.setState({
+        books: books,
+        isLoading: false,
+      });
+    })
+    .catch((err) => {
+      console.log(err)
+      this.setState({ isLoading: false });
+    });
+  }
 
+  renderBooks() {
+    const { books } = this.state;
+    return books.length > 0 ? books.map(book => (
+      <Card
+        key={book._id}
+        title={book.name}
+        readers={book.readers || ["Not read"]}
+        lightbulbs={book.lightbulbs || 0}
+        comments={book.comments || 0}
+        author={book.author}
+      />)) : <Panel><h2>You don't have any books on this shelf</h2></Panel>
+  }
   render() {
     const { className } = this.props;
+    const { isLoading, books, shelves } = this.state;
+    console.log(books, isLoading)
     return (
       <div className={className}>
         <div className="container left">
@@ -54,17 +65,10 @@ class YourBooksView extends React.Component {
           <Select
             id="shelf"
           >
-            <option>Select a shelf</option>
+          <option>All books</option>
+            {shelves > 0 ? shelves.map(shelf => <option value={shelf.label}>{shelf.label}</option>) : null}
           </Select>
-          {books.map(book => (
-            <Card
-              key={book.title}
-              title={book.title}
-              readers={book.readers}
-              lightbulbs={book.lightbulbs}
-              comments={book.comments}
-              author={book.author}
-            />))}
+          {isLoading ? <Panel><Loading /></Panel> : this.renderBooks()}
         </div>
       </div>
     );
@@ -73,10 +77,12 @@ class YourBooksView extends React.Component {
 
 YourBooksView.propTypes = {
   className: PropTypes.string,
+  userId: PropTypes.string,
 };
 
 YourBooksView.defaultProps = {
   className: undefined,
+  userId: undefined,
 };
 
 export default styled(YourBooksView)`
@@ -84,6 +90,7 @@ export default styled(YourBooksView)`
   flex-direction: row;
   flex-wrap: wrap;
   width: 100%;
+
   .left {
     margin: 40px auto;
     width: 400px;

@@ -51,4 +51,7 @@ export default styled(Button)`
   padding: 10px;
   cursor: pointer;
   font-family: 'Maven Pro', sans-serif;
+  i {
+    margin-right: 10px;
+  }
 `;

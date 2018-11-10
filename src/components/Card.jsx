@@ -36,8 +36,8 @@ Card.propTypes = {
   className: PropTypes.string,
   title: PropTypes.string,
   readers: PropTypes.arrayOf(PropTypes.string),
-  lightbulbs: PropTypes.string,
-  comments: PropTypes.string,
+  lightbulbs: PropTypes.number,
+  comments: PropTypes.number,
   author: PropTypes.string,
 };
 

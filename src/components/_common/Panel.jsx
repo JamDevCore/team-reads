@@ -10,12 +10,10 @@ const Panel = ({ children, className}) => (
 );
 
 Panel.propTypes = {
-  children: PropTypes.string,
-  className: PropTypes.sring,
+  className: PropTypes.string,
 };
 
 Panel.defaultProps = {
-  children: undefined,
   className:undefined,
 };
 
@@ -30,7 +28,7 @@ export default styled(Panel)`
   box-shadow: ${theme.boxShadow};
   margin: 0px 10px 30px 10px;
   h2 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Maven Pro', sans-serif;
   }
   p {
     font-family: 'Playfair Display', serif;
