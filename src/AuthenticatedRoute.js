@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Router, Switch, Route, Redirect } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import formatId from './modules/format-id';
 
 
 const AuthenticatedRoute = ({
@@ -23,7 +24,7 @@ const AuthenticatedRoute = ({
             return <Redirect to="/login" />;
           }
           return React.createElement(component, {
-            ...props, isAuthenticated: auth.isAuthenticated(),
+            ...props, userId: formatId(user.sub), isAuthenticated: auth.isAuthenticated(),
           });
         }}
       />
@@ -32,11 +33,17 @@ const AuthenticatedRoute = ({
 }
 
 AuthenticatedRoute.propTypes = {
-
+  component: PropTypes.any,
+  user: PropTypes.object,
+  auth: PropTypes.object,
+  routeName: PropTypes.string,
 };
 
 AuthenticatedRoute.defaultProps = {
-
+  component: undefined,
+  user: undefined,
+  auth: undefined,
+  routeName: undefined,
 };
 
 export default AuthenticatedRoute;

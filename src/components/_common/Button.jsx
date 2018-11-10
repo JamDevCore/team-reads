@@ -10,6 +10,7 @@ const Button = (props) => {
     icon,
     onClick,
     type,
+    isLoading,
   } = props;
   return (
     <button
@@ -17,7 +18,8 @@ const Button = (props) => {
       className={className}
       onClick={onClick}
     >
-      {icon ? <i className={icon} /> : null}
+      {icon && !isLoading ? <i className={icon} /> : null}
+      {isLoading && <i className="fas fa-spinner fa-spin" />}
       {label}
     </button>)
 };
@@ -28,6 +30,7 @@ Button.propTypes = {
   icon: PropTypes.string,
   className: PropTypes.string,
   type: PropTypes.string,
+  isLoading: PropTypes.bool,
 };
 
 Button.defaultProps = {
@@ -36,10 +39,13 @@ Button.defaultProps = {
   icon: undefined,
   className: undefined,
   type: undefined,
+  isLoading: undefined,
 };
 
 export default styled(Button)`
   @import url('https://fonts.googleapis.com/css?family=Maven+Pro');
+  display: flex;
+  justify-content: center;
   background: ${theme.colors.success};
   font-size: ${theme.fontSize}px;
   margin-top: ${theme.baseMargin / 2}px;

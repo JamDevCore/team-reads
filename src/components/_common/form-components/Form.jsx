@@ -1,15 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { Form } from 'formik';
 import theme from '../../../theme';
 
-const Form = ({ className, children }) => (
-  <div className={className}>
+const FormComponent = ({ className, children }) => (
+  <Form className={className}>
     {children}
-  </div>
+  </Form>
 );
 
-Form.propTypes = {
+FormComponent.propTypes = {
   className: PropTypes.string,
   children: PropTypes.oneOfType([
   PropTypes.arrayOf(PropTypes.node),
@@ -17,11 +18,11 @@ Form.propTypes = {
 ]).isRequired,
 };
 
-Form.defaultProps = {
+FormComponent.defaultProps = {
   className: undefined,
 };
 
-export default styled(Form)`
+export default styled(FormComponent)`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

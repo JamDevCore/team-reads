@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Router, Switch, Route, Redirect } from 'react-router-dom';
+import { Router, Switch, Route } from 'react-router-dom';
+import Alert from 'simple-react-alert';
 import history from './modules/history';
 import AuthenticatedRoute from './AuthenticatedRoute';
-import Navbar from './components/Navbar';
 import YourBooksView from './views/YourBooksView';
 import DiscussionView from './views/DiscussionView';
 import CreateDiscussionView from './views/CreateDiscussionView';
@@ -10,7 +10,6 @@ import Fallback from './views/Fallback';
 import LoginView from './views/LoginView';
 import Callback from './components/Callback';
 import Auth from './modules/Auth';
-import formatId from './modules/format-id';
 import './App.css';
 
 const auth = new Auth();
@@ -64,6 +63,7 @@ class App extends Component {
             <AuthenticatedRoute exact path="*" user={userProfile} pathName="404" auth={auth} component={Fallback}/>
           </Switch>
         </Router>
+        <Alert />
       </div>
     );
   }
