@@ -27,9 +27,8 @@ export default styled(ButtonGroup)`
   flex-direction: row;
   justify-content: center;
   text-align: left;
-  button {
+  * {
     display: inline-block;
-    min-width: 45%;
-    margin-right: 10px;
+    width: 45%;
   }
 `;

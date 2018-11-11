@@ -9,38 +9,39 @@ import Button from '../components/_common/Button';
 import HighlightButton from '../components/_common/HighlightButton';
 import Select from '../components/_common/form-components/Select';
 import Card from '../components/Card';
+import Loading from '../components/Loading';
 import theme from '../theme';
 
-const discussions = [
-  {
-    title:"'We must learn what customers really want, not what they say they want or what we think they should want.'",
-    readers: ['James', 'Mike', 'Rachel'],
-    lightbulbs:"16",
-    comments:"22",
-    author:"James",
-  },
-  {
-    title:"f you're not failing, you're not pushing your limits, and if you're not pushing your limits, you're not maximizing your potential",
-    readers: ['James', 'Mike', 'Rachel'],
-    lightbulbs:"16",
-    comments:"22",
-    author:"Ray Dalio",
-  },
-  {
-    title:"If you don't pay appropriate attention to what has your attention, it will take more of your attention than it deserves.",
-    readers: ['James', 'Mike', 'Rachel'],
-    lightbulbs:"16",
-    comments:"22",
-    author:"Gavin White",
-  },
-  {
-    title:"There is a time for many words, and there is also a time for sleep.",
-    readers: ['James', 'Mike', 'Rachel'],
-    lightbulbs:"16",
-    comments:"22",
-    author:"Homer",
-  },
-];
+// const discussions = [
+//   {
+//     title:"'We must learn what customers really want, not what they say they want or what we think they should want.'",
+//     readers: ['James', 'Mike', 'Rachel'],
+//     lightbulbs:"16",
+//     comments:"22",
+//     author:"James",
+//   },
+//   {
+//     title:"f you're not failing, you're not pushing your limits, and if you're not pushing your limits, you're not maximizing your potential",
+//     readers: ['James', 'Mike', 'Rachel'],
+//     lightbulbs:"16",
+//     comments:"22",
+//     author:"Ray Dalio",
+//   },
+//   {
+//     title:"If you don't pay appropriate attention to what has your attention, it will take more of your attention than it deserves.",
+//     readers: ['James', 'Mike', 'Rachel'],
+//     lightbulbs:"16",
+//     comments:"22",
+//     author:"Gavin White",
+//   },
+//   {
+//     title:"There is a time for many words, and there is also a time for sleep.",
+//     readers: ['James', 'Mike', 'Rachel'],
+//     lightbulbs:"16",
+//     comments:"22",
+//     author:"Homer",
+//   },
+// ];
 
 const Container = styled.div`
   margin: 40px;
@@ -58,6 +59,8 @@ class DiscussionView extends React.Component {
   constructor(props) {
     super(props)
       this.state = {
+        isLoading: false,
+        discussions: [],
         bookTitle: undefined,
         author: undefined,
         readBy: ['James', 'Grant', 'Ralph'],
@@ -67,6 +70,9 @@ class DiscussionView extends React.Component {
 
   componentDidMount() {
     const { id } = this.props.match.params;
+    this.setState({
+      isLoading: true,
+    });
     api.get(`book/${id}`)
     .then((res) => {
       console.log(res);
@@ -77,10 +83,40 @@ class DiscussionView extends React.Component {
         readBy: book.readyBy,
       });
     })
+    .catch(err => console.log(err))
+    api.get(`discussion?bookId=${id}`)
+      .then((res) => {
+        console.log(res)
+        const discussions = res.data;
+        this.setState({
+          discussions,
+          isLoading: false,
+        })
+      })
+      .catch(err => {
+        console.log(err)
+        this.setState({
+          isLoading: false,
+        })
+      })
+  }
+
+  renderDiscussions() {
+    const { discussions, bookTitle, author, readBy, isLoading } = this.state;
+    return discussions.length > 0 ? discussions.map(d =>
+      <Card
+        key={d.title}
+        title={d.title}
+        readers={d.readers}
+        lightbulbs={d.lightbulbs}
+        comments={d.comments}
+        author={d.author}
+      />
+    ) : <Panel><h2>No discussions on this book yet</h2></Panel>;
   }
   render() {
     const { className } = this.props;
-    const { bookTitle, author, readBy, personalStatus } = this.state;
+    const { bookTitle, author, readBy, isLoading } = this.state;
     return (
       <div className={className}>
         <div className="left">
@@ -115,16 +151,7 @@ class DiscussionView extends React.Component {
             <option>All notes</option>
             <option>My notes</option>
          </Select>
-          {discussions.length > 0 ? discussions.map(d =>
-          <Card
-            key={d.title}
-            title={d.title}
-            readers={d.readers}
-            lightbulbs={d.lightbulbs}
-            comments={d.comments}
-            author={d.author}
-          />
-        ) : null}
+        {isLoading ? <Panel><Loading /></Panel> : this.renderDiscussions()}
       </div>
       </div>
     );
@@ -159,9 +186,6 @@ h3 {
     box-sizing: border-box;
     width: 60%;
     margin: 20px auto;
-    button {
-      margin: 0px 0px 20px 10px;
-    }
   }
   @media(max-width: 1000px) {
     .right {

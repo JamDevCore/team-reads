@@ -24,18 +24,17 @@ const Button = (props) => {
       {isLoading && <i className="fas fa-spinner fa-spin" />}
       {label}
     </button>) :
-      <button
-        type={type}
-        className={className}
-        onClick={onClick}
-      >
-        <Link to={link}>
-        {icon && !isLoading ? <i className={icon} /> : null}
-        {isLoading && <i className="fas fa-spinner fa-spin" />}
-        {label}
-        </Link>
-      </button>
-
+      <Link to={link}>
+        <button
+          type={type}
+          className={className}
+          onClick={onClick}
+        >
+      {icon && !isLoading ? <i className={icon} /> : null}
+      {isLoading && <i className="fas fa-spinner fa-spin" />}
+      {label}
+          </button>
+      </Link>
 };
 
 Button.propTypes = {
@@ -61,6 +60,8 @@ Button.defaultProps = {
 export default styled(Button)`
   @import url('https://fonts.googleapis.com/css?family=Maven+Pro');
   display: flex;
+  width: 100%;
+  margin-right: 10px;
   justify-content: center;
   background: ${theme.colors.success};
   font-size: ${theme.fontSize}px;
