@@ -38,7 +38,7 @@ const CreateBookForm = ({ className, shelves, isSubmitting }) => {
             component={SelectInput}
             label="Select a shelf"
             >
-            {shelves.length > 0 ? shelves.map(shelf => <option key={shelf._id} value={shelf._id}>{shelf.name}</option>) : null}
+            {shelves && shelves.length > 0 ? shelves.map(shelf => <option key={shelf._id} value={shelf._id}>{shelf.name}</option>) : null}
           </Field>
           <Button
             type="submit"

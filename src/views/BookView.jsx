@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { openAlert } from 'simple-react-alert';
+import history from '../modules/history';
 import api from '../modules/api-call';
+import handleDeleteBook from '../modules/handle-delete-book';
 import Panel from '../components/_common/Panel';
 import Divider from '../components/_common/Divider';
 import ButtonGroup from '../components/_common/ButtonGroup';
@@ -9,39 +12,9 @@ import Button from '../components/_common/Button';
 import HighlightButton from '../components/_common/HighlightButton';
 import Select from '../components/_common/form-components/Select';
 import Card from '../components/Card';
+import Fallback from './Fallback';
 import Loading from '../components/Loading';
 import theme from '../theme';
-
-// const discussions = [
-//   {
-//     title:"'We must learn what customers really want, not what they say they want or what we think they should want.'",
-//     readers: ['James', 'Mike', 'Rachel'],
-//     lightbulbs:"16",
-//     comments:"22",
-//     author:"James",
-//   },
-//   {
-//     title:"f you're not failing, you're not pushing your limits, and if you're not pushing your limits, you're not maximizing your potential",
-//     readers: ['James', 'Mike', 'Rachel'],
-//     lightbulbs:"16",
-//     comments:"22",
-//     author:"Ray Dalio",
-//   },
-//   {
-//     title:"If you don't pay appropriate attention to what has your attention, it will take more of your attention than it deserves.",
-//     readers: ['James', 'Mike', 'Rachel'],
-//     lightbulbs:"16",
-//     comments:"22",
-//     author:"Gavin White",
-//   },
-//   {
-//     title:"There is a time for many words, and there is also a time for sleep.",
-//     readers: ['James', 'Mike', 'Rachel'],
-//     lightbulbs:"16",
-//     comments:"22",
-//     author:"Homer",
-//   },
-// ];
 
 const Container = styled.div`
   margin: 40px;
@@ -55,54 +28,35 @@ const AmazonLink = styled.a`
   margin-top: 20px;
 `;
 
-class DiscussionView extends React.Component {
+class BookView extends React.Component {
   constructor(props) {
     super(props)
       this.state = {
         isLoading: false,
-        discussions: [],
-        bookTitle: undefined,
-        author: undefined,
-        readBy: ['James', 'Grant', 'Ralph'],
-        personalStatus: undefined,
       }
   }
 
-  componentDidMount() {
-    const { id } = this.props.match.params;
+  deleteBook() {
     this.setState({
       isLoading: true,
-    });
-    api.get(`book/${id}`)
-    .then((res) => {
-      console.log(res);
-      const book = res.data;
-      this.setState({
-        bookTitle: book.name,
-        author: book.author,
-        readBy: book.readyBy,
-      });
     })
-    .catch(err => console.log(err))
-    api.get(`discussion?bookId=${id}`)
-      .then((res) => {
-        console.log(res)
-        const discussions = res.data;
-        this.setState({
-          discussions,
-          isLoading: false,
-        })
-      })
-      .catch(err => {
-        console.log(err)
-        this.setState({
-          isLoading: false,
-        })
-      })
+    const { id } = this.props.match.params;
+    const { userId } = this.props;
+    handleDeleteBook({ bookId: id, userId })
+    .then(() => {
+      this.setState({ isLoading: false });
+      openAlert({ message: "Success! Your book has been removed", type: "success" });
+      history.push('/')
+    })
+    .catch((err) => {
+      this.setState({ isLoading: false })
+      openAlert({ message: `Error: ${err}` });
+      history.push('/')
+    });
   }
 
   renderDiscussions() {
-    const { discussions, bookTitle, author, readBy, isLoading } = this.state;
+    const { discussions, bookTitle, author, readBy } = this.props;
     return discussions.length > 0 ? discussions.map(d =>
       <Card
         key={d.title}
@@ -114,59 +68,76 @@ class DiscussionView extends React.Component {
       />
     ) : <Panel><h2>No discussions on this book yet</h2></Panel>;
   }
+
   render() {
-    const { className } = this.props;
-    const { bookTitle, author, readBy, isLoading } = this.state;
+    const { className, bookTitle, author, readBy, bookId, discussions  } = this.props;
+    const { isLoading } = this.state;
     return (
       <div className={className}>
-        <div className="left">
-        <Panel>
-          <h2>{bookTitle}</h2>
-          <p>{author}</p>
-          <Divider />
-          <h3>Read by</h3>
-          <div>
-          {readBy && readBy.length > 0 ? readBy.map(reader => <li key={reader} style={{display:'inline-block'}}>{reader}</li>) :
-          <li style={{display:'inline-block'}}>No-one</li>}
-        </div>
-          <Divider />
-          <Select
-            label="Recommend this book"
-          >
-          <option>Select a team member</option>
-        </Select>
-        <ButtonGroup>
-          <Button
-            label="Add note"
-          />
-        <HighlightButton
-            label="Delete book"
-          />
-        </ButtonGroup>
-        </Panel>
-          <AmazonLink href="http://www.amazon.co.uk">Purchase on Amazon</AmazonLink>
-        </div>
-        <div className="right">
-          <Select>
-            <option>All notes</option>
-            <option>My notes</option>
-         </Select>
-        {isLoading ? <Panel><Loading /></Panel> : this.renderDiscussions()}
-      </div>
-      </div>
-    );
+        {bookId && discussions ?
+        <React.Fragment>
+            <div className="left">
+              <Panel>
+                <h2>{bookTitle}</h2>
+                <p>{author}</p>
+                <Divider />
+                <h3>Read by</h3>
+                <div>
+                {readBy && readBy.length > 0 ? readBy.map(reader => <li key={reader} style={{display:'inline-block'}}>{reader}</li>) :
+                <li style={{display:'inline-block'}}>No-one</li>}
+              </div>
+                <Divider />
+                <Select
+                  label="Recommend this book"
+                >
+                <option>Select a team member</option>
+              </Select>
+              <ButtonGroup>
+                <Button
+                  label="Add note"
+                />
+              <HighlightButton
+                  label="Delete book"
+                  isLoading={isLoading}
+                  onClick={() => this.deleteBook()}
+                />
+              </ButtonGroup>
+              </Panel>
+              <AmazonLink href="http://www.amazon.co.uk">Purchase on Amazon</AmazonLink>
+            </div>
+            <div className="right">
+              <Select>
+                <option>All notes</option>
+                <option>My notes</option>
+             </Select>
+             {this.renderDiscussions()}
+          </div>
+        </React.Fragment> : <Fallback />}
+    </div>)
   }
 }
 
-DiscussionView.propTypes = {
-
+BookView.propTypes = {
+ userId: PropTypes.string,
+ bookId: PropTypes.string,
+ discussions: PropTypes.arrayOf(PropTypes.string),
+ bookTitle: PropTypes.string,
+ author: PropTypes.string,
+ readBy: PropTypes.arrayOf(PropTypes.string),
+ personalStatus: PropTypes.string,
 };
 
-DiscussionView.defaultProps = {
-
+BookView.defaultProps = {
+ userId: undefined,
+ bookId: undefined,
+ discussions: undefined,
+ bookTitle: undefined,
+ author: undefined,
+ readBy: undefined,
+ personalStatus: undefined,
 };
 
-export default styled(DiscussionView)`
+export default styled(BookView)`
 h3 {
   font-size: ${theme.fontSize}px;
 }

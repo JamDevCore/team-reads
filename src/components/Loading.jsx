@@ -15,8 +15,12 @@ class Callback extends React.Component {
 
 export default styled(Callback)`
   width 100%;
-  height: 100%;
+  height: 90vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  i {
+    font-size: 48px;
+    margin-right: 30px;
+  }
 `;

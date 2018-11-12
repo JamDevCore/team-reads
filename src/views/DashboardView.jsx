@@ -20,32 +20,6 @@ class DashboardView extends React.Component {
     }
     this.addBookToState = this.addBookToState.bind(this);
   }
-  componentDidMount() {
-    const { userId } = this.props;
-    this.setState({ isLoading: true })
-    console.log(userId)
-    api.get(`book?ownerId=${userId}`)
-    .then((response) => {
-      console.log(response);
-      const books = response.data.data;
-      this.setState({
-        books: books,
-        isLoading: false,
-      });
-    })
-    .catch((err) => {
-      console.log(err)
-      this.setState({ isLoading: false });
-    });
-    api.get(`shelf?ownerId=${userId}`)
-    .then((response) => {
-      console.log(response)
-      const shelves = response.data.data;
-      this.setState({
-        shelves,
-      })
-    })
-  }
 
   addBookToState(book) {
     const { books } = this.state;
@@ -57,7 +31,7 @@ class DashboardView extends React.Component {
   }
 
   renderBooks() {
-    const { books } = this.state;
+    const { books } = this.props;
     return books.length > 0 ? books.map(book => (
       <Card
         key={book._id}
@@ -70,10 +44,7 @@ class DashboardView extends React.Component {
       />)) : <Panel><h2>You don't have any books on this shelf</h2></Panel>
   }
   render() {
-    const { className, userId } = this.props;
-    const { isLoading, books, shelves } = this.state;
-    console.log(shelves)
-    console.log(books, isLoading)
+    const { className, userId, isLoading, books, shelves  } = this.props;
     return (
       <div className={className}>
         <div className="container left">
@@ -92,7 +63,7 @@ class DashboardView extends React.Component {
           <option value="all">All books</option>
             {shelves.length > 0 ? shelves.map(shelf => <option key={shelf._id} value={shelf._id}>{shelf.name}</option>) : null}
           </Select>
-          {isLoading ? <Panel><Loading /></Panel> : this.renderBooks()}
+          {this.renderBooks()}
         </div>
       </div>
     );
@@ -102,11 +73,17 @@ class DashboardView extends React.Component {
 DashboardView.propTypes = {
   className: PropTypes.string,
   userId: PropTypes.string,
+  books: PropTypes.arrayOf(PropTypes.object),
+  currentShelf: PropTypes.string,
+  shelves: PropTypes.arrayOf(PropTypes.object),
 };
 
 DashboardView.defaultProps = {
   className: undefined,
   userId: undefined,
+  books: undefined,
+  currentShelf: undefined,
+  shelves: undefined,
 };
 
 export default styled(DashboardView)`

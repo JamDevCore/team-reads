@@ -54,7 +54,7 @@ const AmazonLink = styled.a`
   margin-top: 20px;
 `;
 
-class BookView extends React.Component {
+class DiscussionView extends React.Component {
 constructor() {
   super();
   this.state = {
@@ -131,15 +131,15 @@ componentDidMount() {
   }
 }
 
-BookView.propTypes = {
+DiscussionView.propTypes = {
   className: PropTypes.string,
 };
 
-BookView.defaultProps = {
+DiscussionView.defaultProps = {
   className: undefined,
 };
 
-export default styled(BookView)`
+export default styled(DiscussionView)`
 display: flex;
 flex-direction: row;
 flex-wrap: wrap;

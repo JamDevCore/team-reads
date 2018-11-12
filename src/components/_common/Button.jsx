@@ -83,5 +83,6 @@ export default styled(Button)`
   }
   i {
     margin-right: 10px;
+    width: auto;
   }
 `;
