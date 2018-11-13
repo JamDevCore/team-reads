@@ -92,6 +92,7 @@ export default withFormik({
         openAlert({ message: 'Success! You added a book to your shelf', type: 'success' });
         setSubmitting(false);
         const book = response.data
+        console.log(book);
         props.addBookToState(response.data);
         const currentShelf = props.shelves.filter(shelf => shelf._id === values.shelf)
         const booksList = currentShelf[0].books;

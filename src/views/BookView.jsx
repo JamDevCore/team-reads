@@ -37,12 +37,11 @@ class BookView extends React.Component {
   }
 
   deleteBook() {
+    const { bookId, userId } = this.props
     this.setState({
       isLoading: true,
     })
-    const { id } = this.props.match.params;
-    const { userId } = this.props;
-    handleDeleteBook({ bookId: id, userId })
+    handleDeleteBook({ bookId, userId })
     .then(() => {
       this.setState({ isLoading: false });
       openAlert({ message: "Success! Your book has been removed", type: "success" });
@@ -53,6 +52,10 @@ class BookView extends React.Component {
       openAlert({ message: `Error: ${err}` });
       history.push('/')
     });
+  }
+
+  addNote() {
+    const { bookId, userId } = this.props;
   }
 
   renderDiscussions() {
@@ -95,6 +98,7 @@ class BookView extends React.Component {
               <ButtonGroup>
                 <Button
                   label="Add note"
+                  onClick={() => this.addNote()}
                 />
               <HighlightButton
                   label="Delete book"

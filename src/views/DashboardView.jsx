@@ -13,21 +13,8 @@ class DashboardView extends React.Component {
   constructor() {
     super();
     this.state = {
-      books: [],
-      shelves: [],
-      currentShelf: 'all',
       isLoading: false,
     }
-    this.addBookToState = this.addBookToState.bind(this);
-  }
-
-  addBookToState(book) {
-    const { books } = this.state;
-    const newBooks = books;
-    newBooks.push(book);
-    this.setState({
-      books: newBooks,
-    });
   }
 
   renderBooks() {
@@ -44,7 +31,7 @@ class DashboardView extends React.Component {
       />)) : <Panel><h2>You don't have any books on this shelf</h2></Panel>
   }
   render() {
-    const { className, userId, isLoading, books, shelves  } = this.props;
+    const { className, userId, shelves, addBookToState  } = this.props;
     return (
       <div className={className}>
         <div className="container left">
@@ -52,7 +39,7 @@ class DashboardView extends React.Component {
         <CreateBookForm
           shelves={shelves}
           userId={userId}
-          addBookToState={this.addBookToState}
+          addBookToState={addBookToState}
           />
         </Panel>
         </div>
@@ -76,6 +63,7 @@ DashboardView.propTypes = {
   books: PropTypes.arrayOf(PropTypes.object),
   currentShelf: PropTypes.string,
   shelves: PropTypes.arrayOf(PropTypes.object),
+  addBookToState: PropTypes.func,
 };
 
 DashboardView.defaultProps = {
@@ -84,6 +72,7 @@ DashboardView.defaultProps = {
   books: undefined,
   currentShelf: undefined,
   shelves: undefined,
+  addBookToState: undefined,
 };
 
 export default styled(DashboardView)`

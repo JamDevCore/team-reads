@@ -3,18 +3,20 @@ import PropTypes from 'prop-types';
 import DashboardView from '../views/DashboardView';
 import Loading from '../components/Loading';
 import api from '../modules/api-call';
-import formatId from '../modules/format-id';
+import sort from '../modules/sort-by-date';
 
 class DashboardViewContainer extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       books: [],
       shelves: [],
       currentShelf: 'all',
       isLoading: true,
     }
+    this.addBookToState = this.addBookToState.bind(this);
   }
+
   componentDidMount() {
     const { userId } = this.props;
     if (userId) {
@@ -23,8 +25,9 @@ class DashboardViewContainer extends React.Component {
     .then((response) => {
       console.log(response);
       const books = response.data.data;
+      const sortedBooks = sort(books);
       this.setState({
-        books: books,
+        books: sortedBooks,
       });
     })
     .catch((err) => {
@@ -41,8 +44,18 @@ class DashboardViewContainer extends React.Component {
         isLoading: false,
       }))
     });
+    }
   }
+
+  addBookToState(book) {
+    const { books } = this.state;
+    const newBooks = books;
+    newBooks.unshift(book);
+    this.setState({
+      books: newBooks,
+    });
   }
+
   render() {
     const {
       isLoading,
@@ -57,6 +70,7 @@ class DashboardViewContainer extends React.Component {
       books={books}
       currentShelf={currentShelf}
       shelves={shelves}
+      addBookToState={this.addBookToState}
     />
   }
 }
