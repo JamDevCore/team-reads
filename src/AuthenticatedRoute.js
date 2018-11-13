@@ -7,7 +7,6 @@ import formatId from './modules/format-id';
 
 const AuthenticatedRoute = ({
   component,
-  user,
   auth,
   routeName,
   ...rest,
@@ -23,8 +22,10 @@ const AuthenticatedRoute = ({
             }
             return <Redirect to="/login" />;
           }
+          const user = auth.getProfile();
+          const userId = formatId(user.sub);
           return React.createElement(component, {
-            ...props, userId: formatId(user.sub), isAuthenticated: auth.isAuthenticated(),
+            ...props, userId, isAuthenticated: auth.isAuthenticated(),
           });
         }}
       />

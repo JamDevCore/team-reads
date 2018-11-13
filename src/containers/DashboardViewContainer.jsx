@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import DashboardView from '../views/DashboardView';
 import Loading from '../components/Loading';
 import api from '../modules/api-call';
+import formatId from '../modules/format-id';
 
 class DashboardViewContainer extends React.Component {
   constructor() {
@@ -16,6 +17,7 @@ class DashboardViewContainer extends React.Component {
   }
   componentDidMount() {
     const { userId } = this.props;
+    if (userId) {
     console.log(userId)
     api.get(`book?ownerId=${userId}`)
     .then((response) => {
@@ -40,14 +42,15 @@ class DashboardViewContainer extends React.Component {
       }))
     });
   }
+  }
   render() {
     const {
       isLoading,
-      userId,
       books,
       currentShelf,
       shelves,
     } = this.state;
+    const { userId } = this.props;
     return isLoading ? <Loading /> :
     <DashboardView
       userId={userId}

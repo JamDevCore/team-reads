@@ -56,7 +56,7 @@ export default class Auth {
     localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
-    localStorage.setItem('id_token_payload');
+    localStorage.removeItem('id_token_payload');
     // navigate to the home route
     history.replace('/home');
   }

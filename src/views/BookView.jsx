@@ -103,7 +103,7 @@ class BookView extends React.Component {
                 />
               </ButtonGroup>
               </Panel>
-              <AmazonLink href="http://www.amazon.co.uk">Purchase on Amazon</AmazonLink>
+              <AmazonLink isLoading={isLoading} href="http://www.amazon.co.uk">Purchase on Amazon</AmazonLink>
             </div>
             <div className="right">
               <Select>

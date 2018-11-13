@@ -11,7 +11,7 @@ class Fallback extends React.Component {
     const { className } = this.props;
     return (
       <div className={className}>
-        <i class="fas fa-sad-tear"></i>
+        <i className="fas fa-sad-tear"></i>
         <h1>Please forgive us..</h1>
         <h2>We couldn't find what you were looking for, <br /> but we promise to make it up to you!</h2>
           <Button
@@ -37,7 +37,7 @@ export default styled(Fallback)`
   margin: 100px auto;
   text-align: center;
   flex-direction: column
-
+  width:324px;
   i {
     font-size: 62px;
   }

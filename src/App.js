@@ -10,6 +10,7 @@ import Fallback from './views/Fallback';
 import LoginView from './views/LoginView';
 import Callback from './components/Callback';
 import Auth from './modules/Auth';
+import formatId from './modules/format-id';
 import './App.css';
 
 const auth = new Auth();
@@ -23,15 +24,10 @@ const handleAuthentication = (nextState, replace) => {
 class App extends Component {
   constructor() {
     super()
-    this.state = {
-      userId: undefined,
-    }
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
   }
 
-  componentDidMount() {
-  }
 
   goTo(route) {
     this.props.history.replace(`/${route}`)
@@ -46,8 +42,6 @@ class App extends Component {
   }
 
   render() {
-    const userProfile = auth.getProfile();
-    console.log(userProfile);
     return (
       <div className="App">
         <Router history={history} component={App}>
@@ -57,10 +51,10 @@ class App extends Component {
               handleAuthentication(props);
               return <Callback {...props} />
             }}/>
-          <AuthenticatedRoute exact path="/"  auth={auth} user={userProfile} pathName="home" component={DashboardViewContainer}/>
-            <AuthenticatedRoute exact path="/book/:id" auth={auth} user={userProfile} pathName="bookView" component={BookViewContainer}/>
-            <AuthenticatedRoute exact path="/book/:id/discussion/:id" auth={auth} user={userProfile} pathName="discussionView" component={DiscussionView} />
-            <AuthenticatedRoute exact path="*" user={userProfile} pathName="404" auth={auth} component={Fallback}/>
+            <AuthenticatedRoute exact path="/" auth={auth} pathName="home" component={DashboardViewContainer}/>
+            <AuthenticatedRoute exact path="/book/:id" auth={auth} pathName="bookView" component={BookViewContainer}/>
+            <AuthenticatedRoute exact path="/book/:id/discussion/:id" pathName="discussionView" component={DiscussionView} />
+            <AuthenticatedRoute exact path="*" pathName="404" auth={auth} component={Fallback}/>
           </Switch>
         </Router>
         <Alert />
