@@ -33,51 +33,73 @@ class BookView extends React.Component {
     super(props)
       this.state = {
         isLoading: false,
+        isDeleting: false,
       }
   }
 
   deleteBook() {
     const { bookId, userId } = this.props
     this.setState({
-      isLoading: true,
+      isDeleting: true,
     })
     handleDeleteBook({ bookId, userId })
     .then(() => {
-      this.setState({ isLoading: false });
+      this.setState({ isDeleting: false });
       openAlert({ message: "Success! Your book has been removed", type: "success" });
       history.push('/')
     })
     .catch((err) => {
-      this.setState({ isLoading: false })
+      this.setState({ isDeleting: false })
       openAlert({ message: `Error: ${err}` });
       history.push('/')
     });
   }
 
   addNote() {
-    const { bookId, userId } = this.props;
+    const { bookId, userId, username } = this.props;
+    console.log(bookId, userId, username)
+    this.setState({
+      isLoading: true,
+    });
+    api.post(`discussion`, {
+      userId,
+      username,
+      bookId,
+    })
+    .then((res) => {
+      this.setState({ isLoading: true });
+      console.log(res);
+      const discussion = res.data;
+      history.push(`/book/${bookId}/discussion/${discussion._id}`);
+    })
+    .catch((err) => {
+      this.setState({ isLoading: false });
+      console.log(err);
+    })
   }
 
   renderDiscussions() {
-    const { discussions, bookTitle, author, readBy } = this.props;
+    const { discussions, bookId } = this.props;
+    console.log(discussions)
     return discussions.length > 0 ? discussions.map(d =>
       <Card
-        key={d.title}
-        title={d.title}
+        key={d._id}
+        title={d.title || 'Untitled'}
         readers={d.readers}
         lightbulbs={d.lightbulbs}
         comments={d.comments}
-        author={d.author}
+        author={d.username}
+        link={`/book/${bookId}/discussion/${d._id}`}
       />
     ) : <Panel><h2>No discussions on this book yet</h2></Panel>;
   }
 
   render() {
     const { className, bookTitle, author, readBy, bookId, discussions  } = this.props;
-    const { isLoading } = this.state;
+    const { isLoading, isDeleting } = this.state;
     return (
       <div className={className}>
-        {bookId && discussions ?
+        {bookId ?
         <React.Fragment>
             <div className="left">
               <Panel>
@@ -98,11 +120,12 @@ class BookView extends React.Component {
               <ButtonGroup>
                 <Button
                   label="Add note"
+                  isLoading={isLoading}
                   onClick={() => this.addNote()}
                 />
               <HighlightButton
                   label="Delete book"
-                  isLoading={isLoading}
+                  isLoading={isDeleting}
                   onClick={() => this.deleteBook()}
                 />
               </ButtonGroup>
@@ -124,11 +147,12 @@ class BookView extends React.Component {
 BookView.propTypes = {
  userId: PropTypes.string,
  bookId: PropTypes.string,
- discussions: PropTypes.arrayOf(PropTypes.string),
+ discussions: PropTypes.arrayOf(PropTypes.object),
  bookTitle: PropTypes.string,
  author: PropTypes.string,
  readBy: PropTypes.arrayOf(PropTypes.string),
  personalStatus: PropTypes.string,
+ username: PropTypes.string,
 };
 
 BookView.defaultProps = {
@@ -139,6 +163,7 @@ BookView.defaultProps = {
  author: undefined,
  readBy: undefined,
  personalStatus: undefined,
+ username: undefined,
 };
 
 export default styled(BookView)`
@@ -151,7 +176,7 @@ h3 {
   width: 100%;
   .left {
     margin: 40px auto;
-    width: 400px;
+    width: 450px;
     min-width: 300px;
     select {
       margin-left: 0 !important;
@@ -162,16 +187,15 @@ h3 {
     width: 60%;
     margin: 20px auto;
   }
-  @media(max-width: 1000px) {
+  @media(max-width: 1124px) {
     .right {
       margin: 20px auto;
       width: 100%;
 
     }
     .left {
-      width: 500px;
-      min-width: 300px;
-      margin: 40px auto;
+      width: 100%;
+      margin: 40px 0px auto;
     }
   }
   li {

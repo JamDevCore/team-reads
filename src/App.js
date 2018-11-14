@@ -4,8 +4,8 @@ import Alert from 'simple-react-alert';
 import history from './modules/history';
 import AuthenticatedRoute from './AuthenticatedRoute';
 import DashboardViewContainer from './containers/DashboardViewContainer';
-import DiscussionView from './views/DiscussionView';
 import BookViewContainer from './containers/BookViewContainer';
+import DiscussionViewContainer from './containers/DiscussionViewContainer';
 import Fallback from './views/Fallback';
 import LoginView from './views/LoginView';
 import Callback from './components/Callback';
@@ -52,8 +52,8 @@ class App extends Component {
               return <Callback {...props} />
             }}/>
             <AuthenticatedRoute exact path="/" auth={auth} pathName="home" component={DashboardViewContainer}/>
-            <AuthenticatedRoute exact path="/book/:id" auth={auth} pathName="bookView" component={BookViewContainer}/>
-            <AuthenticatedRoute exact path="/book/:id/discussion/:id" pathName="discussionView" component={DiscussionView} />
+            <AuthenticatedRoute exact path="/book/:bookId" auth={auth} pathName="bookView" component={BookViewContainer}/>
+            <AuthenticatedRoute exact path="/book/:bookId/discussion/:discussionId" auth={auth} pathName="discussionView" component={DiscussionViewContainer} />
             <AuthenticatedRoute exact path="*" pathName="404" auth={auth} component={Fallback}/>
           </Switch>
         </Router>

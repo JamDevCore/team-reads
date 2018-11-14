@@ -25,7 +25,7 @@ const AuthenticatedRoute = ({
           const user = auth.getProfile();
           const userId = formatId(user.sub);
           return React.createElement(component, {
-            ...props, userId, isAuthenticated: auth.isAuthenticated(),
+            ...props, userId, username: user.nickname, isAuthenticated: auth.isAuthenticated(),
           });
         }}
       />

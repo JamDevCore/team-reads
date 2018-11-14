@@ -11,7 +11,7 @@ class CreateDiscussionForm extends React.Component {
   render() {
     const { className } = this.props;
     return (
-      <div className="CreateDiscussionForm">
+      <div className={className}>
         <Form>
           <Field
             name="title"

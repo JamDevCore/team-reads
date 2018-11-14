@@ -47,7 +47,10 @@ const IconButton =  styled(Button)`
   height: 40px;
   width: 40px;
   border-radius: 50%;
-
+  i {
+    margin: 0px auto;
+    width: auto;
+  }
   &:hover,
   &:active,
   &:focus {

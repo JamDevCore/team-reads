@@ -58,10 +58,7 @@ class DiscussionView extends React.Component {
 constructor() {
   super();
   this.state = {
-    bookTitle: undefined,
-    author: undefined,
-    readBy: ['James', 'Grant', 'Ralph'],
-    personalStatus: undefined,
+    isLoading: false,
   }
 }
 
@@ -69,8 +66,8 @@ componentDidMount() {
 
 }
   render() {
-    const { className } = this.props;
-    const { bookTitle, author, readBy, personalStatus } = this.state;
+    const { className, bookTitle, author, readBy, personalStatus } = this.props;
+    console.log(readBy)
     return (
       <div className={className}>
         <div className="left">
@@ -80,7 +77,7 @@ componentDidMount() {
           <Divider />
           <h3>Read by</h3>
           <div>
-          {readBy.length > 0 ? readBy.map(reader => <li style={{display:'inline-block'}}>{reader}</li>) : null}
+          {readBy && readBy.length > 0 ? readBy.map(reader => <li style={{display:'inline-block'}}>{reader}</li>) : null}
         </div>
           <Divider />
           <Select
@@ -133,10 +130,20 @@ componentDidMount() {
 
 DiscussionView.propTypes = {
   className: PropTypes.string,
+  userId: PropTypes.string,
+  bookId: PropTypes.string,
+  bookTitle: PropTypes.string,
+  author: PropTypes.string,
+  readBy: PropTypes.string,
 };
 
 DiscussionView.defaultProps = {
   className: undefined,
+  userId: undefined,
+  bookId: undefined,
+  bookTitle: undefined,
+  author: undefined,
+  readBy: undefined,
 };
 
 export default styled(DiscussionView)`
@@ -153,7 +160,7 @@ li {
 }
 .left {
   margin: 40px auto;
-  width: 400px;
+  width: 450px;
   min-width: 300px;
     select {
       margin-left: 0 !important;
@@ -171,15 +178,14 @@ li {
     font-weight: bold;
   }
 }
-@media(max-width: 1000px) {
+@media(max-width: 1124px) {
   .right {
     margin: 30px auto;
     width: 100%;
   }
   .left {
-    width: 500px;
-    min-width: 300px;
-    margin: 40px auto;
+    width: 100%;
+    margin: 40px 0px auto;
   }
 }
 `;

@@ -1,24 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import BookView from '../views/BookView';
+import DiscussionView from '../views/DiscussionView';
 import Loading from '../components/Loading';
 import api from '../modules/api-call';
 
-class BookViewContainer extends React.Component {
-  constructor() {
-    super();
+class DiscussionViewContainer extends React.Component {
+  constructor(props) {
+    super(props);
     this.state = {
       isLoading: true,
-      bookId: undefined,
-      discussions: [],
-      bookTitle: undefined,
-      author: undefined,
-      readBy: [],
-      personalStatus: undefined,
+      bookId: props.match.params.bookId,
     }
   }
+
   componentDidMount() {
-    const { bookId } = this.props.match.params;
+    const { discussionId, bookId } = this.props.match.params;
     api.get(`book/${bookId}`)
     .then((res) => {
       console.log(res);
@@ -28,9 +24,7 @@ class BookViewContainer extends React.Component {
         bookTitle: book.name,
         author: book.author,
         readBy: book.readyBy,
-      }, this.setState({
-        isLoading: false,
-      }));
+      });
     })
     .catch(err => {
       this.setState({
@@ -38,20 +32,24 @@ class BookViewContainer extends React.Component {
       })
       console.log(err)
     })
-    api.get(`discussion?bookId=${bookId}`)
-      .then((res) => {
-        console.log(res)
-        const discussions = res.data.data;
-        this.setState({
-          discussions,
-        })
+    api.get(`discussion/${discussionId}`)
+    .then((res) => {
+      console.log(res);
+      const discussion = res.data.data;
+      console.log(res);
+      this.setState({
+        discussionId: discussion._id,
+        title: discussion.title,
+        note: discussion.note,
+        comments: discussion.comments,
+      });
+    })
+    .catch(err => {
+      this.setState({
+        isLoading: false,
       })
-      .catch(err => {
-        console.log(err)
-        this.setState({
-          isLoading: false,
-        })
-      })
+      console.log(err)
+    })
   }
   render() {
     const {
@@ -63,9 +61,9 @@ class BookViewContainer extends React.Component {
       personalStatus,
       bookId,
     } = this.state;
-    const { userId, username, } = this.props;
-    return isLoading && !bookId ? <Loading /> :
-    <BookView
+    const { userId } = this.props;
+    return isLoading ? <Loading /> :
+    <DiscussionView
       key={bookId}
       userId={userId}
       bookId={bookId}
@@ -74,20 +72,16 @@ class BookViewContainer extends React.Component {
       author={author}
       readBy={readBy}
       personalStatus={personalStatus}
-      username={username}
     />
   }
 }
 
-BookViewContainer.propTypes = {
+DiscussionViewContainer.propTypes = {
   userId: PropTypes.string,
-  username: PropTypes.string,
 };
 
-BookViewContainer.defaultProps = {
+DiscussionViewContainer.defaultProps = {
   userId: undefined,
-  username: undefined,
 };
 
-
-export default BookViewContainer;
+export default DiscussionViewContainer;

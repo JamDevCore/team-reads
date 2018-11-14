@@ -16,6 +16,7 @@ class Card extends React.Component {
       lightbulbs,
       comments,
       bookId,
+      link,
     } = this.props;
     return (
       <div className={className}>
@@ -35,7 +36,7 @@ class Card extends React.Component {
         <div className="column-2">
           <HighlightButton
             label="View"
-            link={`book/${bookId}`}
+            link={link}
           />
         </div>
       </div>);
@@ -50,6 +51,7 @@ Card.propTypes = {
   lightbulbs: PropTypes.number,
   comments: PropTypes.number,
   author: PropTypes.string,
+  link: PropTypes.string,
 };
 
 Card.defaultProps = {
@@ -60,6 +62,7 @@ Card.defaultProps = {
   lightbulbs: undefined,
   comments: undefined,
   author: undefined,
+  link: undefined,
 };
 
 export default styled(Card)`

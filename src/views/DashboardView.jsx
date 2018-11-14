@@ -28,6 +28,7 @@ class DashboardView extends React.Component {
         lightbulbs={book.lightbulbs || 0}
         comments={book.comments || 0}
         author={book.author}
+        link={`/book/${book._id}`}
       />)) : <Panel><h2>You don't have any books on this shelf</h2></Panel>
   }
   render() {
@@ -42,8 +43,8 @@ class DashboardView extends React.Component {
           addBookToState={addBookToState}
           />
         </Panel>
-        </div>
-        <div className="container right">
+      </div>
+      <div className="container right">
           <Select
             id="shelf"
           >
@@ -51,7 +52,7 @@ class DashboardView extends React.Component {
             {shelves.length > 0 ? shelves.map(shelf => <option key={shelf._id} value={shelf._id}>{shelf.name}</option>) : null}
           </Select>
           {this.renderBooks()}
-        </div>
+          </div>
       </div>
     );
   }
@@ -79,27 +80,31 @@ export default styled(DashboardView)`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  width: 100%;
-
+  justify-content: center;
   .left {
     margin: 40px auto;
-    width: 400px;
+    width: 450px;
     min-width: 300px;
+    select {
+      margin-left: 0 !important;
+    }
   }
   .right {
     box-sizing: border-box;
     width: 60%;
     margin: 20px auto;
   }
-  @media(max-width: 1000px) {
+  @media(max-width: 1124px) {
     .right {
-      margin: 30px auto;
+      margin: 20px auto;
       width: 100%;
+
     }
     .left {
-      width: 500px;
-      min-width: 300px;
-      margin: 40px auto;
+      width: 100%;
+      margin: 40px 0px auto;
     }
+  }
+
   }
 `;
