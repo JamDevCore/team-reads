@@ -87,7 +87,7 @@ class BookView extends React.Component {
         title={d.title || 'Untitled'}
         readers={d.readers}
         lightbulbs={d.lightbulbs}
-        comments={d.comments}
+        contributions={d.comments.length}
         author={d.username}
         link={`/book/${bookId}/discussion/${d._id}`}
       />
@@ -119,7 +119,7 @@ class BookView extends React.Component {
               </Select>
               <ButtonGroup>
                 <Button
-                  label="Add note"
+                  label="Start new discussion"
                   isLoading={isLoading}
                   onClick={() => this.addNote()}
                 />

@@ -61,7 +61,7 @@ export default styled(Button)`
   @import url('https://fonts.googleapis.com/css?family=Maven+Pro');
   display: flex;
   width: 100%;
-  margin-right: 10px;
+  margin: 0px auto;
   justify-content: center;
   background: ${theme.colors.success};
   font-size: ${theme.fontSize}px;

@@ -29,6 +29,7 @@ export default styled(ButtonGroup)`
   text-align: left;
   * {
     display: inline-block;
-    width: 45%;
+    width: auto;
+    margin-right: 10px;
   }
 `;

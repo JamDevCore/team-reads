@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components'
+import { Link } from 'react-router-dom';
 import api from '../modules/api-call';
 import Panel from '../components/_common/Panel';
 import Divider from '../components/_common/Divider';
@@ -12,40 +13,6 @@ import Select from '../components/_common/form-components/Select';
 import CreateDiscussionForm from '../components/forms/CreateDiscussionForm';
 import AddCommentForm from '../components/forms/AddCommentForm';
 
-
-
-const comments = [
-  {
-    user: 'James',
-    lightbulbs: 1,
-    text: 'Maecenas elementum nisl laoreet, tristique arcu ut, mattis urna. Etiam aliquam viverra pharetra. Suspendisse eu pretium eros, in rutrum leo. Donec sed ex porttitor, posuere felis ut, vulputate felis. Praesent porta vulputate varius. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.',
-  },
-  {
-    user: 'Harry',
-    lightbulbs: 9,
-    text: 'Phasellus accumsan feugiat nulla a malesuada. Vivamus suscipit tincidunt odio, eu euismod mi congue at. Vivamus condimentum dui at dolor ultricies pharetra.',
-  },
-  {
-    user: 'Michelle',
-    lightbulbs: 5,
-    text: 'Proin semper dapibus arcu, ac porta tortor aliquam tempor. Sed id lectus sem. Quisque hendrerit elit at urna feugiat, id pharetra tortor faucibus. Nam a tellus turpis.',
-  },
-  {
-    user: 'James',
-    lightbulbs: 2,
-    text: 'Maecenas elementum nisl laoreet, tristique arcu ut, mattis urna. Etiam aliquam viverra pharetra. Suspendisse eu pretium eros, in rutrum leo. Donec sed ex porttitor, posuere felis ut, vulputate felis. Praesent porta vulputate varius. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.',
-  },
-  {
-    user: 'Harry',
-    lightbulbs: 0,
-    text: 'Phasellus accumsan feugiat nulla a malesuada. Vivamus suscipit tincidunt odio, eu euismod mi congue at. Vivamus condimentum dui at dolor ultricies pharetra.',
-  },
-  {
-    user: 'Michelle',
-    lightbulbs: 1,
-    text: 'Proin semper dapibus arcu, ac porta tortor aliquam tempor. Sed id lectus sem. Quisque hendrerit elit at urna feugiat, id pharetra tortor faucibus. Nam a tellus turpis.',
-  }
-];
 
 const AmazonLink = styled.a`
   text-decoration: underline;
@@ -62,22 +29,54 @@ constructor() {
   }
 }
 
-componentDidMount() {
-
+renderContributorView() {
+  const { title, note } = this.props;
+  return (
+    <React.Fragment>
+    <h3>Highlight</h3>
+    <p>{title}</p>
+    <h3>Note</h3>
+    <p>{note}</p>
+    </React.Fragment>
+  )
 }
+
+  renderEditorView() {
+    const { updateDiscussion, discussionId, title, note } = this.props;
+    return (
+      <CreateDiscussionForm
+        discussionId={discussionId}
+        title={title}
+        note={note}
+        updateDiscussion={updateDiscussion}
+      />
+    )
+  }
   render() {
-    const { className, bookTitle, author, readBy, personalStatus } = this.props;
-    console.log(readBy)
+    const {
+      className,
+      bookTitle,
+      author,
+      readBy,
+      comments,
+      title,
+      note,
+      bookId,
+      userId,
+      createdBy,
+    } = this.props;
     return (
       <div className={className}>
         <div className="left">
         <Panel>
-          <h2>{bookTitle || 'The Lean Startup'}</h2>
-          <p>{author || 'Eric Reis'}</p>
+          <Link to={`/book/${bookId}`}><h2>{bookTitle}</h2></Link>
+          <p>{author}</p>
           <Divider />
           <h3>Read by</h3>
           <div>
-          {readBy && readBy.length > 0 ? readBy.map(reader => <li style={{display:'inline-block'}}>{reader}</li>) : null}
+          {readBy && readBy.length > 0 ?
+            readBy.map(reader => <li style={{display:'inline-block'}}>{reader}</li>) :
+          <p>No-one</p>}
         </div>
           <Divider />
           <Select
@@ -98,8 +97,7 @@ componentDidMount() {
         </div>
         <div className="right">
           <Panel>
-            <CreateDiscussionForm />
-
+            {userId === createdBy ? this.renderEditorView() : this.renderContributorView()}
           </Panel>
           {comments && comments.length > 0 ?
           comments.map(comment =>
@@ -118,10 +116,9 @@ componentDidMount() {
                   </div>}
             </Panel>
           ) : null}
-            <Panel>
-              <AddCommentForm
-                />
-            </Panel>
+          {title && note && <Panel>
+              <AddCommentForm />
+            </Panel>}
         </div>
       </div>
     );
@@ -131,19 +128,31 @@ componentDidMount() {
 DiscussionView.propTypes = {
   className: PropTypes.string,
   userId: PropTypes.string,
+  createdBy: PropTypes.string,
+  discussionId: PropTypes.string,
   bookId: PropTypes.string,
   bookTitle: PropTypes.string,
   author: PropTypes.string,
-  readBy: PropTypes.string,
+  readBy: PropTypes.arrayOf(PropTypes.string),
+  comments: PropTypes.arrayOf(PropTypes.string),
+  title: PropTypes.string,
+  note: PropTypes.string,
+  updateDiscussion: PropTypes.func,
 };
 
 DiscussionView.defaultProps = {
   className: undefined,
   userId: undefined,
+  createdBy: undefined,
+  discussionId: undefined,
   bookId: undefined,
   bookTitle: undefined,
   author: undefined,
   readBy: undefined,
+  comments: undefined,
+  title: undefined,
+  note: undefined,
+  updateDiscussion: undefined,
 };
 
 export default styled(DiscussionView)`

@@ -14,7 +14,7 @@ class Card extends React.Component {
       author,
       readers,
       lightbulbs,
-      comments,
+      contributions,
       bookId,
       link,
     } = this.props;
@@ -26,7 +26,7 @@ class Card extends React.Component {
             <i className="fas fa-lightbulb"></i>
             <p>{lightbulbs}</p>
             <i className="fas fa-comments"></i>
-            <p>{comments}</p>
+            <p>{contributions}</p>
           </div>
           {readers ? <div className="readerList">
             <i className="fas fa-book"></i>
@@ -49,7 +49,7 @@ Card.propTypes = {
   title: PropTypes.string,
   readers: PropTypes.arrayOf(PropTypes.string),
   lightbulbs: PropTypes.number,
-  comments: PropTypes.number,
+  contributions: PropTypes.number,
   author: PropTypes.string,
   link: PropTypes.string,
 };
@@ -60,7 +60,7 @@ Card.defaultProps = {
   title: undefined,
   readers: undefined,
   lightbulbs: undefined,
-  comments: undefined,
+  contributions: undefined,
   author: undefined,
   link: undefined,
 };

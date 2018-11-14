@@ -9,8 +9,18 @@ class DiscussionViewContainer extends React.Component {
     super(props);
     this.state = {
       isLoading: true,
-      bookId: props.match.params.bookId,
+      bookId: undefined,
+      discussionId: undefined,
+      bookTitle: undefined,
+      author: undefined,
+      readBy: [],
+      createdBy: undefined,
+      title: undefined,
+      note: undefined,
+      comments: [],
     }
+
+    this.updateDiscussion = this.updateDiscussion.bind(this);
   }
 
   componentDidMount() {
@@ -35,13 +45,12 @@ class DiscussionViewContainer extends React.Component {
     api.get(`discussion/${discussionId}`)
     .then((res) => {
       console.log(res);
-      const discussion = res.data.data;
-      console.log(res);
+      const discussion = res.data;
       this.setState({
         discussionId: discussion._id,
         title: discussion.title,
         note: discussion.note,
-        comments: discussion.comments,
+        createdBy: discussion.userId,
       });
     })
     .catch(err => {
@@ -50,21 +59,56 @@ class DiscussionViewContainer extends React.Component {
       })
       console.log(err)
     })
+    api.get(`comment?discussionId?${discussionId}`)
+    .then((res) => {
+      console.log(res);
+      const comments = res.data.data;
+      this.setState({
+        comments,
+      }, this.setState({
+        isLoading: false,
+      }));
+    })
+    .catch(err => {
+      this.setState({
+        isLoading: false,
+      })
+      console.log(err)
+    })
   }
+
+  updateDiscussion(title, note) {
+    this.setState({
+      title,
+      note,
+    });
+  }
+
   render() {
     const {
       isLoading,
       discussions,
       bookTitle,
+      discussionId,
       author,
       readBy,
       personalStatus,
       bookId,
+      comments,
+      title,
+      note,
+      createdBy,
     } = this.state;
     const { userId } = this.props;
     return isLoading ? <Loading /> :
     <DiscussionView
       key={bookId}
+      createdBy={createdBy}
+      updateDiscussion={this.updateDiscussion}
+      discussionId={discussionId}
+      title={title}
+      note={note}
+      comments={comments}
       userId={userId}
       bookId={bookId}
       discussions={discussions}

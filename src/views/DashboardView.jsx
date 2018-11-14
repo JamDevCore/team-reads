@@ -26,7 +26,7 @@ class DashboardView extends React.Component {
         title={book.name}
         readers={book.readers || ["Not read"]}
         lightbulbs={book.lightbulbs || 0}
-        comments={book.comments || 0}
+        contributions={book.discussions.length}
         author={book.author}
         link={`/book/${book._id}`}
       />)) : <Panel><h2>You don't have any books on this shelf</h2></Panel>
