@@ -86,10 +86,10 @@ renderContributorView() {
         </Select>
         <ButtonGroup>
           <Button
-            label="Add note"
+            label="Start new discussion"
           />
         <HighlightButton
-            label="Delete book"
+            label="Delete discussion"
           />
         </ButtonGroup>
         </Panel>
