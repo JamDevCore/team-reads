@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components'
 import { Link } from 'react-router-dom';
 import api from '../modules/api-call';
+import history from '../modules/history';
+import { openAlert } from 'simple-react-alert';
 import Panel from '../components/_common/Panel';
 import Divider from '../components/_common/Divider';
 import ButtonGroup from '../components/_common/ButtonGroup';
@@ -26,6 +28,7 @@ constructor() {
   super();
   this.state = {
     isLoading: false,
+    isDeleting: false,
   }
 }
 
@@ -52,6 +55,58 @@ renderContributorView() {
       />
     )
   }
+
+  addNote() {
+    const { bookId, userId, username } = this.props;
+    console.log(bookId, userId, username)
+    this.setState({
+      isLoading: true,
+    });
+    api.post(`discussion`, {
+      userId,
+      username,
+      bookId,
+    })
+    .then((res) => {
+      this.setState({ isLoading: true });
+      console.log(res);
+      const discussion = res.data;
+      history.push(`/book/${bookId}/discussion/${discussion._id}`);
+    })
+    .catch((err) => {
+      this.setState({ isLoading: false });
+      console.log(err);
+    })
+  }
+
+  deleteDiscussion() {
+    const { discussionId, bookId } = this.props;
+    this.setState({ isDeleting: true });
+    api.delete(`discussion/${discussionId}`)
+    .then((res) => {
+      console.log(res)
+      api.get(`book/${bookId}`)
+      .then((res) => {
+        this.setState({ isDeleting: false });
+        openAlert({ message: "Success! Your discussion has been deleted", type: "info" });
+        history.push(`/book/${bookId}`);
+        console.log(res);
+        const book = res.data;
+        const discussions = book.discussions.filter(id => id !== discussionId)
+        console.log(discussions);
+        api.put(`book/${bookId}`, {
+          discussions,
+        })
+        .catch(err => console.log(err));
+      })
+        .catch(err => console.log(err))
+    })
+    .catch((err) => {
+      this.setState({ isDeleting: false });
+      openAlert({ message: `Error: ${err}`, type: "danger" })
+    });
+  }
+
   render() {
     const {
       className,
@@ -65,6 +120,7 @@ renderContributorView() {
       userId,
       createdBy,
     } = this.props;
+    const { isDeleting, isLoading } = this.state;
     return (
       <div className={className}>
         <div className="left">
@@ -87,9 +143,13 @@ renderContributorView() {
         <ButtonGroup>
           <Button
             label="Start new discussion"
+            isLoading={isLoading}
+            onClick={() => this.addNote()}
           />
         <HighlightButton
             label="Delete discussion"
+            isLoading={isDeleting}
+            onClick={() => this.deleteDiscussion()}
           />
         </ButtonGroup>
         </Panel>
