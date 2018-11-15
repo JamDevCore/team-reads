@@ -13,13 +13,7 @@ import HighlightButton from '../components/_common/HighlightButton';
 import Select from '../components/_common/form-components/Select';
 import Card from '../components/Card';
 import Fallback from './Fallback';
-import Loading from '../components/Loading';
 import theme from '../theme';
-
-const Container = styled.div`
-  margin: 40px;
-  min-width: 800px;
-`;
 
 const AmazonLink = styled.a`
   text-decoration: underline;
@@ -95,7 +89,7 @@ class BookView extends React.Component {
   }
 
   render() {
-    const { className, bookTitle, author, readBy, bookId, discussions  } = this.props;
+    const { className, bookTitle, author, readBy, bookId  } = this.props;
     const { isLoading, isDeleting } = this.state;
     return (
       <div className={className}>

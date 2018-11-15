@@ -9,9 +9,9 @@ import Panel from '../components/_common/Panel';
 import Divider from '../components/_common/Divider';
 import ButtonGroup from '../components/_common/ButtonGroup';
 import Button from '../components/_common/Button';
-import IconButton from '../components/_common/IconButton';
 import HighlightButton from '../components/_common/HighlightButton';
 import Select from '../components/_common/form-components/Select';
+import Comment from '../components/Comment';
 import CreateDiscussionForm from '../components/forms/CreateDiscussionForm';
 import AddCommentForm from '../components/forms/AddCommentForm';
 
@@ -119,8 +119,11 @@ renderContributorView() {
       bookId,
       userId,
       createdBy,
+      discussionId,
+      updateComments,
     } = this.props;
     const { isDeleting, isLoading } = this.state;
+    console.log(comments)
     return (
       <div className={className}>
         <div className="left">
@@ -161,23 +164,22 @@ renderContributorView() {
           </Panel>
           {comments && comments.length > 0 ?
           comments.map(comment =>
-            <Panel>
-              <h3>{comment.user}</h3>
-              <p>{comment.text}</p>
-                  <IconButton
-                    icon="fas fa-lightbulb"
-                  />
-                <p className="lightbulbs">{comment.lightbulbs}</p>
-                {comment.user === 'James' &&
-                  <div className="editButton">
-                    <Button
-                      label="Edit"
-                    />
-                  </div>}
-            </Panel>
-          ) : null}
+            <Comment
+              key={comment._id}
+              userId={userId}
+              ownerId={comment.userId}
+              lightbulbs={comment.lightbulbs}
+              text={comment.text}
+              commentId={comment._id}
+            />
+            ) : null}
           {title && note && <Panel>
-              <AddCommentForm />
+              <AddCommentForm
+                userId={userId}
+                discussionId={discussionId}
+                comments={comments}
+                updateComments={updateComments}
+              />
             </Panel>}
         </div>
       </div>
@@ -194,10 +196,11 @@ DiscussionView.propTypes = {
   bookTitle: PropTypes.string,
   author: PropTypes.string,
   readBy: PropTypes.arrayOf(PropTypes.string),
-  comments: PropTypes.arrayOf(PropTypes.string),
+  comments: PropTypes.arrayOf(PropTypes.object),
   title: PropTypes.string,
   note: PropTypes.string,
   updateDiscussion: PropTypes.func,
+  updateComments: PropTypes.func,
 };
 
 DiscussionView.defaultProps = {
@@ -213,6 +216,7 @@ DiscussionView.defaultProps = {
   title: undefined,
   note: undefined,
   updateDiscussion: undefined,
+  updateComments: undefined,
 };
 
 export default styled(DiscussionView)`

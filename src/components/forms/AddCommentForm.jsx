@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import * as Yup from 'yup';
 import { Field, withFormik } from 'formik';
+import { openAlert } from 'simple-react-alert';
+import api from '../../modules/api-call';
 import Form from '../_common/form-components/Form';
 import Textarea from '../_common/form-components/Textarea';
 import Button from '../_common/Button';
@@ -28,15 +31,51 @@ class AddCommentForm extends React.Component {
 }
 
 AddCommentForm.propTypes = {
-
+  userId: PropTypes.string,
+  comments: PropTypes.arrayOf(PropTypes.object),
+  discussionId: PropTypes.string,
 };
 
 AddCommentForm.defaultProps = {
-
+  userId: undefined,
+  comments: undefined,
+  discussionId: undefined,
 };
 
 export default withFormik({
-  mapPropsToValues: () => ({}),
+  mapPropsToValues: () => ({
+  }),
+  validationSchema: Yup.object().shape({
+    comment: Yup.string().required('Please write a comment!'),
+  }),
+  enableReinitialize: true,
+  handleSubmit: (values, { setSubmitting, props }) => {
+    console.log(props)
+    setSubmitting(true);
+    api.post(`comment`, {
+      userId: props.userId,
+      discussionId: props.discussionId,
+      text: values.comment,
+    })
+      .then((response) => {
+        setSubmitting(false);
+        const comment = response.data
+        console.log(comment);
+        openAlert({ message: 'Success! You updated your discussion', type: 'success' });
+        const comments = props.comments.map(comment => comment._id);
+        comments.push(comment._id)
+        api.put(`discussion/${props.discussionId}`, {
+          comments,
+        })
+        .then(res => console.log(res))
+        .catch(err => console.log(err));
+          props.updateComments(comment);
+      })
+      .catch((error) => {
+        openAlert({ message: `Error: ${error}`, type: 'danger' });
+        setSubmitting(false);
+      });
+  },
 })(styled(AddCommentForm)`
   margin: 0;
 `);

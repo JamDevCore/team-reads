@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import DashboardView from '../views/DashboardView';
 import Loading from '../components/Loading';
 import api from '../modules/api-call';
-import sort from '../modules/sort-by-date';
+import { ascending } from '../modules/sort-by-date';
 
 class DashboardViewContainer extends React.Component {
   constructor(props) {
@@ -25,7 +25,7 @@ class DashboardViewContainer extends React.Component {
     .then((response) => {
       console.log(response);
       const books = response.data.data;
-      const sortedBooks = sort(books);
+      const sortedBooks = ascending(books);
       this.setState({
         books: sortedBooks,
       });
