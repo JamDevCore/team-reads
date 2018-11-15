@@ -66,7 +66,7 @@ Comment.defaultProps = {
 
 export default styled(Comment)`
 .lightbulb {
-  display: inline-block;
+display: inline-block;
 }
 .editButton {
   float: right;
