@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import DashboardView from '../views/DashboardView';
-import Loading from '../components/Loading';
+import Callback from '../components/Callback';
 import api from '../modules/api-call';
 import { ascending } from '../modules/sort-by-date';
 
@@ -64,7 +64,7 @@ class DashboardViewContainer extends React.Component {
       shelves,
     } = this.state;
     const { userId } = this.props;
-    return isLoading ? <Loading /> :
+    return isLoading ? <Callback /> :
     <DashboardView
       userId={userId}
       books={books}

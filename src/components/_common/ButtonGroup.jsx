@@ -28,8 +28,8 @@ export default styled(ButtonGroup)`
   justify-content: center;
   text-align: left;
   * {
-    display: inline-block;
-    width: auto;
+    display: inline-block !important;
+    width: auto !important;
     margin-right: 10px;
   }
 `;

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import BookView from '../views/BookView';
-import Loading from '../components/Loading';
+import Callback from '../components/Callback';
 import api from '../modules/api-call';
 
 class BookViewContainer extends React.Component {
@@ -64,7 +64,7 @@ class BookViewContainer extends React.Component {
       bookId,
     } = this.state;
     const { userId, username, } = this.props;
-    return isLoading && !bookId ? <Loading /> :
+    return isLoading && !bookId ? <Callback /> :
     <BookView
       key={bookId}
       userId={userId}

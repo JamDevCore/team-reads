@@ -5,7 +5,7 @@ import CreateBookForm from '../components/forms/CreateBookForm';
 import Select from '../components/_common/form-components/Select';
 import Card from '../components/Card';
 import Panel from '../components/_common/Panel';
-import Loading from '../components/Loading';
+import Callback from '../components/Callback';
 import theme from '../theme';
 import api from '../modules/api-call';
 

@@ -11,18 +11,20 @@ import Button from '../_common/Button';
 
 class AddCommentForm extends React.Component {
   render() {
+    const { isSubmitting, commentId } = this.props;
     return (
       <React.Fragment>
         <Form>
           <Field
-            label="Add a comment"
+            label={!commentId ? "Add a comment" : ""}
             name="comment"
             component={Textarea}
             rows={5}
           />
         <Button
           type="submit"
-          label="Add comment"
+          isLoading={isSubmitting}
+          label={!commentId ? "Add comment" : "Update comment"}
           />
         </Form>
       </React.Fragment>
@@ -34,24 +36,31 @@ AddCommentForm.propTypes = {
   userId: PropTypes.string,
   comments: PropTypes.arrayOf(PropTypes.object),
   discussionId: PropTypes.string,
+  text: PropTypes.string,
+  isSubmitting: PropTypes.bool,
+  commentId: PropTypes.string,
 };
 
 AddCommentForm.defaultProps = {
   userId: undefined,
   comments: undefined,
   discussionId: undefined,
+  text: undefined,
+  isSubmitting: false,
+  commentId: undefined,
 };
 
 export default withFormik({
-  mapPropsToValues: () => ({
+  mapPropsToValues: props => ({
+    comment: props.text || "",
   }),
   validationSchema: Yup.object().shape({
     comment: Yup.string().required('Please write a comment!'),
   }),
-  enableReinitialize: true,
-  handleSubmit: (values, { setSubmitting, props }) => {
+  handleSubmit: (values, { setSubmitting, resetForm, props }) => {
     console.log(props)
     setSubmitting(true);
+    if (!props.commentId) {
     api.post(`comment`, {
       userId: props.userId,
       discussionId: props.discussionId,
@@ -69,12 +78,26 @@ export default withFormik({
         })
         .then(res => console.log(res))
         .catch(err => console.log(err));
+          resetForm();
           props.updateComments(comment);
       })
       .catch((error) => {
         openAlert({ message: `Error: ${error}`, type: 'danger' });
         setSubmitting(false);
       });
+    } else {
+      api.put(`comment/${props.commentId}`, {
+        text: values.comment,
+      })
+        .then((response) => {
+          setSubmitting(false);
+          const comment = response.data
+          console.log(comment);
+          openAlert({ message: 'Success! You updated your discussion', type: 'success' });
+          props.setEditState(false);
+        })
+
+    }
   },
 })(styled(AddCommentForm)`
   margin: 0;

@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import DiscussionView from '../views/DiscussionView';
-import Loading from '../components/Loading';
+import Callback from '../components/Callback';
 import api from '../modules/api-call';
-import { ascending } from '../modules/sort-by-date';
 
 class DiscussionViewContainer extends React.Component {
   constructor(props) {
@@ -23,6 +22,7 @@ class DiscussionViewContainer extends React.Component {
 
     this.updateDiscussion = this.updateDiscussion.bind(this);
     this.updateComments = this.updateComments.bind(this);
+    this.removeComments = this.removeComments.bind(this);
   }
 
   componentDidMount() {
@@ -91,7 +91,15 @@ class DiscussionViewContainer extends React.Component {
     const newComments = comments;
     comments.push(comment);
     this.setState({
-      comments: ascending(newComments)
+      comments: newComments
+    })
+  }
+
+  removeComments(commentId) {
+    const { comments } = this.state;
+    const newComments = comments.filter(comment => comment._id !== commentId)
+    this.setState({
+      comments: newComments,
     })
   }
 
@@ -111,12 +119,13 @@ class DiscussionViewContainer extends React.Component {
       createdBy,
     } = this.state;
     const { userId } = this.props;
-    return isLoading ? <Loading /> :
+    return isLoading ? <Callback /> :
     <DiscussionView
       key={bookId}
       createdBy={createdBy}
       updateDiscussion={this.updateDiscussion}
       updateComments={this.updateComments}
+      removeComments={this.removeComments}
       discussionId={discussionId}
       title={title}
       note={note}

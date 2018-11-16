@@ -87,7 +87,6 @@ renderContributorView() {
       console.log(res)
       api.get(`book/${bookId}`)
       .then((res) => {
-        this.setState({ isDeleting: false });
         openAlert({ message: "Success! Your discussion has been deleted", type: "info" });
         history.push(`/book/${bookId}`);
         console.log(res);
@@ -97,6 +96,7 @@ renderContributorView() {
         api.put(`book/${bookId}`, {
           discussions,
         })
+        .then(() => this.setState({ isDeleting: false }))
         .catch(err => console.log(err));
       })
         .catch(err => console.log(err))
@@ -121,6 +121,7 @@ renderContributorView() {
       createdBy,
       discussionId,
       updateComments,
+      removeComments,
     } = this.props;
     const { isDeleting, isLoading } = this.state;
     console.log(comments)
@@ -168,9 +169,12 @@ renderContributorView() {
               key={comment._id}
               userId={userId}
               ownerId={comment.userId}
-              lightbulbs={comment.lightbulbs}
+              discussionId={discussionId}
               text={comment.text}
               commentId={comment._id}
+              updateComments={updateComments}
+              comments={comments}
+              removeComments={removeComments}
             />
             ) : null}
           {title && note && <Panel>
@@ -201,6 +205,7 @@ DiscussionView.propTypes = {
   note: PropTypes.string,
   updateDiscussion: PropTypes.func,
   updateComments: PropTypes.func,
+  removeComments: PropTypes.func,
 };
 
 DiscussionView.defaultProps = {
@@ -217,6 +222,7 @@ DiscussionView.defaultProps = {
   note: undefined,
   updateDiscussion: undefined,
   updateComments: undefined,
+  removeComments: undefined,
 };
 
 export default styled(DiscussionView)`
