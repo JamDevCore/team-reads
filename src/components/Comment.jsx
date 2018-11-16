@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import api from '../modules/api-call';
 import Panel from '../components/_common/Panel';
 import Button from '../components/_common/Button';
-import IconButton from '../components/_common/IconButton';
+import LinkButton from '../components/_common/LinkButton';
 
 
 class Comment extends React.Component {
@@ -27,20 +27,15 @@ class Comment extends React.Component {
     const { username } = this.state;
     return (
       <Panel key={userId} className={className}>
-        <h3>{`Written by: ${username || ""}`}</h3>
-        <p>{text}</p>
-        <div className="lightbulb">
-            <IconButton
-              icon="fas fa-lightbulb"
+        <h3>{`User: ${username || "Anonymous"}`}</h3>
+          {userId === ownerId &&
+          <div className="editButton">
+            <LinkButton
+              label="Edit"
             />
-        </div>
-          <p className="lightbulbs">{lightbulbs}</p>
-            {userId === ownerId &&
-            <div className="editButton">
-              <Button
-                label="Edit"
-              />
-            </div>}
+          </div>}
+        <p>{text}</p>
+
       </Panel>
     );
   }
@@ -51,7 +46,6 @@ Comment.propTypes = {
   commentId: PropTypes.string,
   ownerId: PropTypes.string,
   userId: PropTypes.string,
-  lightbulbs: PropTypes.number,
   text: PropTypes.string,
 };
 
@@ -60,16 +54,15 @@ Comment.defaultProps = {
   commentId: undefined,
   userId: undefined,
   ownerId: undefined,
-  lightbulbs: undefined,
   text: undefined,
 };
 
 export default styled(Comment)`
-.lightbulb {
-display: inline-block;
+h3 {
+  display: inline-block;
 }
 .editButton {
-  float: right;
   display: inline-block;
+  width: auto;
 }
 `;

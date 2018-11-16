@@ -224,10 +224,6 @@ display: flex;
 flex-direction: row;
 flex-wrap: wrap;
 width: 100%;
-.editButton {
-  float: right;
-  display: inline-block;
-}
 li {
   margin-right: 10px;
 }
