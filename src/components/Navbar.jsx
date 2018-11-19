@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import theme from '../theme';
 import Logo from '../logo-green.png';
+import MobileNavLink from './_common/MobileNavLink';
 
 const MobileNav = styled.div`
   position: fixed;
@@ -16,19 +17,6 @@ const MobileNav = styled.div`
   text-align: right;
   padding: 20px;
   color: ${theme.colors.black};
-  .mobileNavLink {
-    padding: 5px 0px;
-    border-bottom: 2px solid white;
-    display: block !important;
-    margin: 20px;
-    font-size: 28px;
-    font-weight: bold;
-    color: ${theme.colors.black};
-  }
-  .mobileNavLink:focus,
-  .mobileNavLink:active {
-    border-bottom: 2px solid white;
-  }
   i {
     display: block !important;
     font-size: 24px;
@@ -66,10 +54,10 @@ class Navbar extends React.Component {
           className="fas fa-times"
           onClick={() => this.toggleMobileNav()}
         />
-        <Link className="mobileNavLink" to="/">Your books</Link>
-        <Link className="mobileNavLink" to="/team">Team view</Link>
-        <Link className="mobileNavLink" to="/account">Settings</Link>
-        <Link className="mobileNavLink" to="#" onClick={handleLogout}>Logout</Link>
+        <MobileNavLink className="mobileNavLink" to="/">Your books</MobileNavLink>
+        <MobileNavLink className="mobileNavLink" to="/team">Team view</MobileNavLink>
+        <MobileNavLink className="mobileNavLink" to="/account">Settings</MobileNavLink>
+        <MobileNavLink className="mobileNavLink" to="#" onClick={handleLogout}>Logout</MobileNavLink>
       </MobileNav>);
   }
 
@@ -113,6 +101,7 @@ Navbar.defaultProps = {
 
 export default styled(Navbar)`
   position: relative;
+  z-index: 2;
   width: 100%;
   height: 60px;
   margin: 0;

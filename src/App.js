@@ -6,11 +6,12 @@ import AuthenticatedRoute from './AuthenticatedRoute';
 import DashboardViewContainer from './containers/DashboardViewContainer';
 import BookViewContainer from './containers/BookViewContainer';
 import DiscussionViewContainer from './containers/DiscussionViewContainer';
+import TeamView from './views/TeamView';
+import TeamSetup from './views/TeamSetup';
 import Fallback from './views/Fallback';
 import LoginView from './views/LoginView';
 import Callback from './components/Callback';
 import Auth from './modules/Auth';
-import formatId from './modules/format-id';
 import './App.css';
 
 const auth = new Auth();
@@ -42,9 +43,10 @@ class App extends Component {
   }
 
   render() {
+    console.log('here')
     return (
+    <Router history={history} component={App}>
       <div className="App">
-        <Router history={history} component={App}>
           <Switch>
             <Route path="/login" render={(props) => <LoginView handleLogin={this.login} auth={auth} {...props}/>} />
             <Route path="/callback" render={(props) => {
@@ -54,11 +56,14 @@ class App extends Component {
             <AuthenticatedRoute exact path="/" auth={auth} pathName="home" component={DashboardViewContainer}/>
             <AuthenticatedRoute exact path="/book/:bookId" auth={auth} pathName="bookView" component={BookViewContainer}/>
             <AuthenticatedRoute exact path="/book/:bookId/discussion/:discussionId" auth={auth} pathName="discussionView" component={DiscussionViewContainer} />
+            <AuthenticatedRoute exact path="/team-setup" auth={auth} pathName="teamSetup" component={TeamSetup}/>
+            <AuthenticatedRoute exact path="/team" auth={auth} pathName="teamView" component={TeamView}/>
             <AuthenticatedRoute exact path="*" pathName="404" auth={auth} component={Fallback}/>
           </Switch>
-        </Router>
+
         <Alert />
       </div>
+              </Router>
     );
   }
 }

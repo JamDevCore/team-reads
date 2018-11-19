@@ -32,30 +32,6 @@ constructor() {
   }
 }
 
-renderContributorView() {
-  const { title, note } = this.props;
-  return (
-    <React.Fragment>
-    <h3>Highlight</h3>
-    <p>{title}</p>
-    <h3>Note</h3>
-    <p>{note}</p>
-    </React.Fragment>
-  )
-}
-
-  renderEditorView() {
-    const { updateDiscussion, discussionId, title, note } = this.props;
-    return (
-      <CreateDiscussionForm
-        discussionId={discussionId}
-        title={title}
-        note={note}
-        updateDiscussion={updateDiscussion}
-      />
-    )
-  }
-
   addNote() {
     const { bookId, userId, username } = this.props;
     console.log(bookId, userId, username)
@@ -106,6 +82,31 @@ renderContributorView() {
       openAlert({ message: `Error: ${err}`, type: "danger" })
     });
   }
+
+
+  renderContributorView() {
+    const { title, note } = this.props;
+    return (
+      <React.Fragment>
+      <h3>Highlight</h3>
+      <p>{title}</p>
+      <h3>Note</h3>
+      <p>{note}</p>
+      </React.Fragment>
+    )
+  }
+
+    renderEditorView() {
+      const { updateDiscussion, discussionId, title, note } = this.props;
+      return (
+        <CreateDiscussionForm
+          discussionId={discussionId}
+          title={title}
+          note={note}
+          updateDiscussion={updateDiscussion}
+        />
+      )
+    }
 
   render() {
     const {
