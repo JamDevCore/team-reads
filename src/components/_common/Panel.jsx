@@ -31,7 +31,7 @@ export default styled(Panel)`
     font-family: 'Maven Pro', sans-serif;
   }
   p {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Maven Pro', sans-serif;
   }
   h3 {
     font-weight: bold;

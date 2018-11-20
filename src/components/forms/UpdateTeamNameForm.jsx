@@ -10,23 +10,22 @@ import Form from '../_common/form-components/Form';
 import TextInput from '../_common/form-components/TextInput';
 import Button from '../_common/Button';
 
-class CreateTeamForm extends React.Component {
+class UpdateTeamNameForm extends React.Component {
   render() {
-    const { isSubmitting, className, userId } = this.props;
-    console.log(userId)
+    const { isSubmitting, className } = this.props;
     return (
       <div className={className}>
-        <h1>Set up your team</h1>
+        <h1>Details</h1>
         <Form>
           <Field
             name="teamName"
-            label="Give your team a name"
+            label="Change your team name"
             component={TextInput}
           />
         <Button
           type="submit"
           isLoading={isSubmitting}
-          label="Create team"
+          label="Update name"
           />
         </Form>
       </div>
@@ -34,12 +33,18 @@ class CreateTeamForm extends React.Component {
   }
 }
 
-CreateTeamForm.propTypes = {
+UpdateTeamNameForm.propTypes = {
   userId: PropTypes.string,
+  teamId: PropTypes.string,
+  teamName: PropTypes.string,
+  updateName: PropTypes.func,
 };
 
-CreateTeamForm.defaultProps = {
+UpdateTeamNameForm.defaultProps = {
   userId: undefined,
+  teamId: undefined,
+  teamName: undefined,
+  updateName: undefined,
 };
 
 export default withFormik({
@@ -47,31 +52,24 @@ export default withFormik({
     teamName: props.teamName || "",
   }),
   validationSchema: Yup.object().shape({
-    teamName: Yup.string().required('Please add a name for your team!'),
+    teamName: Yup.string().required(),
   }),
   handleSubmit: (values, { setSubmitting, props }) => {
     setSubmitting(true);
-    console.log(values)
-    console.log(values.teamName)
-    api.post('team', {
+    api.put(`team/${props.teamId}`, {
       teamName: values.teamName,
-      teamMembers: [props.userId],
-      teamAdmins: [props.userId],
-      numberOfUsers: 1,
-      userId: props.userId,
     })
-      .then((response) => {
+      .then(() => {
         setSubmitting(false);
-        const team = response.data
-        openAlert({ message: 'Success! You created a team', type: 'success' });
-        history.push(`team/${team._id}`)
+        props.updateName(values.teamName);
+        openAlert({ message: 'Success! Your team name has been updated', type: 'success' });
       })
       .catch((error) => {
         openAlert({ message: `Error: ${error}`, type: 'danger' });
         setSubmitting(false);
       });
   },
-})(styled(CreateTeamForm)`
+})(styled(UpdateTeamNameForm)`
   margin: 0;
   button {
     width: 200px;

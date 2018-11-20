@@ -10,23 +10,24 @@ import Form from '../_common/form-components/Form';
 import TextInput from '../_common/form-components/TextInput';
 import Button from '../_common/Button';
 
-class CreateTeamForm extends React.Component {
+class FindTeamForm extends React.Component {
   render() {
-    const { isSubmitting, className, userId } = this.props;
-    console.log(userId)
+    const { isSubmitting, className } = this.props;
     return (
       <div className={className}>
-        <h1>Set up your team</h1>
+        <h1>Find a team</h1>
         <Form>
+          <p>Need to join a team that already exists?</p>
           <Field
-            name="teamName"
-            label="Give your team a name"
+            name="teamSearch"
+            label="Type out the name of a team"
             component={TextInput}
+            searchBar
           />
         <Button
           type="submit"
           isLoading={isSubmitting}
-          label="Create team"
+          label="Find team"
           />
         </Form>
       </div>
@@ -34,31 +35,25 @@ class CreateTeamForm extends React.Component {
   }
 }
 
-CreateTeamForm.propTypes = {
+FindTeamForm.propTypes = {
   userId: PropTypes.string,
 };
 
-CreateTeamForm.defaultProps = {
+FindTeamForm.defaultProps = {
   userId: undefined,
 };
 
 export default withFormik({
   mapPropsToValues: props => ({
-    teamName: props.teamName || "",
   }),
   validationSchema: Yup.object().shape({
     teamName: Yup.string().required('Please add a name for your team!'),
   }),
   handleSubmit: (values, { setSubmitting, props }) => {
     setSubmitting(true);
-    console.log(values)
-    console.log(values.teamName)
     api.post('team', {
-      teamName: values.teamName,
-      teamMembers: [props.userId],
-      teamAdmins: [props.userId],
-      numberOfUsers: 1,
       userId: props.userId,
+      teamName: props.teamName,
     })
       .then((response) => {
         setSubmitting(false);
@@ -71,7 +66,7 @@ export default withFormik({
         setSubmitting(false);
       });
   },
-})(styled(CreateTeamForm)`
+})(styled(FindTeamForm)`
   margin: 0;
   button {
     width: 200px;

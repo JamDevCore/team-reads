@@ -23,6 +23,7 @@ const TextInput = ({
   field: { name, ...field },
   form: { touched, errors },
   placeholder,
+  searchBar,
   ...props,
 }) => {
   const error = errors[name];
@@ -37,6 +38,7 @@ const TextInput = ({
           {...field}
           {...props}
         />
+      {searchBar && <i className="fas fa-search" />}
       {touch && error && <InputError>{error}</InputError>}
     </div>);
 }
@@ -45,6 +47,7 @@ TextInput.propTypes = {
   className: PropTypes.string.isRequired,
   label: PropTypes.string,
   placeholder: PropTypes.string,
+  searchBar: PropTypes.bool,
   /* eslint-disable react/forbid-prop-types,react/require-default-props */
   field: PropTypes.object,
   form: PropTypes.object,
@@ -53,6 +56,7 @@ TextInput.propTypes = {
 
 TextInput.defaultProps = {
   placeholder: undefined,
+  searchBar: undefined,
   label: undefined,
   field: undefined,
   form: undefined,
@@ -62,4 +66,12 @@ export default styled(TextInput)`
 margin: 0 0 ${theme.baseMargin}px 0;
 width: 100%;
 box-sizing: border-box;
+i {
+  position: relative;
+  top: -30px;
+  right: -10px;
+}
+input {
+  padding-left: ${(props) => props.searchBar ? '40px' : '10px'};
+}
 `;

@@ -91,7 +91,7 @@ export default styled(Card)`
   }
   h3 {
     margin: 10px 10px;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Maven Pro', sans-serif;
 
   }
   i {

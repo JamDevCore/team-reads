@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
+import Callback from './components/Callback';
 import api from './modules/api-call';
 import Navbar from './components/Navbar';
 import formatId from './modules/format-id';
@@ -13,7 +14,7 @@ class AuthenticatedRoute extends React.Component {
     this.state = {
       userId: user && formatId(user.sub),
       teamId: undefined,
-      isLoading: false,
+      isLoading: true,
     }
   }
 
@@ -30,14 +31,15 @@ class AuthenticatedRoute extends React.Component {
         });
       })
       .catch(err => {
-        console.log(err)
+        this.setState({
+          isLoading: false,
+        })
       })
     }
   }
 
   testRouteName(pathName) {
     const regexp = /\b(\w*team\w*)\b/
-    console.log(regexp.test(pathName))
     return pathName !== 'teamSetup' && regexp.test(pathName)
   }
 
@@ -49,11 +51,11 @@ class AuthenticatedRoute extends React.Component {
       ...rest
     } = this.props;
     const { userId, teamId, username, isLoading } = this.state;
-    console.log(userId)
+    console.log(teamId)
   return (
     <div>
       <Navbar handleLogout={auth.logout}/>
-      <Route
+      {!isLoading ? <Route
         {...rest}
         render={(props) => {
           if (!auth.isAuthenticated()) {
@@ -65,13 +67,17 @@ class AuthenticatedRoute extends React.Component {
           they need to have a team, so we check and redirect them to team
           setup if they don't have one */
 
-          if (this.testRouteName(pathName) && !teamId) return <Redirect to="/team-setup" />
+          if (this.testRouteName(pathName) && !teamId) {
+            return <Redirect to="/team-setup" />
+            }
+
+          if(pathName === 'teamSetup' && teamId) return <Redirect to ={`/team/${teamId}`} />
 
           return React.createElement(component, {
-            ...props, userId, username, isAuthenticated: auth.isAuthenticated(),
+            ...props, userId, username, teamId, isAuthenticated: auth.isAuthenticated(),
           });
         }}
-      />}
+      /> : <Callback />}
     </div>
   );
 }

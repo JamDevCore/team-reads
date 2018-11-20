@@ -13,7 +13,7 @@ const MobileNavLink = styled(Link)`
   color: ${theme.colors.black};
   &:focus,
   &:active {
-  border-bottom: 2px solid white;
+  color: ${theme.colors.primary};
   }
 `;
 
