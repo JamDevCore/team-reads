@@ -14,12 +14,13 @@ class AuthenticatedRoute extends React.Component {
     this.state = {
       userId: user && formatId(user.sub),
       teamId: undefined,
-      isLoading: true,
+      isLoading: false,
     }
   }
 
   componentDidMount() {
     if (this.props.auth.isAuthenticated()) {
+      this.setState({ isLoading: true });
       const user = this.props.auth.getProfile();
       const userId = formatId(user.sub);
       api.get(`user/${userId}`)
@@ -51,6 +52,7 @@ class AuthenticatedRoute extends React.Component {
       ...rest
     } = this.props;
     const { userId, teamId, username, isLoading } = this.state;
+    console.log(userId)
     console.log(teamId)
   return (
     <div>
