@@ -100,7 +100,7 @@ Navbar.defaultProps = {
 };
 
 export default styled(Navbar)`
-  position: relative;
+  position:fixed;
   z-index: 2;
   width: 100%;
   height: 60px;

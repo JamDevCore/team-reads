@@ -41,4 +41,7 @@ export default styled(Fallback)`
   i {
     font-size: 62px;
   }
+  button {
+    margin: 0px auto;
+  }
 `;

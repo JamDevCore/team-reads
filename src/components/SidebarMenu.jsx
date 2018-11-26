@@ -32,10 +32,11 @@ SidebarMenu.defaultProps = {
 
 export default styled(SidebarMenu)`
   padding: 20px;
-  postion: fixed;
+  position: fixed;
+  top: 60px;
   height: 100vh;
   z-index: 0;
-  width: 300px;
+  width: 250px;
   background-color: white;
   margin: 0;
 `;

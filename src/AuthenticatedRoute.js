@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
+import styled from 'styled-components';
 import Callback from './components/Callback';
 import api from './modules/api-call';
 import Navbar from './components/Navbar';
 import formatId from './modules/format-id';
+
 
 
 class AuthenticatedRoute extends React.Component {
@@ -49,14 +51,15 @@ class AuthenticatedRoute extends React.Component {
       component,
       auth,
       pathName,
+      className,
       ...rest
     } = this.props;
-    const { userId, teamId, username, isLoading } = this.state;
-    console.log(userId)
-    console.log(teamId)
+    const { userId, username, isLoading , teamId } = this.state;
+
   return (
-    <div>
+    <div className={className}>
       <Navbar handleLogout={auth.logout}/>
+      <div className="view">
       {!isLoading ? <Route
         {...rest}
         render={(props) => {
@@ -80,6 +83,7 @@ class AuthenticatedRoute extends React.Component {
           });
         }}
       /> : <Callback />}
+      </div>
     </div>
   );
 }
@@ -99,4 +103,8 @@ AuthenticatedRoute.defaultProps = {
   routeName: undefined,
 };
 
-export default AuthenticatedRoute;
+export default styled(AuthenticatedRoute)`
+.view {
+  padding-top: 60px;
+}
+`;

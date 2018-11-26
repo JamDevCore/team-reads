@@ -10,59 +10,67 @@ import Form from '../_common/form-components/Form';
 import TextInput from '../_common/form-components/TextInput';
 import Button from '../_common/Button';
 
-class FindTeamForm extends React.Component {
+class AddUserForm extends React.Component {
   render() {
     const { isSubmitting, className } = this.props;
     return (
       <div className={className}>
+        <h1>Add a new team member</h1>
         <Form>
-          <p>Need to join a team that already exists?</p>
           <Field
-            name="teamSearch"
-            label="Type out the name of a team"
+            name="teamName"
+            label="Add a user's email to invite them"
             component={TextInput}
-            searchBar
           />
-        <Button
-          type="submit"
-          isLoading={isSubmitting}
-          label="Find team"
-          />
+          <Button
+            type="submit"
+            isLoading={isSubmitting}
+            label="Add user"
+            />
         </Form>
       </div>
     );
   }
 }
 
-FindTeamForm.propTypes = {
-  userId: PropTypes.string,
+AddUserForm.propTypes = {
+
 };
 
-FindTeamForm.defaultProps = {
-  userId: undefined,
+AddUserForm.defaultProps = {
+
 };
 
 export default withFormik({
   mapPropsToValues: props => ({
-    teamSearch: props.teamSearch || "",
+    teamName: props.teamName || "",
   }),
   validationSchema: Yup.object().shape({
-    teamSearch: Yup.string(),
+    teamName: Yup.string().required('Please add a name for your team!'),
   }),
   handleSubmit: (values, { setSubmitting, props }) => {
     setSubmitting(true);
-    api.get(`team?search=${values.teamSearch}`)
+    console.log(values)
+    console.log(values.teamName)
+    api.post('team', {
+      teamName: values.teamName,
+      teamMembers: [props.userId],
+      teamAdmins: [props.userId],
+      numberOfUsers: 1,
+      userId: props.userId,
+    })
       .then((response) => {
         setSubmitting(false);
-        const teams = response.data.data;
-        props.setSearchResults(teams);
+        const team = response.data
+        openAlert({ message: 'Success! You created a team', type: 'success' });
+        history.push(`team/${team._id}`)
       })
       .catch((error) => {
         openAlert({ message: `Error: ${error}`, type: 'danger' });
         setSubmitting(false);
       });
   },
-})(styled(FindTeamForm)`
+})(styled(AddUserForm)`
   margin: 0;
   button {
     width: 200px;

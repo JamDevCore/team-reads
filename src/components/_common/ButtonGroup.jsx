@@ -23,9 +23,9 @@ ButtonGroup.defaultProps = {
 
 export default styled(ButtonGroup)`
   width: 100%;
-  display: flex:
+  display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
   text-align: left;
   * {
     display: inline-block !important;

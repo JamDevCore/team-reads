@@ -16,7 +16,6 @@ class CreateTeamForm extends React.Component {
     console.log(userId)
     return (
       <div className={className}>
-        <h1>Set up your team</h1>
         <Form>
           <Field
             name="teamName"

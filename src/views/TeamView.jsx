@@ -18,6 +18,7 @@ class TeamView extends React.Component {
       this.state = {
         teamName: undefined,
         teamMembers: [],
+        joinRequests: [],
       }
   }
 
@@ -30,6 +31,7 @@ class TeamView extends React.Component {
         this.setState({
           teamName: team.teamName,
           teamMembers: team.teamMembers,
+          joinRequests: team.joinRequests,
         });
       });
     }
@@ -37,19 +39,32 @@ class TeamView extends React.Component {
 
   render() {
     const { className, teamId } = this.props;
-    const { teamMembers, teamName } = this.state;
+    const { teamMembers, teamName, joinRequests } = this.state;
     console.log(teamName)
     return (
       <div className={className}>
         <SidebarMenu />
+        <div className="teamView">
         <Switch>
           <Route exact path="/team/:id" teamName={teamName} teamId={teamId} component={TeamOverview} />
           <Route exact path="/team/:id/members" teamId={teamId} component={TeamMembersView}/>
           <Route exact path="/team/:id/books" teamId={teamId} component={TeamBooksView}/>
           <Route exact path="/team/:id/discussions" teamId={teamId} component={TeamDiscussionsView}/>
-          <Route exact path="/team/:id/settings" render={(props) => <TeamSettingsView teamName={teamName} teamId={teamId} { ...props}/>}/>
+          <Route
+            exact
+            path="/team/:id/settings"
+            render={(props) =>
+              <TeamSettingsView
+                joinRequests={joinRequests}
+                teamName={teamName}
+                teamId={teamId}
+                teamMembers={teamMembers}
+                { ...props}
+                />}
+              />
           <Route exact path="/team/*" pathName="404" render={() => <Fallback />}/>
         </Switch>
+        </div>
       </div>
     );
   }
@@ -70,6 +85,10 @@ TeamView.defaultProps = {
 };
 
 export default styled(TeamView)`
-width: 100%;
 display: flex;
+.teamView {
+  margin-left: 350px;
+  width: 100%;
+  display: flex;
+}
 `;

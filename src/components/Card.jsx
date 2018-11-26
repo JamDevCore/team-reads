@@ -74,7 +74,6 @@ export default styled(Card)`
   background-color: white;
   box-sizing: border-box;
   margin: 0px 20px ${theme.baseMargin}px 10px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   .column-1 {
     padding: ${theme.baseMargin / 2}px ${theme.baseMargin}px;
     width: 80%;
