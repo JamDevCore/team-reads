@@ -8,7 +8,7 @@ import SidebarMenu from '../components/SidebarMenu';
 import TeamOverview from './TeamOverview';
 import TeamSettingsView from './TeamSettingsView';
 import TeamDiscussionsView from './TeamDiscussionsView';
-import TeamBooksView from './TeamBooksView';
+import TeamDashboardViewContainer from '../containers/TeamDashboardViewContainer';
 import TeamMembersView from './TeamMembersView';
 import Fallback from './Fallback';
 
@@ -40,7 +40,7 @@ class TeamView extends React.Component {
   render() {
     const { className, teamId } = this.props;
     const { teamMembers, teamName, joinRequests } = this.state;
-    console.log(teamName)
+    console.log(teamId)
     return (
       <div className={className}>
         <SidebarMenu />
@@ -48,7 +48,16 @@ class TeamView extends React.Component {
         <Switch>
           <Route exact path="/team/:id" teamName={teamName} teamId={teamId} component={TeamOverview} />
           <Route exact path="/team/:id/members" teamId={teamId} component={TeamMembersView}/>
-          <Route exact path="/team/:id/books" teamId={teamId} component={TeamBooksView}/>
+          <Route
+            exact
+            path="/team/:id/books"
+            render={(props) =>
+              <TeamDashboardViewContainer
+                teamId={teamId}
+                teamMembers={teamMembers}
+                {...props}
+                />}
+              />
           <Route exact path="/team/:id/discussions" teamId={teamId} component={TeamDiscussionsView}/>
           <Route
             exact

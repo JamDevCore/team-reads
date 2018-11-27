@@ -15,8 +15,8 @@ class TeamSettingsView extends React.Component {
     super();
     this.state = {
       userRequests: [],
-      isAcceptingUser: undefined,
-      isDeclining: false,
+      isAcceptingUser: false,
+      isDecliningUser: false,
     }
 
     this.acceptJoinRequest = this.acceptJoinRequest.bind(this);
@@ -46,21 +46,34 @@ class TeamSettingsView extends React.Component {
       newUser: userId,
     })
     .then(() => {
-      this.setState({ isAcceptingUser: undefined })
+      this.setState({ isAcceptingUser: false })
       openAlert({ message: "The join request has been accepted", type: "success" });
     })
     .catch((err) => {
-      this.setState({ isAcceptingUser: undefined });
+      this.setState({ isAcceptingUser: false });
       openAlert({ message: `Error: ${err}`, type: "danger" });
     })
   }
 
   declineJoinRequest(userId) {
-    console.log(userId)
+    const { teamId } = this.props;
+    console.log(userId, teamId)
+    this.setState({ isDecliningUser: userId });
+    api.put(`team/${teamId}`, {
+      newUser: userId,
+    })
+    .then(() => {
+      this.setState({ isAcceptingUser: false })
+      openAlert({ message: "The join request has been accepted", type: "success" });
+    })
+    .catch((err) => {
+      this.setState({ isAcceptingUser: false });
+      openAlert({ message: `Error: ${err}`, type: "danger" });
+    })
   }
   render() {
     const { className, userId, teamId, teamName, teamMembers } = this.props;
-    const { userRequests, isAcceptingUser, isDeclining } = this.state;
+    const { userRequests, isAcceptingUser, isDecliningUser } = this.state;
     console.log(teamId)
     return (
       <div className={className}>
@@ -72,7 +85,7 @@ class TeamSettingsView extends React.Component {
               key={user._id}
               meta={user._id}
               actionLoading={isAcceptingUser === user._id}
-              closeAction={isDeclining}
+              closeLoading={isDecliningUser === user._id}
               action={this.acceptJoinRequest}
               closeAction={this.declineJoinRequest}
               actionLabel="Accept invite"

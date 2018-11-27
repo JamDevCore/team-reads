@@ -15,6 +15,7 @@ const BannerMessage = ({
   closeAction,
   meta,
   actionLoading,
+  closeLoading,
 }) => (
   <div className={className}>
     <div className="message">
@@ -43,6 +44,7 @@ BannerMessage.propTypes = {
   actionLabel: PropTypes.string,
   closeLabel: PropTypes.string,
   actionLoading: PropTypes.bool,
+  closeLoading: PropTypes.bool,
   meta: PropTypes.string,
 };
 
@@ -53,6 +55,7 @@ BannerMessage.defaultProps = {
   actionLabel: undefined,
   closeLabel: undefined,
   actionLoading: PropTypes.bool,
+  closeLoading: PropTypes.bool,
   meta: PropTypes.string,
 };
 
