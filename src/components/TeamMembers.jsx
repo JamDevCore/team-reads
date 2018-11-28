@@ -4,6 +4,7 @@ import ReactTable from 'react-table';
 import { openAlert } from 'simple-react-alert';
 import 'react-table/react-table.css';
 import styled from 'styled-components';
+import Loading from './Loading';
 import HighlightButton from './_common/HighlightButton';
 import api from '../modules/api-call';
 
@@ -13,26 +14,30 @@ class TeamMembers extends React.Component {
     this.state = {
       teamMembers: [],
       isRemovingUser: false,
+      loadingUsers: false,
     }
   }
 
   componentDidMount() {
-    const { teamMembersId } = this.props;
-    const component = this;
-    if (teamMembersId.length > 0) {
-      teamMembersId.forEach(id => {
-        api.get(`user/${id}`)
+    const { teamId } = this.props;
+    if (teamId) {
+      this.setState({
+        loadingUsers: true,
+      })
+        api.get(`user?teamId=${teamId}`)
         .then((res) => {
-          console.log(res)
-          const teamMembers = component.state.teamMembers;
-          console.log(teamMembers)
-          teamMembers.push(res.data);
+          const users = res.data.data;
           this.setState({
-            teamMembers,
+            teamMembers: users,
+            loadingUsers: false,
           });
         })
-        .catch(err => console.log(err))
-      })
+        .catch(err => {
+          this.setState({
+            loadingUsers: false,
+          })
+          console.log(err)
+        })
     }
   }
   removeUserFromTeam(userId) {
@@ -85,31 +90,31 @@ class TeamMembers extends React.Component {
 }
 
   render() {
-    const { teamMembers } = this.state;
+    const { teamMembers, loadingUsers } = this.state;
     const { className } = this.props;
     const columns = this.columns()
     console.log(teamMembers)
     return (
       <div className={className}>
         <h1>Team members</h1>
-        <ReactTable
+        {!loadingUsers ? <ReactTable
           key={teamMembers.length}
           className="table -striped"
           data={teamMembers}
           columns={columns}
           defaultPageSize={5}
-        />
+        /> : <Loading />}
       </div>
     );
   }
 }
 
 TeamMembers.propTypes = {
-
+  teamId: PropTypes.string,
 };
 
 TeamMembers.defaultProps = {
-
+  teamId: undefined,
 };
 
 export default styled(TeamMembers)`

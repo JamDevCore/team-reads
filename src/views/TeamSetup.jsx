@@ -67,14 +67,14 @@ class TeamSetup extends React.Component {
     console.log(userId, teamId)
     this.setState({ isDecliningUser: userId });
     api.put(`team/${teamId}`, {
-      newUser: userId,
+      declineInvitation: userId,
     })
     .then(() => {
-      this.setState({ isAcceptingUser: false })
+      this.setState({ isDecliningUser: false })
       openAlert({ message: "The join request has been accepted", type: "success" });
     })
     .catch((err) => {
-      this.setState({ isAcceptingUser: false });
+      this.setState({ isDecliningUser: false });
       openAlert({ message: `Error: ${err}`, type: "danger" });
     })
   }
