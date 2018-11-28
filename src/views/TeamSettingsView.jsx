@@ -5,8 +5,11 @@ import { openAlert } from 'simple-react-alert';
 import api from '../modules/api-call';
 import theme from '../theme';
 import Panel from '../components/_common/Panel';
+import Button from '../components/_common/Button';
+import List from '../components/_common/List';
 import BannerMessage from '../components/_common/BannerMessage';
 import UpdateTeamNameForm from '../components/forms/UpdateTeamNameForm';
+import FindUserForm from '../components/forms/FindUserForm';
 import TeamMembers from '../components/TeamMembers';
 
 
@@ -15,12 +18,15 @@ class TeamSettingsView extends React.Component {
     super();
     this.state = {
       userRequests: [],
+      userSearchList: [],
+      isSendingRequest: false,
       isAcceptingUser: false,
       isDecliningUser: false,
     }
 
     this.acceptJoinRequest = this.acceptJoinRequest.bind(this);
     this.declineJoinRequest = this.declineJoinRequest.bind(this);
+    this.setSearchResults = this.setSearchResults.bind(this);
   }
   componentDidMount() {
     const { joinRequests } = this.props;
@@ -71,9 +77,33 @@ class TeamSettingsView extends React.Component {
       openAlert({ message: `Error: ${err}`, type: "danger" });
     })
   }
+
+  sendRequest(userId) {
+    const { teamId } = this.props;
+    this.setState({ isSendingRequest: userId });
+    api.put(`team/${teamId}`, {
+      sendInvitation: userId,
+    })
+    .then((res )=> {
+      openAlert({ message: 'Your invite has been sent', type: 'info' });
+      this.setState({ isSendingRequest: false });
+    })
+    .catch((err) => {
+      openAlert({ message: `Error: ${err}`, type: 'danger' });
+      this.setState({ isSendingRequest: false });
+    })
+  }
+
+  setSearchResults (users) {
+    console.log(users)
+    this.setState({
+      userSearchList: users,
+    })
+  }
+
   render() {
     const { className, userId, teamId, teamName, teamMembers } = this.props;
-    const { userRequests, isAcceptingUser, isDecliningUser } = this.state;
+    const { userRequests, isAcceptingUser, isDecliningUser, userSearchList, isSendingRequest } = this.state;
     console.log(teamId)
     return (
       <div className={className}>
@@ -110,6 +140,29 @@ class TeamSettingsView extends React.Component {
               teamMembersId={teamMembers}
             />
           </Panel>
+          <Panel>
+            <FindUserForm
+              teamId={teamId}
+              setSearchResults={this.setSearchResults}
+            />
+            {userSearchList && userSearchList.length > 0 ?
+              <React.Fragment>
+              <h2>Search results</h2>
+              <List>
+              {userSearchList.map((user) => (
+                <li key={user._id}>
+                  <h3>{user.username}</h3>
+                  <Button
+                    label="Send an invite"
+                    isLoading={isSendingRequest}
+                    onClick={() => this.sendRequest(user._id)}
+                  />
+                </li>
+              ))}
+            </List>
+            </React.Fragment> : null}
+          </Panel>
+
       </div>
     );
   }

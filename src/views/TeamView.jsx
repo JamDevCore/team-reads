@@ -7,7 +7,7 @@ import api from '../modules/api-call';
 import SidebarMenu from '../components/SidebarMenu';
 import TeamOverview from './TeamOverview';
 import TeamSettingsView from './TeamSettingsView';
-import TeamDiscussionsView from './TeamDiscussionsView';
+import TeamDiscussionListViewContainer from '../containers/TeamDiscussionListViewContainer';
 import TeamDashboardViewContainer from '../containers/TeamDashboardViewContainer';
 import TeamMembersView from './TeamMembersView';
 import Fallback from './Fallback';
@@ -23,7 +23,7 @@ class TeamView extends React.Component {
   }
 
   componentDidMount() {
-    const { teamId } = this.props;
+    const { teamId, userId } = this.props;
     if (teamId) {
       api.get(`team/${teamId}`)
       .then((res) => {
@@ -32,6 +32,14 @@ class TeamView extends React.Component {
           teamName: team.teamName,
           teamMembers: team.teamMembers,
           joinRequests: team.joinRequests,
+        });
+      });
+    } else {
+      api.get(`user/${userId}`)
+      .then((res) => {
+        const user = res.data;
+        this.setState({
+          teamInvites: user.teamInvites,
         });
       });
     }
@@ -58,7 +66,16 @@ class TeamView extends React.Component {
                 {...props}
                 />}
               />
-          <Route exact path="/team/:id/discussions" teamId={teamId} component={TeamDiscussionsView}/>
+          <Route
+            exact
+            path="/team/:id/discussions"
+            teamId={teamId}
+            render={(props) =>
+              <TeamDiscussionListViewContainer
+                teamId={teamId}
+                teamMembers={teamMembers}
+                {...props}
+              />}/>
           <Route
             exact
             path="/team/:id/settings"

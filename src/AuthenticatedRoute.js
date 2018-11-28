@@ -16,6 +16,7 @@ class AuthenticatedRoute extends React.Component {
     this.state = {
       userId: user && formatId(user.sub),
       teamId: undefined,
+      teamInvites: undefined,
       isLoading: false,
     }
   }
@@ -31,6 +32,7 @@ class AuthenticatedRoute extends React.Component {
           teamId: res.data && res.data.teams && res.data.teams[0],
           isLoading: false,
           username: res.data.username,
+          teamInvites: res.data.teamInvites,
         });
       })
       .catch(err => {
@@ -54,7 +56,7 @@ class AuthenticatedRoute extends React.Component {
       className,
       ...rest
     } = this.props;
-    const { userId, username, isLoading , teamId } = this.state;
+    const { userId, username, isLoading , teamId, teamInvites, } = this.state;
 
   return (
     <div className={className}>
@@ -79,7 +81,7 @@ class AuthenticatedRoute extends React.Component {
           if(pathName === 'teamSetup' && teamId) return <Redirect to ={`/team/${teamId}`} />
 
           return React.createElement(component, {
-            ...props, userId, username, teamId, isAuthenticated: auth.isAuthenticated(),
+            ...props, userId, username, teamId, teamInvites, isAuthenticated: auth.isAuthenticated(),
           });
         }}
       /> : <Callback />}
