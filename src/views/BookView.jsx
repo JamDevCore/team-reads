@@ -50,7 +50,7 @@ class BookView extends React.Component {
   }
 
   addNote() {
-    const { bookId, userId, username } = this.props;
+    const { bookId, userId, username, bookTitle } = this.props;
     console.log(bookId, userId, username)
     this.setState({
       isLoading: true,
@@ -59,6 +59,7 @@ class BookView extends React.Component {
       userId,
       username,
       bookId,
+      bookTitle,
     })
     .then((res) => {
       this.setState({ isLoading: true });

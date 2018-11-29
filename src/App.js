@@ -10,6 +10,7 @@ import TeamView from './views/TeamView';
 import TeamSetup from './views/TeamSetup';
 import Fallback from './views/Fallback';
 import LoginView from './views/LoginView';
+import UserSettings from './views/UserSettings';
 import Callback from './components/Callback';
 import Auth from './modules/Auth';
 import './App.css';
@@ -53,6 +54,7 @@ class App extends Component {
               return <Callback {...props} />
             }}/>
             <AuthenticatedRoute exact path="/" auth={auth} pathName="home" component={DashboardViewContainer}/>
+            <AuthenticatedRoute exact path="/settings" auth={auth} pathName="settings" component={UserSettings}/>
             <AuthenticatedRoute exact path="/book/:bookId" auth={auth} pathName="bookView" component={BookViewContainer}/>
             <AuthenticatedRoute exact path="/book/:bookId/discussion/:discussionId" auth={auth} pathName="discussionView" component={DiscussionViewContainer} />
             <AuthenticatedRoute exact path="/team-setup" auth={auth} pathName="teamSetup" component={TeamSetup}/>

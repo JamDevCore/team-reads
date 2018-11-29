@@ -14,7 +14,7 @@ class SidebarMenu extends React.Component {
       <div className={className}>
         <MobileNavLink to={`/team/${teamId}/`}>Team Central</MobileNavLink>
         <MobileNavLink to={`/team/${teamId}/books`}>Books</MobileNavLink>
-        <MobileNavLink to={`/team/${teamId}/members`}>Members</MobileNavLink>
+        {/* <MobileNavLink to={`/team/${teamId}/members`}>Members</MobileNavLink> */}
         <MobileNavLink to={`/team/${teamId}/discussions`}>Discussions</MobileNavLink>
         <MobileNavLink to={`/team/${teamId}/settings`}>Settings</MobileNavLink>
       </div>
@@ -35,7 +35,7 @@ export default styled(SidebarMenu)`
   position: fixed;
   top: 60px;
   height: 100vh;
-  z-index: 0;
+  z-index: 11;
   width: 250px;
   background-color: white;
   margin: 0;

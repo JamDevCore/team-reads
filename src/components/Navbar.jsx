@@ -56,7 +56,7 @@ class Navbar extends React.Component {
         />
         <MobileNavLink className="mobileNavLink" to="/">Your books</MobileNavLink>
         <MobileNavLink className="mobileNavLink" to="/team">Team view</MobileNavLink>
-        <MobileNavLink className="mobileNavLink" to="/account">Settings</MobileNavLink>
+        <MobileNavLink className="mobileNavLink" to="/settings">Settings</MobileNavLink>
         <MobileNavLink className="mobileNavLink" to="#" onClick={handleLogout}>Logout</MobileNavLink>
       </MobileNav>);
   }
@@ -76,7 +76,7 @@ class Navbar extends React.Component {
         </Link>
         <Link className="navLink" to="/">Your books</Link>
         <Link className="navLink" to="/team">Team view</Link>
-        <Link className="navLink" to="/account">Settings</Link>
+        <Link className="navLink" to="/settings">Settings</Link>
         <Link className="navLink" to="#" onClick={handleLogout}>Logout</Link>
         <i
           className="fas fa-bars"

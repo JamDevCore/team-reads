@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TeamDashboardView from '../views/TeamDashboardView';
+import TeamBookList from '../views/TeamBookList';
 import Callback from '../components/Callback';
 import api from '../modules/api-call';
 import { ascending } from '../modules/sort-by-date';
 
-class TeamDashboardViewContainer extends React.Component {
+class TeamBookListContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -41,7 +41,7 @@ class TeamDashboardViewContainer extends React.Component {
     } = this.state;
     const { userId, teamId } = this.props;
     return isLoading ? <Callback /> :
-    <TeamDashboardView
+    <TeamBookList
       userId={userId}
       books={books}
       teamId={teamId}
@@ -49,14 +49,14 @@ class TeamDashboardViewContainer extends React.Component {
   }
 }
 
-TeamDashboardViewContainer.propTypes = {
+TeamBookListContainer.propTypes = {
   teamId: PropTypes.string,
   teamMembers: PropTypes.arrayOf(PropTypes.string),
 };
 
-TeamDashboardViewContainer.defaultProps = {
+TeamBookListContainer.defaultProps = {
   teamId: undefined,
   teamMembers: undefined,
 };
 
-export default TeamDashboardViewContainer;
+export default TeamBookListContainer;

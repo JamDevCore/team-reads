@@ -33,7 +33,7 @@ constructor() {
 }
 
   addNote() {
-    const { bookId, userId, username } = this.props;
+    const { bookId, userId, username, bookTitle } = this.props;
     console.log(bookId, userId, username)
     this.setState({
       isLoading: true,
@@ -42,6 +42,7 @@ constructor() {
       userId,
       username,
       bookId,
+      bookTitle,
     })
     .then((res) => {
       this.setState({ isLoading: true });

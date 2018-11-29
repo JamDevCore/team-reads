@@ -1,15 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import Card from '../components/Card';
+import PageTitle from '../components/_common/PageTitle';
 
-class TeamBooksView extends React.Component {
+class TeamBookList extends React.Component {
 
   render() {
-    const { books } = this.props;
-    console.log(books)
+    const { books, className } = this.props;
     return (
-      <div className="TeamBooksView">
-        <h1>Team books view</h1>
+      <div className={className}>
+        <PageTitle>Team books view</PageTitle>
         {books && books.length > 0 ? books.map(book =>
           <Card
             key={book._id}
@@ -27,12 +28,14 @@ class TeamBooksView extends React.Component {
   }
 }
 
-TeamBooksView.propTypes = {
+TeamBookList.propTypes = {
   books: PropTypes.arrayOf(PropTypes.object),
 };
 
-TeamBooksView.defaultProps = {
+TeamBookList.defaultProps = {
   books: undefined,
 };
 
-export default TeamBooksView;
+export default styled(TeamBookList)`
+width: 1000px;
+`;

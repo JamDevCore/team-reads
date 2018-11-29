@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import TeamDiscussionListView from '../views/TeamDiscussionListView';
 import Callback from '../components/Callback';
 import api from '../modules/api-call';
+import { ascending } from '../modules/sort-by-date';
 
 class TeamDiscussionListViewContainer extends React.Component {
   constructor() {
@@ -19,7 +20,7 @@ class TeamDiscussionListViewContainer extends React.Component {
       console.log(res);
       const discussions = res.data.data;
       this.setState({
-        discussions,
+        discussions: ascending(discussions),
       }, this.setState({
         isLoading: false,
       }));

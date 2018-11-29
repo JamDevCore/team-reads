@@ -8,7 +8,7 @@ import SidebarMenu from '../components/SidebarMenu';
 import TeamOverview from './TeamOverview';
 import TeamSettingsView from './TeamSettingsView';
 import TeamDiscussionListViewContainer from '../containers/TeamDiscussionListViewContainer';
-import TeamDashboardViewContainer from '../containers/TeamDashboardViewContainer';
+import TeamBookListContainer from '../containers/TeamBookListContainer';
 import TeamMembersView from './TeamMembersView';
 import Fallback from './Fallback';
 
@@ -55,12 +55,12 @@ class TeamView extends React.Component {
         <div className="teamView">
         <Switch>
           <Route exact path="/team/:id" teamName={teamName} teamId={teamId} component={TeamOverview} />
-          <Route exact path="/team/:id/members" teamId={teamId} component={TeamMembersView}/>
+          {/* <Route exact path="/team/:id/members" teamId={teamId} component={TeamMembersView}/> */}
           <Route
             exact
             path="/team/:id/books"
             render={(props) =>
-              <TeamDashboardViewContainer
+              <TeamBookListContainer
                 teamId={teamId}
                 teamMembers={teamMembers}
                 {...props}

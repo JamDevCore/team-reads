@@ -31,7 +31,7 @@ class TeamDiscussionListView extends React.Component {
       }
   }
   renderDiscussions() {
-    const { discussions, bookId } = this.props;
+    const { discussions } = this.props;
     console.log(discussions)
     return discussions.length > 0 ? discussions.map(d =>
       <Card
@@ -41,7 +41,7 @@ class TeamDiscussionListView extends React.Component {
         lightbulbs={d.lightbulbs}
         contributions={d.comments.length}
         author={d.username}
-        link={`/book/${bookId}/discussion/${d._id}`}
+        link={`/book/${d.bookId}/discussion/${d._id}`}
       />
     ) : <Panel><h2>No discussions on this book yet</h2></Panel>;
   }
@@ -85,5 +85,5 @@ TeamDiscussionListView.defaultProps = {
 };
 
 export default styled(TeamDiscussionListView)`
-width: 95%;
+width: 1000px;
 `;

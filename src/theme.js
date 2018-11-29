@@ -12,7 +12,7 @@ const colors = {
 const theme = {
   colors,
   fontSize: 16,
-  borderRadius: 3,
+  borderRadius: 6,
   baseMargin: 20,
   boxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)',
 }
