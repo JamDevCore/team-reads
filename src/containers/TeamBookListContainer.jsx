@@ -11,17 +11,18 @@ class TeamBookListContainer extends React.Component {
     this.state = {
       books: [],
       isLoading: true,
+      teamMembers: [],
     }
   }
 
   componentDidMount() {
-    const { teamId } = this.props;
+    const { teamId, teamMembers } = this.props;
     console.log(teamId)
     if (teamId) {
     api.get(`book?teamId=${teamId}`)
     .then((res) => {
       this.setState({
-        books: res.data.data,
+        books: ascending(res.data.data),
         isLoading: false,
       });
     })
@@ -32,6 +33,26 @@ class TeamBookListContainer extends React.Component {
       })
     })
     }
+    if (teamId) {
+      this.setState({
+        loadingUsers: true,
+      })
+        api.get(`user?teamId=${teamId}`)
+        .then((res) => {
+          const users = res.data.data;
+          console.log(res)
+          this.setState({
+            teamMembers: users,
+            loadingUsers: false,
+          });
+        })
+        .catch(err => {
+          this.setState({
+            loadingUsers: false,
+          })
+          console.log(err)
+        })
+    }
   }
 
   render() {
@@ -40,11 +61,13 @@ class TeamBookListContainer extends React.Component {
       books,
     } = this.state;
     const { userId, teamId } = this.props;
+    const { teamMembers } = this.state;
     return isLoading ? <Callback /> :
     <TeamBookList
       userId={userId}
       books={books}
       teamId={teamId}
+      teamMembers={teamMembers}
     />
   }
 }

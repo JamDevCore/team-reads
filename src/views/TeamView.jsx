@@ -50,7 +50,7 @@ class TeamView extends React.Component {
   }
 
   render() {
-    const { className, teamId } = this.props;
+    const { className, teamId, userId } = this.props;
     const { teamMembers, teamName, joinRequests } = this.state;
     console.log(teamId)
     return (
@@ -90,6 +90,7 @@ class TeamView extends React.Component {
                 teamName={teamName}
                 teamId={teamId}
                 teamMembers={teamMembers}
+                userId={userId}
                 { ...props}
                 />}
               />

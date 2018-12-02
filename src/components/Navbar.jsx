@@ -55,8 +55,8 @@ class Navbar extends React.Component {
           className="fas fa-times"
           onClick={() => this.toggleMobileNav()}
         />
-        <MobileNavLink className="mobileNavLink" to="/">Your books</MobileNavLink>
-        <MobileNavLink className="mobileNavLink" to={`team/${teamId}`}>Team view</MobileNavLink>
+      <MobileNavLink className="mobileNavLink" to="/">My books</MobileNavLink>
+        <MobileNavLink className="mobileNavLink" to={`team/${teamId}`}>Team</MobileNavLink>
         <MobileNavLink className="mobileNavLink" to="/settings">Settings</MobileNavLink>
         <MobileNavLink className="mobileNavLink" to="#" onClick={handleLogout}>Logout</MobileNavLink>
       </MobileNav>);
@@ -75,8 +75,8 @@ class Navbar extends React.Component {
         <Link to="/">
           <img src={Logo} alt="team-reads-logo"></img>
         </Link>
-        <Link className="navLink" to="/">Your books</Link>
-        <Link className="navLink" to={`/team/${teamId}`}>Team view</Link>
+        <Link className="navLink" to="/">Books</Link>
+        <Link className="navLink" to={`/team/${teamId}`}>Team</Link>
         <Link className="navLink" to="/settings">Settings</Link>
         <Link className="navLink" to="#" onClick={handleLogout}>Logout</Link>
         <i

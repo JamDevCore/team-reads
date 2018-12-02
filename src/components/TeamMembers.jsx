@@ -63,7 +63,9 @@ class TeamMembers extends React.Component {
       openAlert({ message: `Error: ${err}`});
     });
   }
+
   columns() {
+    const { userId } = this.props;
     const { isRemovingUser } = this.state;
     return [{
     Header: 'Name',
@@ -78,10 +80,10 @@ class TeamMembers extends React.Component {
     Header: 'Delete user',
     accessor: '_id',
     Cell: props => {
-      console.log(props)
+      console.log(props.value, userId)
       return (
     <HighlightButton
-      label="Remove user"
+      label={userId === props.value ? "Leave team" : "Remove user"}
       isLoading={isRemovingUser === props.value}
       onClick={() => this.removeUserFromTeam(props.value)}
       />)
@@ -111,10 +113,12 @@ class TeamMembers extends React.Component {
 
 TeamMembers.propTypes = {
   teamId: PropTypes.string,
+  userId: PropTypes.string,
 };
 
 TeamMembers.defaultProps = {
   teamId: undefined,
+  userId: undefined,
 };
 
 export default styled(TeamMembers)`

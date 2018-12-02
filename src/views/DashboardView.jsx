@@ -62,8 +62,6 @@ DashboardView.propTypes = {
   className: PropTypes.string,
   userId: PropTypes.string,
   books: PropTypes.arrayOf(PropTypes.object),
-  currentShelf: PropTypes.string,
-  shelves: PropTypes.arrayOf(PropTypes.object),
   addBookToState: PropTypes.func,
 };
 
@@ -72,7 +70,6 @@ DashboardView.defaultProps = {
   userId: undefined,
   books: undefined,
   currentShelf: undefined,
-  shelves: undefined,
   addBookToState: undefined,
 };
 
@@ -92,7 +89,7 @@ export default styled(DashboardView)`
   .right {
     box-sizing: border-box;
     width: 60%;
-    margin: 20px auto;
+    margin: 30px auto;
   }
   @media(max-width: 1124px) {
     .right {

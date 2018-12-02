@@ -11,6 +11,7 @@ class TeamDiscussionListViewContainer extends React.Component {
     this.state = {
       discussions: [],
       isLoading: true,
+      teamMembers: [],
     }
   }
   componentDidMount() {
@@ -31,16 +32,34 @@ class TeamDiscussionListViewContainer extends React.Component {
       })
       console.log(err)
     });
+    api.get(`user?teamId=${teamId}`)
+    .then((res) => {
+      const users = res.data.data;
+      console.log(res)
+      this.setState({
+        teamMembers: users,
+        loadingUsers: false,
+      });
+    })
+    .catch(err => {
+      this.setState({
+        loadingUsers: false,
+      })
+      console.log(err)
+    })
   }
   render() {
     const {
       isLoading,
       discussions,
+      teamMembers,
     } = this.state;
     console.log(discussions)
     return isLoading && !discussions.length > 0 ? <Callback /> :
     <TeamDiscussionListView
+      key={discussions.length}
       discussions={discussions}
+      teamMembers={teamMembers}
     />
   }
 }
@@ -48,11 +67,13 @@ class TeamDiscussionListViewContainer extends React.Component {
 TeamDiscussionListViewContainer.propTypes = {
   userId: PropTypes.string,
   username: PropTypes.string,
+  teamMembers: PropTypes.arrayOf(PropTypes.string)
 };
 
 TeamDiscussionListViewContainer.defaultProps = {
   userId: undefined,
   username: undefined,
+  teamMembers: undefined,
 };
 
 

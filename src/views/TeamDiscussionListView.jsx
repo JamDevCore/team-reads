@@ -26,13 +26,32 @@ const AmazonLink = styled.a`
 class TeamDiscussionListView extends React.Component {
   constructor(props) {
     super(props)
+    console.log(this.props.discussions)
       this.state = {
         isLoading: false,
         isDeleting: false,
+        discussions: this.props.discussions,
+        sortBy: "all",
       }
   }
-  renderDiscussions() {
+
+  selectUser() {
     const { discussions } = this.props;
+    const user = document.querySelector('[name="userSort"]').value;
+    console.log(user)
+    if (user === "all") {
+      this.setState({ discussions });
+    } else {
+      const newDiscussions = discussions.filter(book => book.userId === user);
+      this.setState({
+        discussions: newDiscussions,
+      })
+    }
+  }
+
+
+  renderDiscussions() {
+    const { discussions } = this.state;
     console.log(discussions)
     return discussions.length > 0 ? discussions.map(d =>
       <Card
@@ -48,18 +67,24 @@ class TeamDiscussionListView extends React.Component {
   }
 
   render() {
-    const { discussions, className } = this.props;
-    const { isLoading } = this.state;
+    const { className, teamMembers } = this.props;
+    const { isLoading, discussions } = this.state;
     return (
       <div className={className}>
         <PageTitle>Discussions</PageTitle>
-        {discussions.length > 0 ? <React.Fragment>
-              <Select>
-                <option>All notes</option>
-                <option>My notes</option>
-             </Select>
-             {this.renderDiscussions()}
-        </React.Fragment> : <Panel><h2>There are no discussions yet!</h2></Panel>}
+          <Select
+            name="userSort"
+            label="Sort by team member"
+            onChange={() => this.selectUser()}
+          >
+            <option key="all" value="all">All team members</option>
+            {teamMembers && teamMembers.length > 0 ? teamMembers.map(user => {
+              console.log(user)
+              return (
+              <option key={user._id} value={user._id}>{user.username}</option>
+            )}): null}
+          </Select>
+           {this.renderDiscussions()}
     </div>)
   }
 }
@@ -73,6 +98,7 @@ TeamDiscussionListView.propTypes = {
  readBy: PropTypes.arrayOf(PropTypes.string),
  personalStatus: PropTypes.string,
  username: PropTypes.string,
+ teamMembers: PropTypes.arrayOf(PropTypes.object),
 };
 
 TeamDiscussionListView.defaultProps = {
@@ -84,6 +110,7 @@ TeamDiscussionListView.defaultProps = {
  readBy: undefined,
  personalStatus: undefined,
  username: undefined,
+ teamMembers: undefined,
 };
 
 export default styled(TeamDiscussionListView)`

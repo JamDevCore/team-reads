@@ -13,9 +13,9 @@ class SidebarMenu extends React.Component {
     return (
       <div className={className}>
         <MobileNavLink to={`/team/${teamId}/`}>Team Central</MobileNavLink>
-        <MobileNavLink to={`/team/${teamId}/books`}>Books</MobileNavLink>
+        <MobileNavLink to={`/team/${teamId}/books`}>Read</MobileNavLink>
         {/* <MobileNavLink to={`/team/${teamId}/members`}>Members</MobileNavLink> */}
-        <MobileNavLink to={`/team/${teamId}/discussions`}>Discussions</MobileNavLink>
+        <MobileNavLink to={`/team/${teamId}/discussions`}>Discuss</MobileNavLink>
         <MobileNavLink to={`/team/${teamId}/settings`}>Settings</MobileNavLink>
       </div>
     );
