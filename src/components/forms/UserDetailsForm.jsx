@@ -4,8 +4,6 @@ import styled from 'styled-components';
 import * as Yup from 'yup';
 import { Field, withFormik } from 'formik';
 import { openAlert } from 'simple-react-alert';
-import history from '../../modules/history';
-import handleUpdateUserEmail from '../../modules/handle-update-user-email';
 import api from '../../modules/api-call';
 import Form from '../_common/form-components/Form';
 import TextInput from '../_common/form-components/TextInput';
@@ -13,7 +11,8 @@ import Button from '../_common/Button';
 
 class UserDetailsForm extends React.Component {
   render() {
-    const { isSubmitting, className } = this.props;
+    const { isSubmitting, className, email } = this.props;
+    console.log(email)
     return (
       <div className={className}>
         <Form>
@@ -43,6 +42,7 @@ UserDetailsForm.propTypes = {
   userId: PropTypes.string,
   email: PropTypes.string,
   userSub: PropTypes.string,
+  updateUserDetails: PropTypes.func,
 };
 
 UserDetailsForm.defaultProps = {
@@ -50,6 +50,7 @@ UserDetailsForm.defaultProps = {
   userId: undefined,
   email: undefined,
   userSub: undefined,
+  updateUserDetails: undefined,
 };
 
 export default withFormik({
@@ -63,23 +64,21 @@ export default withFormik({
   }),
   handleSubmit: (values, { setSubmitting, props }) => {
     setSubmitting(true);
-    console.log(values)
+    console.log(values);
+    console.log(props.userSub);
     api.put(`user/${props.userId}`, {
       username: values.username,
       email: values.email,
+      userSub: props.userSub,
     })
-      .then((response) => {
-        console.log(response)
-        if(props.email !== values.email) {
-          handleUpdateUserEmail({
-            userId: props.userSub,
-            email: values.email,
-          })
-        }
+      .then((res) => {
+        console.log(res)
         setSubmitting(false);
-        const team = response.data
+        props.updateUserDetails({
+          email: res.data.email,
+          username: res.data.username,
+        });
         openAlert({ message: 'Your details have been updated', type: 'success' });
-        history.push(`team/${team._id}`)
       })
       .catch((error) => {
         openAlert({ message: `Error: ${error}`, type: 'danger' });

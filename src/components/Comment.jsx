@@ -4,9 +4,12 @@ import styled from 'styled-components';
 import api from '../modules/api-call';
 import Panel from '../components/_common/Panel';
 import ButtonGroup from '../components/_common/ButtonGroup';
-import LinkButton from '../components/_common/LinkButton';
+
+import Button from '../components/_common/Button';
+import HighlightButton from '../components/_common/HighlightButton';
 import Loading from '../components/Loading';
 import AddCommentForm from '../components/forms/AddCommentForm';
+import theme from '../theme';
 
 
 class Comment extends React.Component {
@@ -68,7 +71,7 @@ class Comment extends React.Component {
   }
 
   renderEditCommentForm() {
-    const  { discussionId, text, userId, commentId } = this.props;
+    const  { discussionId, text, userId, commentId, updateComments } = this.props;
     return (
       <AddCommentForm
         userId={userId}
@@ -76,6 +79,7 @@ class Comment extends React.Component {
         discussionId={discussionId}
         setEditState={this.setEditState}
         commentId={commentId}
+        updateComments={updateComments}
       />
     )
   }
@@ -87,20 +91,20 @@ class Comment extends React.Component {
       <React.Fragment>
         <div className="header">
         <h3>{username}</h3>
-        {userId === ownerId &&
+          </div>
+          {editing ? this.renderEditCommentForm() : <p>{text}</p>}
+          {userId === ownerId &&
             <ButtonGroup>
-              <LinkButton
+              <Button
                 label="Edit"
                 onClick={() => this.setEditState(true)}
               />
-              <LinkButton
+            <HighlightButton
                 label="Delete"
                 isLoading={isLoading}
                 onClick={() => this.deleteComment()}
               />
           </ButtonGroup>}
-          </div>
-          {editing ? this.renderEditCommentForm() : <p>{text}</p>}
       </React.Fragment>
     )
   }
@@ -122,7 +126,7 @@ Comment.propTypes = {
   userId: PropTypes.string,
   text: PropTypes.string,
   discussionId: PropTypes.string,
-  updateComment: PropTypes.func,
+  updateComments: PropTypes.func,
   comments: PropTypes.arrayOf(PropTypes.object),
   removeComments: PropTypes.func,
 };
@@ -134,16 +138,18 @@ Comment.defaultProps = {
   ownerId: undefined,
   text: undefined,
   discussionId: undefined,
-  updateComment: undefined,
+  updateComments: undefined,
   comments: undefined,
   removeComments: undefined
 };
 
 export default styled(Comment)`
+position: relative;
 .header {
   display: flex;
 }
 h3 {
   display: inline-block;
 }
+
 `;

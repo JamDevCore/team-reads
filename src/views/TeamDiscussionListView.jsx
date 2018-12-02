@@ -14,6 +14,7 @@ import Select from '../components/_common/form-components/Select';
 import Card from '../components/Card';
 import Fallback from './Fallback';
 import theme from '../theme';
+import PageTitle from '../components/_common/PageTitle';
 
 const AmazonLink = styled.a`
   text-decoration: underline;
@@ -51,6 +52,7 @@ class TeamDiscussionListView extends React.Component {
     const { isLoading } = this.state;
     return (
       <div className={className}>
+        <PageTitle>Discussions</PageTitle>
         {discussions.length > 0 ? <React.Fragment>
               <Select>
                 <option>All notes</option>

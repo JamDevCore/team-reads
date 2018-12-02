@@ -9,7 +9,7 @@ export default class Auth {
       audience: 'https://jamesvitaly.eu.auth0.com/userinfo',
       redirectUri: 'http://localhost:3000/callback',
       responseType: 'token id_token',
-      scope: 'openid profile email app_metadata',
+      scope: 'openid profile email app_metadata update:current_user_metadata update:users',
     });
 
     this.login = this.login.bind(this);
@@ -25,6 +25,10 @@ export default class Auth {
 
   getProfile() {
     return JSON.parse(localStorage.getItem('id_token_payload'));
+  }
+
+  getAccessToken(){
+    return localStorage.getItem('access_token');
   }
 
   handleAuthentication() {

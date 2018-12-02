@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import _ from 'underscore';
 import DiscussionView from '../views/DiscussionView';
 import Callback from '../components/Callback';
 import api from '../modules/api-call';
@@ -66,6 +67,7 @@ class DiscussionViewContainer extends React.Component {
     .then((res) => {
       console.log(res);
       const comments = res.data.data;
+      console.log(comments)
       this.setState({
         comments,
       }, this.setState({
@@ -89,8 +91,8 @@ class DiscussionViewContainer extends React.Component {
 
   updateComments(comment) {
     const { comments } = this.state;
-    const newComments = comments;
-    comments.push(comment);
+    const newComments = comments.filter(com => com._id !== comment._id);
+    newComments.push(comment);
     this.setState({
       comments: newComments
     })

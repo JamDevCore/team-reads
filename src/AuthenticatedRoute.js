@@ -66,7 +66,7 @@ class AuthenticatedRoute extends React.Component {
 
   return (
     <div className={className}>
-      <Navbar handleLogout={auth.logout}/>
+      <Navbar handleLogout={auth.logout} teamId={teamId}/>
       <div className="view">
       {!isLoading ? <Route
         {...rest}
@@ -84,10 +84,18 @@ class AuthenticatedRoute extends React.Component {
             return <Redirect to="/team-setup" />
             }
 
-          if(pathName === 'teamSetup' && teamId) return <Redirect to ={`/team/${teamId}`} />
+          if((pathName === 'team' || pathName === 'teamSetup') && teamId) return <Redirect to ={`/team/${teamId}`} />
 
           return React.createElement(component, {
-            ...props, userId, username, teamId, userSub, email, teamInvites, isAuthenticated: auth.isAuthenticated(),
+            ...props,
+            userId,
+            username,
+            teamId,
+            userSub,
+            auth,
+            email,
+            teamInvites,
+            isAuthenticated: auth.isAuthenticated(),
           });
         }}
       /> : <Callback />}

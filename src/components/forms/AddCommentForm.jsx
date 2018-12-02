@@ -7,7 +7,7 @@ import { openAlert } from 'simple-react-alert';
 import api from '../../modules/api-call';
 import Form from '../_common/form-components/Form';
 import Textarea from '../_common/form-components/Textarea';
-import Button from '../_common/Button';
+import LinkButton from '../_common/LinkButton';
 
 class AddCommentForm extends React.Component {
   render() {
@@ -21,7 +21,7 @@ class AddCommentForm extends React.Component {
             component={Textarea}
             rows={5}
           />
-        <Button
+        <LinkButton
           type="submit"
           isLoading={isSubmitting}
           label={!commentId ? "Add comment" : "Update comment"}
@@ -70,7 +70,7 @@ export default withFormik({
         setSubmitting(false);
         const comment = response.data
         console.log(comment);
-        openAlert({ message: 'Success! You updated your discussion', type: 'success' });
+        openAlert({ message: 'Your comment has been added', type: 'success' });
         const comments = props.comments.map(comment => comment._id);
         comments.push(comment._id)
         api.put(`discussion/${props.discussionId}`, {
@@ -94,6 +94,7 @@ export default withFormik({
           const comment = response.data
           console.log(comment);
           openAlert({ message: 'Success! You updated your discussion', type: 'success' });
+          props.updateComments(comment);
           props.setEditState(false);
         })
 

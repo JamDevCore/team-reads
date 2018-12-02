@@ -4,7 +4,7 @@ import theme from '../../theme';
 
 const LinkButton = styled(Button)`
   background-color: transparent;
-  color: ${theme.colors.dark};
+  color: ${theme.colors.primary};
   text-decoration: underline;
 `;
 

@@ -20,6 +20,7 @@ class TeamSetup extends React.Component {
       isLoading: false,
       isAcceptingTeam: false,
       isDecliningTeam: false,
+      isRequesting: false,
     }
     this.setSearchResults = this.setSearchResults.bind(this);
     this.acceptInvite = this.acceptInvite.bind(this);
@@ -71,7 +72,7 @@ class TeamSetup extends React.Component {
     })
     .then(() => {
       this.setState({ isDecliningUser: false })
-      openAlert({ message: "The join request has been accepted", type: "success" });
+      openAlert({ message: "The request has been declined", type: "info" });
     })
     .catch((err) => {
       this.setState({ isDecliningUser: false });
@@ -81,17 +82,17 @@ class TeamSetup extends React.Component {
 
   sendRequest(teamId) {
     const { userId } = this.props;
-    this.setState({ isLoading: true });
+    this.setState({ isRequesting: teamId });
     api.put(`team/${teamId}`, {
       joinRequest: userId,
     })
     .then((res )=> {
       openAlert({ message: 'Your request has been sent', type: 'info' });
-      this.setState({ isLoding: false });
+      this.setState({ isRequesting: false });
     })
     .catch((err) => {
       openAlert({ message: `Error: ${err}`, type: 'danger' });
-      this.setState({ isLoding: false });
+      this.setState({ isRequesting: false });
     })
   }
 
@@ -102,7 +103,9 @@ class TeamSetup extends React.Component {
   }
   render() {
     const { className, userId } = this.props;
-    const { teamSearchList, isDecliningTeam, isAcceptingTeam, teamInvitations } = this.state;
+    const {
+      teamSearchList, isDecliningTeam, isAcceptingTeam, teamInvitations, isRequesting,
+    } = this.state;
     return (
       <div className={className}>
         {teamInvitations && teamInvitations.length > 0 ?
@@ -140,6 +143,7 @@ class TeamSetup extends React.Component {
                 <h3>{team.teamName}</h3>
                 <Button
                   label="Request to join"
+                  isLoading={isRequesting === team._id}
                   onClick={() => this.sendRequest(team._id)}
                 />
               </li>

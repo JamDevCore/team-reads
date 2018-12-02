@@ -34,7 +34,7 @@ const CreateBookForm = ({ className, shelves, isSubmitting }) => {
               />
           <Button
             type="submit"
-            label="Create book"
+            label="Add new book"
             isLoading={isSubmitting}
           />
         </Form>

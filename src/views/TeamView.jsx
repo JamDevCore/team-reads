@@ -25,9 +25,12 @@ class TeamView extends React.Component {
   componentDidMount() {
     const { teamId, userId } = this.props;
     if (teamId) {
+      console.log(teamId)
       api.get(`team/${teamId}`)
       .then((res) => {
         const team = res.data;
+        console.log(team)
+        console.log(team.joinRequests)
         this.setState({
           teamName: team.teamName,
           teamMembers: team.teamMembers,
@@ -35,6 +38,7 @@ class TeamView extends React.Component {
         });
       });
     } else {
+      history.push('/team-setup');
       api.get(`user/${userId}`)
       .then((res) => {
         const user = res.data;
@@ -81,6 +85,7 @@ class TeamView extends React.Component {
             path="/team/:id/settings"
             render={(props) =>
               <TeamSettingsView
+                key={joinRequests.length}
                 joinRequests={joinRequests}
                 teamName={teamName}
                 teamId={teamId}

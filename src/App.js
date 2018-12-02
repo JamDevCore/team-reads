@@ -58,7 +58,7 @@ class App extends Component {
             <AuthenticatedRoute exact path="/book/:bookId" auth={auth} pathName="bookView" component={BookViewContainer}/>
             <AuthenticatedRoute exact path="/book/:bookId/discussion/:discussionId" auth={auth} pathName="discussionView" component={DiscussionViewContainer} />
             <AuthenticatedRoute exact path="/team-setup" auth={auth} pathName="teamSetup" component={TeamSetup}/>
-            <AuthenticatedRoute path="/team" auth={auth} pathName="teamView" component={TeamView}/>
+            <AuthenticatedRoute path="/team/:id" auth={auth} pathName="teamView" component={TeamView}/>
             <AuthenticatedRoute exact path="*" pathName="404" auth={auth} component={Fallback}/>
           </Switch>
 

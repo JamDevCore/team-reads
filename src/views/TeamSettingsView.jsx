@@ -31,17 +31,22 @@ class TeamSettingsView extends React.Component {
   componentDidMount() {
     const { joinRequests } = this.props;
     const { userRequests } = this.state;
-    joinRequests.forEach((id) => {
-      api.get(`user/${id}`)
-      .then((res) => {
-        const requests = userRequests;
-        requests.push(res.data)
-        this.setState({
-          userRequests,
+    console.log(joinRequests)
+    if (joinRequests.length > 0) {
+      joinRequests.forEach((id) => {
+        api.get(`user/${id}`)
+        .then((res) => {
+          const requests = userRequests;
+          console.log(requests)
+          console.log(res);
+          requests.push(res.data)
+          this.setState({
+            userRequests,
+          })
         })
+        .catch(err => console.log(err));
       })
-      .catch(err => console.log(err));
-    })
+    }
   }
 
   acceptJoinRequest(userId) {
@@ -53,7 +58,7 @@ class TeamSettingsView extends React.Component {
     })
     .then(() => {
       this.setState({ isAcceptingUser: false })
-      openAlert({ message: "The join request has been accepted", type: "success" });
+      openAlert({ message: "This request has been accepted", type: "success" });
     })
     .catch((err) => {
       this.setState({ isAcceptingUser: false });
@@ -66,14 +71,14 @@ class TeamSettingsView extends React.Component {
     console.log(userId, teamId)
     this.setState({ isDecliningUser: userId });
     api.put(`team/${teamId}`, {
-      newUser: userId,
+      declineRequest: userId,
     })
     .then(() => {
-      this.setState({ isAcceptingUser: false })
-      openAlert({ message: "The join request has been accepted", type: "success" });
+      this.setState({ isDecliningUser: false })
+      openAlert({ message: "This request has been declined", type: "success" });
     })
     .catch((err) => {
-      this.setState({ isAcceptingUser: false });
+      this.setState({ isDecliningUser: false });
       openAlert({ message: `Error: ${err}`, type: "danger" });
     })
   }
@@ -112,15 +117,15 @@ class TeamSettingsView extends React.Component {
           userRequests.map((user) => {
           return (
             <BannerMessage
-              key={user._id}
-              meta={user._id}
-              actionLoading={isAcceptingUser === user._id}
-              closeLoading={isDecliningUser === user._id}
+              key={user && user._id}
+              meta={user && user._id}
+              actionLoading={user && isAcceptingUser === user._id}
+              closeLoading={user && isDecliningUser === user._id}
               action={this.acceptJoinRequest}
               closeAction={this.declineJoinRequest}
               actionLabel="Accept invite"
               closeLabel="Decline"
-              message={`${user.email} has requested to join your team`}
+              message={user && `${user.email} has requested to join your team`}
               />)})
           : null}
           <Panel>
@@ -181,7 +186,7 @@ TeamSettingsView.defaultProps = {
   userId: undefined,
   teamId: undefined,
   teamName: undefined,
-  teamMembers: PropTypes.arrayOf(PropTypes.string),
+  teamMembers: undefined,
 };
 
 export default styled(TeamSettingsView)`

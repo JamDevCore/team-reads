@@ -47,6 +47,7 @@ class Navbar extends React.Component {
   }
 
   renderMobileNav() {
+    const { teamId } = this.props;
     const { mobileNavIsOpen, handleLogout } = this.state;
     return mobileNavIsOpen && (
       <MobileNav mobileNavIsOpen={mobileNavIsOpen}>
@@ -55,7 +56,7 @@ class Navbar extends React.Component {
           onClick={() => this.toggleMobileNav()}
         />
         <MobileNavLink className="mobileNavLink" to="/">Your books</MobileNavLink>
-        <MobileNavLink className="mobileNavLink" to="/team">Team view</MobileNavLink>
+        <MobileNavLink className="mobileNavLink" to={`team/${teamId}`}>Team view</MobileNavLink>
         <MobileNavLink className="mobileNavLink" to="/settings">Settings</MobileNavLink>
         <MobileNavLink className="mobileNavLink" to="#" onClick={handleLogout}>Logout</MobileNavLink>
       </MobileNav>);
@@ -68,14 +69,14 @@ class Navbar extends React.Component {
   }
 
   render() {
-    const { className, handleLogout } = this.props;
+    const { className, handleLogout, teamId } = this.props;
     return (
       <div className={className}>
         <Link to="/">
           <img src={Logo} alt="team-reads-logo"></img>
         </Link>
         <Link className="navLink" to="/">Your books</Link>
-        <Link className="navLink" to="/team">Team view</Link>
+        <Link className="navLink" to={`/team/${teamId}`}>Team view</Link>
         <Link className="navLink" to="/settings">Settings</Link>
         <Link className="navLink" to="#" onClick={handleLogout}>Logout</Link>
         <i
@@ -92,11 +93,13 @@ class Navbar extends React.Component {
 Navbar.propTypes = {
   className: PropTypes.string,
   handleLogout: PropTypes.func,
+  teamId: PropTypes.string,
 };
 
 Navbar.defaultProps = {
   className: undefined,
   handleLogout: undefined,
+  teamId: undefined,
 };
 
 export default styled(Navbar)`
