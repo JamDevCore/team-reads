@@ -54,7 +54,6 @@ class DiscussionViewContainer extends React.Component {
         title: discussion.title,
         note: discussion.note,
         createdBy: discussion.userId,
-        bookTitle: discussion.bookTitle,
       });
     })
     .catch(err => {

@@ -12,26 +12,28 @@ class Card extends React.Component {
       className,
       title,
       author,
-      readers,
       lightbulbs,
       contributions,
       bookId,
       link,
+      owner,
     } = this.props;
+    const heading = author ? `${title} - ${author}` : title;
     return (
       <div className={className}>
         <div className="column-1">
-          <h3>{`${title} - ${author}`}</h3>
+          <h3>{heading}</h3>
+            {owner && <div className="owner">
+                <i className="fas fa-book"></i>
+                <p>{owner}</p>
+            </div>}
           <div className="iconList">
             <i className="fas fa-lightbulb"></i>
             <p>{lightbulbs}</p>
             <i className="fas fa-comments"></i>
             <p>{contributions}</p>
           </div>
-          {readers ? <div className="readerList">
-            <i className="fas fa-book"></i>
-            {readers.map(name => <p key={name}>{name}</p>)}
-          </div> : null}
+
         </div>
         <div className="column-2">
           <HighlightButton
@@ -52,6 +54,7 @@ Card.propTypes = {
   contributions: PropTypes.number,
   author: PropTypes.string,
   link: PropTypes.string,
+  owner: PropTypes.string,
 };
 
 Card.defaultProps = {
@@ -63,6 +66,7 @@ Card.defaultProps = {
   contributions: undefined,
   author: undefined,
   link: undefined,
+  owner: undefined,
 };
 
 export default styled(Card)`
@@ -105,7 +109,7 @@ export default styled(Card)`
     flex-direction: row;
     justify-content: flex-start;
   }
-  .readerList {
+  .owner {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;

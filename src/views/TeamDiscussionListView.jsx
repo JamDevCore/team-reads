@@ -71,7 +71,9 @@ class TeamDiscussionListView extends React.Component {
     const { isLoading, discussions } = this.state;
     return (
       <div className={className}>
-        <PageTitle>Discussions</PageTitle>
+        <Panel header >
+        <PageTitle>Team discussion feed</PageTitle>
+        </Panel>
           <Select
             name="userSort"
             label="Sort by team member"
@@ -115,4 +117,5 @@ TeamDiscussionListView.defaultProps = {
 
 export default styled(TeamDiscussionListView)`
 width: 1000px;
+padding-top: 40px;
 `;

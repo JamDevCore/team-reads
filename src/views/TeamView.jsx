@@ -67,6 +67,7 @@ class TeamView extends React.Component {
               <TeamBookListContainer
                 teamId={teamId}
                 teamMembers={teamMembers}
+                teamName={teamName}
                 {...props}
                 />}
               />
@@ -78,7 +79,9 @@ class TeamView extends React.Component {
               <TeamDiscussionListViewContainer
                 teamId={teamId}
                 teamMembers={teamMembers}
+                teamName={teamName}
                 {...props}
+
               />}/>
           <Route
             exact

@@ -79,11 +79,11 @@ class BookView extends React.Component {
     return discussions.length > 0 ? discussions.map(d =>
       <Card
         key={d._id}
+        owner={d.username}
         title={d.title || 'Untitled'}
         readers={d.readers}
         lightbulbs={d.lightbulbs}
         contributions={d.comments.length}
-        author={d.username}
         link={`/book/${bookId}/discussion/${d._id}`}
       />
     ) : <Panel><h2>No discussions on this book yet</h2></Panel>;
@@ -101,17 +101,6 @@ class BookView extends React.Component {
                 <h2>{bookTitle}</h2>
                 <p>{author}</p>
                 <Divider />
-                <h3>Read by</h3>
-                <div>
-                {readBy && readBy.length > 0 ? readBy.map(reader => <li key={reader} style={{display:'inline-block'}}>{reader}</li>) :
-                <li style={{display:'inline-block'}}>No-one</li>}
-              </div>
-                <Divider />
-                <Select
-                  label="Recommend this book"
-                >
-                <option>Select a team member</option>
-              </Select>
               <ButtonGroup>
                 <Button
                   label="Start new discussion"

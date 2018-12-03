@@ -53,6 +53,24 @@ class TeamBookListContainer extends React.Component {
           console.log(err)
         })
     }
+
+  }
+
+  assignOwnersToBooks() {
+    const { teamMembers, books } = this.state;
+    let newBooks;
+    if (books && teamMembers) {
+      console.log('here')
+      newBooks = books;
+      newBooks.forEach((book, index) => {
+        teamMembers.forEach((user) => {
+          if (book.ownerId === user._id){
+            newBooks[index].owner = user.username;
+          }
+        })
+      })
+    }
+    return newBooks;
   }
 
   render() {
@@ -60,13 +78,15 @@ class TeamBookListContainer extends React.Component {
       isLoading,
       books,
     } = this.state;
-    const { userId, teamId } = this.props;
+    const { userId, teamId, teamName } = this.props;
     const { teamMembers } = this.state;
+    console.log(books)
     return isLoading ? <Callback /> :
     <TeamBookList
       userId={userId}
-      books={books}
+      books={this.assignOwnersToBooks()}
       teamId={teamId}
+      teamName={teamName}
       teamMembers={teamMembers}
     />
   }
@@ -75,11 +95,13 @@ class TeamBookListContainer extends React.Component {
 TeamBookListContainer.propTypes = {
   teamId: PropTypes.string,
   teamMembers: PropTypes.arrayOf(PropTypes.string),
+  teamName: PropTypes.string,
 };
 
 TeamBookListContainer.defaultProps = {
   teamId: undefined,
   teamMembers: undefined,
+  teamName: undefined,
 };
 
 export default TeamBookListContainer;

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Load from '../Loading.svg';
 
 class Loading extends React.Component {
   render() {
@@ -7,7 +8,7 @@ class Loading extends React.Component {
     const { className } = this.props;
     return (
       <div className={className}>
-        <i className="fas fa-spinner fa-spin"></i>
+        <img src={Load} alt="loading"/>
       </div>
     );
   }
@@ -19,6 +20,9 @@ export default styled(Loading)`
   display: flex;
   justify-content: center;
   align-items: center;
+  img {
+    width: 80px;
+  }
   i {
     font-size: 32px;
     margin-right: 30px;

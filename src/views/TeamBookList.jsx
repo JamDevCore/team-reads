@@ -9,11 +9,13 @@ import Panel from '../components/_common/Panel';
 class TeamBookList extends React.Component {
   constructor(props) {
     super(props);
+    console.log(this.props.books)
     this.state = {
       books: this.props.books,
       sortBy: "all",
     }
   }
+
 
   selectUser() {
     const { books } = this.props;
@@ -29,14 +31,14 @@ class TeamBookList extends React.Component {
     }
   }
 
-  sortBooks
   render() {
     const { className, teamMembers } = this.props;
     const { books } = this.state;
+    console.log(books)
     return (
       <div className={className}>
-        <Panel>
-        <PageTitle>What's been read</PageTitle>
+        <Panel header >
+        <PageTitle>Team book feed</PageTitle>
         </Panel>
         <Select
           name="userSort"
@@ -53,6 +55,7 @@ class TeamBookList extends React.Component {
         {books && books.length > 0 ? books.map(book =>
           <Card
             key={book._id}
+            owner={book.owner}
             title={book.name}
             author={book.author}
             bookId={book._id}
@@ -70,11 +73,13 @@ class TeamBookList extends React.Component {
 TeamBookList.propTypes = {
   books: PropTypes.arrayOf(PropTypes.object),
   teamMembers: PropTypes.arrayOf(PropTypes.object),
+  teamName: PropTypes.string,
 };
 
 TeamBookList.defaultProps = {
   books: undefined,
   teamMembers: undefined,
+  teamName: undefined,
 };
 
 export default styled(TeamBookList)`

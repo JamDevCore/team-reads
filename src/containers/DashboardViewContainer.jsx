@@ -28,21 +28,12 @@ class DashboardViewContainer extends React.Component {
       const sortedBooks = ascending(books);
       this.setState({
         books: sortedBooks,
+        isLoading: false,
       });
     })
     .catch((err) => {
       console.log(err)
       this.setState({ isLoading: false });
-    });
-    api.get(`shelf?ownerId=${userId}`)
-    .then((response) => {
-      console.log(response)
-      const shelves = response.data.data;
-      this.setState({
-        shelves,
-      }, this.setState({
-        isLoading: false,
-      }))
     });
     }
   }

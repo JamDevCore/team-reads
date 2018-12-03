@@ -11,6 +11,8 @@ import BannerMessage from '../components/_common/BannerMessage';
 import UpdateTeamNameForm from '../components/forms/UpdateTeamNameForm';
 import FindUserForm from '../components/forms/FindUserForm';
 import TeamMembers from '../components/TeamMembers';
+import PageTitle from '../components/_common/PageTitle';
+
 
 
 class TeamSettingsView extends React.Component {
@@ -112,7 +114,9 @@ class TeamSettingsView extends React.Component {
     console.log(teamId)
     return (
       <div className={className}>
-        <h1>Settings</h1>
+        <Panel header >
+        <PageTitle>Team setting</PageTitle>
+        </Panel>
           {userRequests && userRequests.length > 0 ?
           userRequests.map((user) => {
           return (
@@ -191,6 +195,7 @@ TeamSettingsView.defaultProps = {
 
 export default styled(TeamSettingsView)`
 width: 95%;
+padding-top: 40px;
 h1 {
   margin-left: 10px;
 }

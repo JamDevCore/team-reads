@@ -114,7 +114,6 @@ constructor() {
       className,
       bookTitle,
       author,
-      readBy,
       comments,
       title,
       note,
@@ -134,18 +133,6 @@ constructor() {
           <Link to={`/book/${bookId}`}><h2>{bookTitle}</h2></Link>
           <p>{author}</p>
           <Divider />
-          <h3>Read by</h3>
-          <div>
-          {readBy && readBy.length > 0 ?
-            readBy.map(reader => <li style={{display:'inline-block'}}>{reader}</li>) :
-          <p>No-one</p>}
-        </div>
-          <Divider />
-          <Select
-            label="Recommend this book"
-          >
-          <option>Select a team member</option>
-        </Select>
         <ButtonGroup>
           <Button
             label="Start new discussion"

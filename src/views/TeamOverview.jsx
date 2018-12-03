@@ -1,12 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import PageTitle from '../components/_common/PageTitle';
+import Panel from '../components/_common/Panel';
+
 
 class TeamOverview extends React.Component {
 
   render() {
+    const { className } = this.props;
     return (
-      <div className="TeamOverview">
-        <h1>Overview</h1>
+      <div className={className}>
+        <Panel header >
+        <PageTitle>Team home</PageTitle>
+        </Panel>
       </div>
     );
   }
@@ -20,4 +27,7 @@ TeamOverview.defaultProps = {
 
 };
 
-export default TeamOverview;
+export default styled(TeamOverview)`
+width: 95%;
+padding-top: 40px;
+`;
