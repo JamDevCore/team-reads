@@ -26,8 +26,9 @@ const MobileNav = styled.div`
 
 const Overlay = styled.div`
   position: fixed;
+  z-index: 15 !important;
   background-color: rgba(33, 152, 243, 0.6);
-  width: 100%;
+  width: 100vw;
   height: 100%;
 `
 
@@ -55,8 +56,8 @@ class Navbar extends React.Component {
           className="fas fa-times"
           onClick={() => this.toggleMobileNav()}
         />
-      <MobileNavLink className="mobileNavLink" to="/">My books</MobileNavLink>
-        <MobileNavLink className="mobileNavLink" to={`team/${teamId}`}>Team</MobileNavLink>
+      <MobileNavLink className="mobileNavLink" to="/">Your books</MobileNavLink>
+        <MobileNavLink className="mobileNavLink" to={`team/${teamId}/books`}>View team</MobileNavLink>
         <MobileNavLink className="mobileNavLink" to="/settings">Settings</MobileNavLink>
         <MobileNavLink className="mobileNavLink" to="#" onClick={handleLogout}>Logout</MobileNavLink>
       </MobileNav>);
@@ -75,8 +76,8 @@ class Navbar extends React.Component {
         <Link to="/">
           <img src={Logo} alt="team-reads-logo"></img>
         </Link>
-        <Link className="navLink" to="/">Books</Link>
-        <Link className="navLink" to={`/team/${teamId}`}>Team</Link>
+        <Link className="navLink" to="/">Your books</Link>
+        <Link className="navLink" to={`/team/${teamId}/books`}>View team</Link>
         <Link className="navLink" to="/settings">Settings</Link>
         <Link className="navLink" to="#" onClick={handleLogout}>Logout</Link>
         <i

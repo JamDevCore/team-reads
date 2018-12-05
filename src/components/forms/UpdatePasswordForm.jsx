@@ -9,20 +9,22 @@ import Form from '../_common/form-components/Form';
 import TextInput from '../_common/form-components/TextInput';
 import Button from '../_common/Button';
 
-class UserDetailsForm extends React.Component {
+class UpdatePasswordForm extends React.Component {
   render() {
     const { isSubmitting, className } = this.props;
     return (
       <div className={className}>
         <Form>
           <Field
-            name="username"
-            label="Username"
+            type="password"
+            name="currentPassword"
+            label="Current password"
             component={TextInput}
           />
           <Field
-            name="email"
-            label="Email address"
+            type="password"
+            name="newPassword"
+            label="New password"
             component={TextInput}
           />
           <Button
@@ -36,55 +38,42 @@ class UserDetailsForm extends React.Component {
   }
 }
 
-UserDetailsForm.propTypes = {
+UpdatePasswordForm.propTypes = {
   username: PropTypes.string,
   userId: PropTypes.string,
-  email: PropTypes.string,
   userSub: PropTypes.string,
-  updateUserDetails: PropTypes.func,
 };
 
-UserDetailsForm.defaultProps = {
-  username: undefined,
+UpdatePasswordForm.defaultProps = {
   userId: undefined,
-  email: undefined,
   userSub: undefined,
-  updateUserDetails: undefined,
 };
 
 export default withFormik({
-  mapPropsToValues: props => ({
-    username: props.username || "",
-    email: props.email || "",
-  }),
   validationSchema: Yup.object().shape({
-    username: Yup.string().required('Add your name'),
-    email: Yup.string().email('Please include a valid email address'),
+    currentPassword: Yup.string().required('Current password is required'),
+    newPassword: Yup.string().required('Please include a valid email address'),
   }),
   handleSubmit: (values, { setSubmitting, props }) => {
     setSubmitting(true);
     console.log(values);
     console.log(props.userSub);
     api.put(`user/${props.userId}`, {
-      username: values.username,
-      email: values.email,
+      currentPassword: values.username,
+      newPassword: values.email,
       userSub: props.userSub,
     })
       .then((res) => {
         console.log(res)
         setSubmitting(false);
-        props.updateUserDetails({
-          email: res.data.email,
-          username: res.data.username,
-        });
-        openAlert({ message: 'Your details have been updated', type: 'success' });
+        openAlert({ message: 'Your password has been updated', type: 'success' });
       })
       .catch((error) => {
         openAlert({ message: `Error: ${error}`, type: 'danger' });
         setSubmitting(false);
       });
   },
-})(styled(UserDetailsForm)`
+})(styled(UpdatePasswordForm)`
   margin: 0;
   button {
     width: 200px;

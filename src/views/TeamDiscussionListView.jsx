@@ -9,7 +9,7 @@ import Panel from '../components/_common/Panel';
 import Divider from '../components/_common/Divider';
 import ButtonGroup from '../components/_common/ButtonGroup';
 import Button from '../components/_common/Button';
-import HighlightButton from '../components/_common/HighlightButton';
+import DangerButton from '../components/_common/DangerButton';
 import Select from '../components/_common/form-components/Select';
 import Card from '../components/Card';
 import Fallback from './Fallback';
@@ -56,11 +56,11 @@ class TeamDiscussionListView extends React.Component {
     return discussions.length > 0 ? discussions.map(d =>
       <Card
         key={d._id}
+        owner={d.username}
         title={d.title || 'Untitled'}
         readers={d.readers}
         lightbulbs={d.lightbulbs}
         contributions={d.comments.length}
-        author={d.username}
         link={`/book/${d.bookId}/discussion/${d._id}`}
       />
     ) : <Panel><h2>No discussions on this book yet</h2></Panel>;
@@ -71,12 +71,8 @@ class TeamDiscussionListView extends React.Component {
     const { isLoading, discussions } = this.state;
     return (
       <div className={className}>
-        <Panel header >
-        <PageTitle>Team discussion feed</PageTitle>
-        </Panel>
           <Select
             name="userSort"
-            label="Sort by team member"
             onChange={() => this.selectUser()}
           >
             <option key="all" value="all">All team members</option>

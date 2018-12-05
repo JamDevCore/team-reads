@@ -62,7 +62,7 @@ width: 95%;
 box-sizing: border-box;
 
 select {
-  margin: ${theme.baseMargin / 2}px 10px;
+  margin: 20px 10px 40px 10px;
   box-sizing: border-box;
   height: 40px;
   background-color: white;

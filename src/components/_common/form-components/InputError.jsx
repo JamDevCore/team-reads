@@ -6,5 +6,5 @@ export default styled.label`
   font-size: 14px;
   display: block;
   font-weight: 600;
-  color: ${theme.colors.highlight};
+  color: ${theme.colors.error};
 `;

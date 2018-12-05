@@ -1,10 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import axios from 'axios';
+import { openAlert } from 'simple-react-alert';
 import Panel from '../components/_common/Panel';
-import PageTitle from '../components/_common/PageTitle';
+import Button from '../components/_common/Button';
+import DangerButton from '../components/_common/DangerButton';
 import UserDetailsForm from '../components/forms/UserDetailsForm';
 import api from '../modules/api-call';
+
+const { REACT_APP_AUTH_0_CLIENT_ID } = process.env;
 
 class UserSettings extends React.Component {
   constructor(props) {
@@ -22,12 +27,44 @@ componentDidMount() {
     this.setState({
       email: res.data.email,
       username: res.data.username,
+      isLoading: false,
     });
   })
   .catch((err) => {
     console.log(err);
   });
 }
+
+  requestChangePasswordEmail() {
+    const { email } = this.state;
+    this.setState({ isLoading: true });
+    var options = {
+      method: 'POST',
+      url: 'https://jamesvitaly.eu.auth0.com/dbconnections/change_password',
+      headers: { 'content-type': 'application/json' },
+      data: {
+        client_id: REACT_APP_AUTH_0_CLIENT_ID,
+        email,
+        connection: 'Username-Password-Authentication'
+        },
+      json: true
+      };
+      axios(options)
+      .then((res) => {
+        this.setState({
+          isLoading: false,
+        })
+        openAlert({ message: `${res.data}`, type: 'success' });
+        console.log(res)
+      })
+      .catch((err )=> {
+        this.setState({
+          isLoading: false,
+        })
+        openAlert({ message: `Err: ${err}`, type: 'danger' });
+        console.log(err)
+      })
+  }
 
   updateUserDetails({ email, username }) {
     this.setState({
@@ -37,11 +74,10 @@ componentDidMount() {
   }
   render() {
     const { className, userId, userSub } = this.props;
-    const { email, username } = this.state;
+    const { email, username, isLoading } = this.state;
     console.log(email)
     return (
       <div className={className}>
-        <PageTitle>Settings</PageTitle>
         <Panel>
           <UserDetailsForm
             key={`${email} ${username}`}
@@ -50,6 +86,13 @@ componentDidMount() {
             userId={userId}
             userSub={userSub}
             updateUserDetails={this.updateUserDetails}
+          />
+        </Panel>
+        <Panel>
+          <DangerButton
+            label="Send password reset email"
+            isLoading={isLoading}
+            onClick={() => this.requestChangePasswordEmail()}
           />
         </Panel>
       </div>
@@ -74,4 +117,5 @@ UserSettings.defaultProps = {
 export default styled(UserSettings)`
 width: 1000px;
 margin: 0px auto;
+padding-top: 40px;
 `;

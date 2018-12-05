@@ -24,6 +24,7 @@ const TextInput = ({
   form: { touched, errors },
   placeholder,
   searchBar,
+  type,
   ...props,
 }) => {
   const error = errors[name];
@@ -33,6 +34,7 @@ const TextInput = ({
       <InputLabel htmlFor={name} error={error}>{label}</InputLabel>
         <Input
           id={name}
+          type={type || "text"}
           placeholder={placeholder}
           hasError={error && touch}
           {...field}
@@ -48,6 +50,7 @@ TextInput.propTypes = {
   label: PropTypes.string,
   placeholder: PropTypes.string,
   searchBar: PropTypes.bool,
+  type: PropTypes.string,
   /* eslint-disable react/forbid-prop-types,react/require-default-props */
   field: PropTypes.object,
   form: PropTypes.object,
@@ -55,6 +58,7 @@ TextInput.propTypes = {
 };
 
 TextInput.defaultProps = {
+  type: undefined,
   placeholder: undefined,
   searchBar: undefined,
   label: undefined,

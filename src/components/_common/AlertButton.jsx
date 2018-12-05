@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom';
 import Button from './Button';
 import theme from '../../theme';
 
-const HighlightButton = styled(Button)`
-  background-color: ${theme.colors.highlight};
+const AlertButton = styled(Button)`
+  background-color: ${theme.colors.alert};
 `;
 
-export default HighlightButton;
+export default AlertButton;

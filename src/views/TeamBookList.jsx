@@ -37,12 +37,8 @@ class TeamBookList extends React.Component {
     console.log(books)
     return (
       <div className={className}>
-        <Panel header >
-        <PageTitle>Team book feed</PageTitle>
-        </Panel>
         <Select
           name="userSort"
-          label="Sort by team member"
           onChange={() => this.selectUser()}
         >
           <option key="all" value="all">All team members</option>
@@ -83,6 +79,7 @@ TeamBookList.defaultProps = {
 };
 
 export default styled(TeamBookList)`
-width: 1000px;
+width: 100%;
+min-width: 600px;
 padding-top: 40px;
 `;

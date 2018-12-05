@@ -58,7 +58,7 @@ class TeamView extends React.Component {
         <SidebarMenu />
         <div className="teamView">
         <Switch>
-          <Route exact path="/team/:id" teamName={teamName} teamId={teamId} component={TeamOverview} />
+          {/* <Route exact path="/team/:id" teamName={teamName} teamId={teamId} component={TeamOverview} /> */}
           {/* <Route exact path="/team/:id/members" teamId={teamId} component={TeamMembersView}/> */}
           <Route
             exact
@@ -125,5 +125,10 @@ display: flex;
   margin-left: 350px;
   width: 100%;
   display: flex;
+}
+@media(max-width: 950px) {
+  .teamView {
+    margin-left: 0;
+  }
 }
 `;

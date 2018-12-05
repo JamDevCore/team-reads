@@ -5,7 +5,7 @@ import { openAlert } from 'simple-react-alert';
 import 'react-table/react-table.css';
 import styled from 'styled-components';
 import Loading from './Loading';
-import HighlightButton from './_common/HighlightButton';
+import DangerButton from './_common/DangerButton';
 import api from '../modules/api-call';
 
 class TeamMembers extends React.Component {
@@ -82,7 +82,7 @@ class TeamMembers extends React.Component {
     Cell: props => {
       console.log(props.value, userId)
       return (
-    <HighlightButton
+    <DangerButton
       label={userId === props.value ? "Leave team" : "Remove user"}
       isLoading={isRemovingUser === props.value}
       onClick={() => this.removeUserFromTeam(props.value)}

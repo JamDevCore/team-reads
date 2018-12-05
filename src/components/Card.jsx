@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import history from '../modules/history';
 import styled from 'styled-components';
 import theme from '../theme'
-import HighlightButton from './_common/HighlightButton';
-
+import trimText from '../modules/trim-text';
+import DangerButton from './_common/DangerButton';
 
 class Card extends React.Component {
   render() {
@@ -18,7 +18,7 @@ class Card extends React.Component {
       link,
       owner,
     } = this.props;
-    const heading = author ? `${title} - ${author}` : title;
+    const heading = author ? `${trimText(title, 160)} - ${author}` : trimText(title, 160);
     return (
       <div className={className}>
         <div className="column-1">
@@ -29,14 +29,14 @@ class Card extends React.Component {
             </div>}
           <div className="iconList">
             <i className="fas fa-lightbulb"></i>
-            <p>{lightbulbs}</p>
+            <p>{lightbulbs || 0}</p>
             <i className="fas fa-comments"></i>
             <p>{contributions}</p>
           </div>
 
         </div>
         <div className="column-2">
-          <HighlightButton
+          <DangerButton
             label="View"
             link={link}
           />
@@ -78,8 +78,9 @@ export default styled(Card)`
   background-color: white;
   box-sizing: border-box;
   margin: 0px 20px ${theme.baseMargin}px 10px;
+  padding-right: 15px;
   .column-1 {
-    padding: ${theme.baseMargin / 2}px ${theme.baseMargin}px;
+    padding: 10px 10px 10px 20px;
     width: 80%;
     display: flex;
     flex-direction: column;

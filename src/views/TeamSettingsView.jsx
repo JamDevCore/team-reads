@@ -114,9 +114,6 @@ class TeamSettingsView extends React.Component {
     console.log(teamId)
     return (
       <div className={className}>
-        <Panel header >
-        <PageTitle>Team setting</PageTitle>
-        </Panel>
           {userRequests && userRequests.length > 0 ?
           userRequests.map((user) => {
           return (

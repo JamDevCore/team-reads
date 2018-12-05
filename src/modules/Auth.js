@@ -1,11 +1,12 @@
 import auth0 from 'auth0-js';
 import history from './history';
 
+
 export default class Auth {
   constructor() {
     this.auth0 = new auth0.WebAuth({
       domain: 'jamesvitaly.eu.auth0.com',
-      clientID: 'XSptuZln3ysBr6XhprisMlw510tSnGY9',
+      clientID: `${process.env.REACT_APP_AUTH_0_CLIENT_ID}`,
       audience: 'https://jamesvitaly.eu.auth0.com/userinfo',
       redirectUri: 'http://localhost:3000/callback',
       responseType: 'token id_token',

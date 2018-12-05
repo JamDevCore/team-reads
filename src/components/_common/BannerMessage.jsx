@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from './Button';
-import HighlightButton from './HighlightButton';
+import DangerButton from './DangerButton';
 import ButtonGroup from './ButtonGroup';
 import theme from '../../theme';
 import styled from 'styled-components';
@@ -28,7 +28,7 @@ const BannerMessage = ({
           isLoading={actionLoading}
           onClick={() => action(meta)}
           />
-        <HighlightButton
+        <DangerButton
           label={closeLabel}
           onClick={() => closeAction(meta)}
           />

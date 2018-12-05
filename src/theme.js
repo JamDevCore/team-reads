@@ -2,9 +2,11 @@ const colors = {
   light: '#2196f3',
   primary: '#2B67C9',
   dark: '#0086c3',
-  highlight: '#FF5613',
+  highlight: '#3985BF',
+  alert: '#f8b700',
+  danger: '#FF5613',
   success: '#00a86c',
-  danger: '#f44336',
+  error: '#f44336',
   grey: '#d3d3d3',
   black: '#484848',
 }

@@ -9,7 +9,7 @@ import Panel from '../components/_common/Panel';
 import Divider from '../components/_common/Divider';
 import ButtonGroup from '../components/_common/ButtonGroup';
 import Button from '../components/_common/Button';
-import HighlightButton from '../components/_common/HighlightButton';
+import DangerButton from '../components/_common/DangerButton';
 import Select from '../components/_common/form-components/Select';
 import Comment from '../components/Comment';
 import CreateDiscussionForm from '../components/forms/CreateDiscussionForm';
@@ -139,7 +139,7 @@ constructor() {
             isLoading={isLoading}
             onClick={() => this.addNote()}
           />
-        <HighlightButton
+        <DangerButton
             label="Delete discussion"
             isLoading={isDeleting}
             onClick={() => this.deleteDiscussion()}

@@ -84,7 +84,7 @@ class AuthenticatedRoute extends React.Component {
             return <Redirect to="/team-setup" />
             }
 
-          if((pathName === 'team' || pathName === 'teamSetup') && teamId) return <Redirect to ={`/team/${teamId}`} />
+          if((pathName === 'team' || pathName === 'teamSetup') && teamId) return <Redirect to ={`/team/${teamId}/books`} />
 
           return React.createElement(component, {
             ...props,

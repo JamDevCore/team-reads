@@ -6,7 +6,7 @@ import Panel from '../components/_common/Panel';
 import ButtonGroup from '../components/_common/ButtonGroup';
 
 import Button from '../components/_common/Button';
-import HighlightButton from '../components/_common/HighlightButton';
+import DangerButton from '../components/_common/DangerButton';
 import Loading from '../components/Loading';
 import AddCommentForm from '../components/forms/AddCommentForm';
 import theme from '../theme';
@@ -99,7 +99,7 @@ class Comment extends React.Component {
                 label="Edit"
                 onClick={() => this.setEditState(true)}
               />
-            <HighlightButton
+            <DangerButton
                 label="Delete"
                 isLoading={isLoading}
                 onClick={() => this.deleteComment()}
