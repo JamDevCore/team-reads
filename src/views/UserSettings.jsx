@@ -5,7 +5,7 @@ import axios from 'axios';
 import { openAlert } from 'simple-react-alert';
 import Panel from '../components/_common/Panel';
 import Button from '../components/_common/Button';
-import DangerButton from '../components/_common/DangerButton';
+import HighlightButton from '../components/_common/HighlightButton';
 import UserDetailsForm from '../components/forms/UserDetailsForm';
 import api from '../modules/api-call';
 
@@ -89,8 +89,9 @@ componentDidMount() {
           />
         </Panel>
         <Panel>
-          <DangerButton
+          <HighlightButton
             label="Send password reset email"
+            icon="fas fa-envelope"
             isLoading={isLoading}
             onClick={() => this.requestChangePasswordEmail()}
           />

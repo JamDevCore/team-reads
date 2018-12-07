@@ -23,6 +23,8 @@ class SidebarMenu extends React.Component {
 
   render() {
     const { className } = this.props;
+    const { isMobileNavOpen } = this.state;
+    const mobileNavMenu = isMobileNavOpen ? 'openLinks' : 'closedLinks';
     return (
       <div className={className}>
         {/*<MobileNavLink to={`/team/${teamId}/`}>Team Central</MobileNavLink>*/}
@@ -32,7 +34,7 @@ class SidebarMenu extends React.Component {
         >
           <p>View options</p>
         </div>
-        <div className="links">
+        <div className={mobileNavMenu}>
           <MobileNavLink to={`/team/${teamId}/books`}>Books</MobileNavLink>
           {/* <MobileNavLink to={`/team/${teamId}/members`}>Members</MobileNavLink> */}
           <MobileNavLink to={`/team/${teamId}/discussions`}>Discussions</MobileNavLink>
@@ -73,15 +75,29 @@ export default styled(SidebarMenu)`
     }
   }
   @media(max-width: 950px) {
-    padding:5px;
+    padding: 0;
     width: 100%;
-    height: 20px;
+    height: 40px;
     top: 60px;
-    .links {
+    .closedLinks {
       display: none;
     }
-    .button {
+    .openLinks {
+      text-align: center;
+      width: 100vw;
       display: flex;
+      flex-direction: column;
+      background: white;
+      box-shadow: ${theme.strongBoxShadow};
+      border-top: 1px solid ${theme.colors.lightGrey}
+    }
+    .button {
+      padding: 10px 0px 10px 0px;
+      color: ${theme.colors.light}
+      display: flex;
+    }
+    .button:hover {
+      background-color: ${theme.colors.grey}
     }
   }
 `;

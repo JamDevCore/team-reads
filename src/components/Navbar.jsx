@@ -56,9 +56,9 @@ class Navbar extends React.Component {
           className="fas fa-times"
           onClick={() => this.toggleMobileNav()}
         />
-      <MobileNavLink className="mobileNavLink" to="/">Your books</MobileNavLink>
-        <MobileNavLink className="mobileNavLink" to={`team/${teamId}/books`}>View team</MobileNavLink>
-        <MobileNavLink className="mobileNavLink" to="/settings">Settings</MobileNavLink>
+      <MobileNavLink className="mobileNavLink" onClick={() => this.toggleMobileNav()} to="/">Your books</MobileNavLink>
+        <MobileNavLink className="mobileNavLink" onClick={() => this.toggleMobileNav()}to={`/team/${teamId}/books`}>View team</MobileNavLink>
+        <MobileNavLink className="mobileNavLink" onClick={() => this.toggleMobileNav()} to="/settings">Settings</MobileNavLink>
         <MobileNavLink className="mobileNavLink" to="#" onClick={handleLogout}>Logout</MobileNavLink>
       </MobileNav>);
   }

@@ -4,7 +4,7 @@ import history from '../modules/history';
 import styled from 'styled-components';
 import theme from '../theme'
 import trimText from '../modules/trim-text';
-import DangerButton from './_common/DangerButton';
+import Button from './_common/Button';
 
 class Card extends React.Component {
   render() {
@@ -36,7 +36,7 @@ class Card extends React.Component {
 
         </div>
         <div className="column-2">
-          <DangerButton
+          <Button
             label="View"
             link={link}
           />
