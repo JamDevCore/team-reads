@@ -131,7 +131,7 @@ constructor() {
         <div className="left">
         <Panel>
           <Link to={`/book/${bookId}`}><h2>{bookTitle}</h2></Link>
-          <p>{author}</p>
+          <h4>{author}</h4>
           <Divider />
         <ButtonGroup>
           <Button
@@ -239,7 +239,6 @@ li {
     margin-left: 10px;
     font-size: 16px;
     font-family: 'Maven Pro';
-    font-weight: bold;
   }
 }
 @media(max-width: 1124px) {

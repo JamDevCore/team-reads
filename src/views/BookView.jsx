@@ -86,7 +86,7 @@ class BookView extends React.Component {
         contributions={d.comments.length}
         link={`/book/${bookId}/discussion/${d._id}`}
       />
-    ) : <Panel><h2>No discussions on this book yet</h2></Panel>;
+  ) : <Panel><h3>No discussions on this book yet</h3></Panel>;
   }
 
   render() {
@@ -99,7 +99,7 @@ class BookView extends React.Component {
             <div className="left">
               <Panel>
                 <h2>{bookTitle}</h2>
-                <p>{author}</p>
+                <h4>{author}</h4>
                 <Divider />
               <ButtonGroup>
                 <Button
@@ -151,9 +151,6 @@ BookView.defaultProps = {
 };
 
 export default styled(BookView)`
-h3 {
-  font-size: ${theme.fontSize}px;
-}
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

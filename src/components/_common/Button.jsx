@@ -45,9 +45,11 @@ Button.propTypes = {
   type: PropTypes.string,
   isLoading: PropTypes.bool,
   link: PropTypes.string,
+  isFullWidth: PropTypes.bool,
 };
 
 Button.defaultProps = {
+  isFullWidth: undefined,
   label: undefined,
   onClick: undefined,
   icon: undefined,
@@ -68,9 +70,10 @@ export default styled(Button)`
   border: none;
   color: white;
   border-radius: 3px;
-  font-weight: bold;
+  font-weight: 500;
   min-width: 80px;
-  padding: 10px;
+  width: ${(props) => props.isFullWidth ? '100%' : ''};
+  padding: 10px 15px;
   cursor: pointer;
   font-family: 'Maven Pro', sans-serif;
   a {
@@ -83,5 +86,6 @@ export default styled(Button)`
   i {
     margin-right: 10px;
     width: auto;
+    text-decoration: none !important;
   }
 `;

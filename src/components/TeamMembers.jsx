@@ -98,7 +98,7 @@ class TeamMembers extends React.Component {
     console.log(teamMembers)
     return (
       <div className={className}>
-        <h1>Team members</h1>
+        <h2>Team members</h2>
         {!loadingUsers ? <ReactTable
           key={teamMembers.length}
           className="table -striped"
@@ -122,8 +122,4 @@ TeamMembers.defaultProps = {
 };
 
 export default styled(TeamMembers)`
-.table {
-  font-size: 16px;
-  font-weight: 600;
-}
 `;

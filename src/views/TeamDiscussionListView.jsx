@@ -63,7 +63,7 @@ class TeamDiscussionListView extends React.Component {
         contributions={d.comments.length}
         link={`/book/${d.bookId}/discussion/${d._id}`}
       />
-    ) : <Panel><h2>No discussions on this book yet</h2></Panel>;
+  ) : <Panel><h3>No discussions on this book yet</h3></Panel>;
   }
 
   render() {

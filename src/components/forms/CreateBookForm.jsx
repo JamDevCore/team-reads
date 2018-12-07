@@ -15,7 +15,7 @@ import theme from '../../theme';
 const CreateBookForm = ({ className, shelves, isSubmitting }) => {
     return (
       <div className={className}>
-        <h2>To start a discussion, try adding a book to your collection</h2>
+        <h3>To start a discussion, try adding a book to your collection</h3>
         <Divider />
         <Form>
           <Field

@@ -7,6 +7,7 @@ const colors = {
   alert: '#f8b700',
   danger: '#FF5613',
   success: '#00a86c',
+  successSelect: '#00e694',
   error: '#f44336',
   grey: '#d3d3d3',
   black: '#484848',

@@ -116,7 +116,11 @@ UserSettings.defaultProps = {
 };
 
 export default styled(UserSettings)`
-width: 1000px;
+max-width: 1000px;
 margin: 0px auto;
 padding-top: 40px;
+@media(max-width: 950px) {
+  width: 100%;
+}
+
 `;

@@ -55,7 +55,7 @@ SidebarMenu.defaultProps = {
 };
 
 export default styled(SidebarMenu)`
-  padding: 20px;
+  padding: 20px 0;
   position: fixed;
   top: 60px;
   height: 100vh;
@@ -69,7 +69,7 @@ export default styled(SidebarMenu)`
     padding: 0;
     p {
     margin:0;
-    font-weight: bold;
+    font-weight: 700;
     width: 100%;
     padding:0;
     text-align: center;
@@ -107,7 +107,7 @@ export default styled(SidebarMenu)`
         margin: 0;
         padding: 20px 0px;
         font-size: 20px;
-        font-weight: bold;
+        font-weight: 500;
         height: 100%;
         width: 100%;
       }

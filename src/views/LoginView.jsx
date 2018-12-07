@@ -13,7 +13,7 @@ class LoginView extends React.Component {
       <div className={className}>
         <Panel>
           <div className="loginContainer">
-            <h1>Welcome to Team Reads</h1>
+            <h2>Welcome to Team Reads</h2>
               <ButtonGroup>
               <Button
                 label="Enter"

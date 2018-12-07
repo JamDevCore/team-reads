@@ -22,7 +22,7 @@ class Card extends React.Component {
     return (
       <div className={className}>
         <div className="column-1">
-          <h3>{heading}</h3>
+          <h4>{heading}</h4>
             {owner && <div className="owner">
                 <i className="fas fa-book"></i>
                 <p>{owner}</p>
@@ -39,6 +39,7 @@ class Card extends React.Component {
           <Button
             label="View"
             link={link}
+            isFullWidth
           />
         </div>
       </div>);
@@ -78,7 +79,7 @@ export default styled(Card)`
   background-color: white;
   box-sizing: border-box;
   margin: 0px 20px ${theme.baseMargin}px 10px;
-  padding-right: 15px;
+  padding: 15px;
   .column-1 {
     padding: 10px 10px 10px 20px;
     width: 80%;
@@ -92,11 +93,6 @@ export default styled(Card)`
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-  }
-  h3 {
-    margin: 10px 10px;
-    font-family: 'Maven Pro', sans-serif;
-
   }
   i {
     margin: 10px 10px;
@@ -114,5 +110,8 @@ export default styled(Card)`
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    p {
+      padding-top: 2px;
+    }
   }
 `;

@@ -30,6 +30,6 @@ export default styled(ButtonGroup)`
   * {
     display: inline-block !important;
     width: auto !important;
-    margin-right: 10px;
+    margin-right: 10px !important;
   }
 `;

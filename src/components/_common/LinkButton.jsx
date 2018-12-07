@@ -5,7 +5,12 @@ import theme from '../../theme';
 const LinkButton = styled(Button)`
   background-color: transparent;
   color: ${theme.colors.primary};
-  text-decoration: underline;
+  i {
+    text-decoration: none !important;
+  }
+  &:hover {
+    background-color: ${theme.colors.lightGrey};
+  }
 `;
 
 export default LinkButton;

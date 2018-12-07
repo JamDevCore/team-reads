@@ -15,7 +15,7 @@ class UpdateTeamNameForm extends React.Component {
     const { isSubmitting, className } = this.props;
     return (
       <div className={className}>
-        <h1>Details</h1>
+        <h2>Details</h2>
         <Form>
           <Field
             name="teamName"
