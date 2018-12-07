@@ -69,7 +69,7 @@ export default styled(Button)`
   color: white;
   border-radius: 3px;
   font-weight: bold;
-  min-width: 120px;
+  min-width: 80px;
   padding: 10px;
   cursor: pointer;
   font-family: 'Maven Pro', sans-serif;

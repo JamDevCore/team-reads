@@ -4,8 +4,6 @@ import MobileNavLink from '../components/_common/MobileNavLink';
 import styled from 'styled-components';
 import theme from '../theme';
 
-const teamId = "5bc4b158209338216135bbe4";
-
 class SidebarMenu extends React.Component {
   constructor(){
     super();
@@ -23,17 +21,18 @@ class SidebarMenu extends React.Component {
 
   render() {
     const { className } = this.props;
+    const { teamId } = this.props;
     const { isMobileNavOpen } = this.state;
     const mobileNavMenu = isMobileNavOpen ? 'openLinks' : 'closedLinks';
     return (
       <div className={className}>
         {/*<MobileNavLink to={`/team/${teamId}/`}>Team Central</MobileNavLink>*/}
-        <div
+        {<div
           className="button"
           onClick={() => this.toggleMobileNav()}
         >
           <p>View options</p>
-        </div>
+        </div>}
         <div className={mobileNavMenu}>
           <MobileNavLink to={`/team/${teamId}/books`}>Books</MobileNavLink>
           {/* <MobileNavLink to={`/team/${teamId}/members`}>Members</MobileNavLink> */}
@@ -47,10 +46,12 @@ class SidebarMenu extends React.Component {
 
 SidebarMenu.propTypes = {
   className: PropTypes.string,
+  teamId: PropTypes.string,
 };
 
 SidebarMenu.defaultProps = {
   className: undefined,
+  teamId: undefined,
 };
 
 export default styled(SidebarMenu)`
@@ -74,23 +75,14 @@ export default styled(SidebarMenu)`
     text-align: center;
     }
   }
+  .button {
+    display: none;
+  }
   @media(max-width: 950px) {
     padding: 0;
     width: 100%;
     height: 40px;
     top: 60px;
-    .closedLinks {
-      display: none;
-    }
-    .openLinks {
-      text-align: center;
-      width: 100vw;
-      display: flex;
-      flex-direction: column;
-      background: white;
-      box-shadow: ${theme.strongBoxShadow};
-      border-top: 1px solid ${theme.colors.lightGrey}
-    }
     .button {
       padding: 10px 0px 10px 0px;
       color: ${theme.colors.light}
@@ -98,6 +90,30 @@ export default styled(SidebarMenu)`
     }
     .button:hover {
       background-color: ${theme.colors.grey}
+    }
+    .closedLinks {
+      display: none;
+    }
+    .openLinks {
+      padding: 0px 0px;
+      text-align: center;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      background: white;
+      box-shadow: ${theme.strongBoxShadow};
+      border-top: 1px solid ${theme.colors.lightGrey}
+      a {
+        margin: 0;
+        padding: 20px 0px;
+        font-size: 20px;
+        font-weight: bold;
+        height: 100%;
+        width: 100%;
+      }
+      a:hover {
+        background-color: ${theme.colors.grey};
+      }
     }
   }
 `;

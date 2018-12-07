@@ -18,7 +18,7 @@ const theme = {
   borderRadius: 6,
   baseMargin: 20,
   boxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)',
-  strongBoxShadow: '0 5px 8px rgba(0,0,0,0.12), 0 5px 8px rgba(0,0,0,0.24)',
+  strongBoxShadow: '0 2px 3px rgba(0,0,0,0.12), 0 2px 3px rgba(0,0,0,0.24)',
 }
 
 export default theme;
