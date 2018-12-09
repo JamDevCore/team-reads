@@ -4,7 +4,6 @@ import ReactTable from 'react-table';
 import { openAlert } from 'simple-react-alert';
 import 'react-table/react-table.css';
 import styled from 'styled-components';
-import Loading from './Loading';
 import DangerButton from './_common/DangerButton';
 import api from '../modules/api-call';
 
@@ -14,32 +13,9 @@ class TeamMembers extends React.Component {
     this.state = {
       teamMembers: [],
       isRemovingUser: false,
-      loadingUsers: false,
     }
   }
 
-  componentDidMount() {
-    const { teamId } = this.props;
-    if (teamId) {
-      this.setState({
-        loadingUsers: true,
-      })
-        api.get(`user?teamId=${teamId}`)
-        .then((res) => {
-          const users = res.data.data;
-          this.setState({
-            teamMembers: users,
-            loadingUsers: false,
-          });
-        })
-        .catch(err => {
-          this.setState({
-            loadingUsers: false,
-          })
-          console.log(err)
-        })
-    }
-  }
   removeUserFromTeam(userId) {
     const { teamId } = this.props;
     const { teamMembers } = this.state;
@@ -92,20 +68,19 @@ class TeamMembers extends React.Component {
 }
 
   render() {
-    const { teamMembers, loadingUsers } = this.state;
-    const { className } = this.props;
+    const { className, teamMembers } = this.props;
     const columns = this.columns()
     console.log(teamMembers)
     return (
       <div className={className}>
         <h2>Team members</h2>
-        {!loadingUsers ? <ReactTable
+        {<ReactTable
           key={teamMembers.length}
           className="table -striped"
           data={teamMembers}
           columns={columns}
           defaultPageSize={5}
-        /> : <Loading />}
+        />}
       </div>
     );
   }
@@ -114,11 +89,13 @@ class TeamMembers extends React.Component {
 TeamMembers.propTypes = {
   teamId: PropTypes.string,
   userId: PropTypes.string,
+  teamMembers: PropTypes.arrayOf(PropTypes.object),
 };
 
 TeamMembers.defaultProps = {
   teamId: undefined,
   userId: undefined,
+  teamMembers: undefined,
 };
 
 export default styled(TeamMembers)`

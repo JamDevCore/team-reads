@@ -16,9 +16,9 @@ const MobileNav = styled.div`
   height: 100%;
   padding-top: 20px;
   z-index: 100;
-  text-align: right;
   color: ${theme.colors.black};
   i {
+    text-align: right;
     display: block !important;
     font-size: 24px;
     color: ${theme.colors.black} !important;

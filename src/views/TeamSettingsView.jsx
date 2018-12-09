@@ -144,6 +144,7 @@ class TeamSettingsView extends React.Component {
               teamId={teamId}
               teamName={teamName}
               teamMembersId={teamMembers}
+              teamMembers={teamMembers}
             />
           </Panel>
           <Panel>
@@ -175,11 +176,11 @@ class TeamSettingsView extends React.Component {
 }
 
 TeamSettingsView.propTypes = {
-  joinRequests: PropTypes.arrayOf(PropTypes.string),
+  joinRequests: PropTypes.arrayOf(PropTypes.object),
   userId: PropTypes.string,
   teamId: PropTypes.string,
   teamName: PropTypes.string,
-  teamMembers: PropTypes.arrayOf(PropTypes.string),
+  teamMembers: PropTypes.arrayOf(PropTypes.object),
 };
 
 TeamSettingsView.defaultProps = {

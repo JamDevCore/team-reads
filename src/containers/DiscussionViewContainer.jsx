@@ -27,57 +27,62 @@ class DiscussionViewContainer extends React.Component {
 
   componentDidMount() {
     const { discussionId, bookId } = this.props.match.params;
-    api.get(`book/${bookId}`)
-    .then((res) => {
-      console.log(res);
-      const book = res.data;
-      this.setState({
-        bookId: book._id,
-        bookTitle: book.name,
-        author: book.author,
-        readBy: book.readyBy,
-      });
-    })
-    .catch(err => {
-      this.setState({
-        isLoading: false,
-      })
-      console.log(err)
-    })
+    // api.get(`book/${bookId}`)
+    // .then((res) => {
+    //   console.log(res);
+    //   const book = res.data;
+    //   this.setState({
+    //     bookId: book._id,
+    //     bookTitle: book.name,
+    //     author: book.author,
+    //   });
+    // })
+    // .catch(err => {
+    //   this.setState({
+    //     isLoading: false,
+    //   })
+    //   console.log(err)
+    // })
     api.get(`discussion/${discussionId}`)
     .then((res) => {
       console.log(res);
       const discussion = res.data;
+      console.log(discussion.bookId[0]._id);
       this.setState({
         discussionId: discussion._id,
         title: discussion.title,
         note: discussion.note,
-        ownerId: discussion.userId,
+        ownerId: discussion.userId._id,
+        bookId: discussion.bookId[0]._id,
+        bookTitle: discussion.bookId[0].name,
+        author: discussion.bookId[0].author,
+        comments: discussion.comments,
+        isLoading: false,
       });
     })
-    .catch(err => {
+    .catch((err) => {
       this.setState({
         isLoading: false,
       })
       console.log(err)
     })
-    api.get(`comment?discussionId=${discussionId}`)
-    .then((res) => {
-      console.log(res);
-      const comments = res.data.data;
-      console.log(comments)
-      this.setState({
-        comments,
-      }, this.setState({
-        isLoading: false,
-      }));
-    })
-    .catch(err => {
-      this.setState({
-        isLoading: false,
-      })
-      console.log(err)
-    })
+    // api.get(`comment?discussionId=${discussionId}`)
+    // .then((res) => {
+    //   console.log(res);
+    //   const comments = res.data.data;
+    //   console.log(comments)
+    //   this.setState({
+    //     comments,
+    //   }, this.setState({
+    //     isLoading: false,
+    //   }));
+    // })
+    // .catch(err => {
+    //   this.setState({
+    //     isLoading: false,
+    //   })
+    //   console.log(err)
+    // })
   }
 
   updateDiscussion(title, note) {

@@ -16,6 +16,7 @@ class TeamDiscussionListViewContainer extends React.Component {
   }
   componentDidMount() {
     const { teamId } = this.props;
+    console.log(teamId)
     api.get(`discussion?teamId=${teamId}`)
     .then((res) => {
       console.log(res);

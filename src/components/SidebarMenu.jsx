@@ -31,7 +31,7 @@ class SidebarMenu extends React.Component {
           className="button"
           onClick={() => this.toggleMobileNav()}
         >
-          <p>View options</p>
+          <p>Team menu</p>
         </div>}
         <div className={mobileNavMenu}>
           <MobileNavLink onClick={() => this.toggleMobileNav()} to={`/team/${teamId}/books`}>Books</MobileNavLink>
@@ -69,7 +69,7 @@ export default styled(SidebarMenu)`
     padding: 0;
     p {
     margin:0;
-    font-weight: 700;
+    font-weight: 500;
     width: 100%;
     padding:0;
     text-align: center;
@@ -87,6 +87,8 @@ export default styled(SidebarMenu)`
       padding: 10px 0px 10px 0px;
       color: ${theme.colors.light}
       display: flex;
+      border-bottom: ${theme.colors.lightGrey}
+      box-shadow: ${theme.boxShadow};
     }
     .button:hover {
       background-color: ${theme.colors.grey}
@@ -105,7 +107,7 @@ export default styled(SidebarMenu)`
       border-top: 1px solid ${theme.colors.lightGrey}
       a {
         margin: 0;
-        padding: 20px 0px;
+        padding: 20px 20px;
         font-size: 20px;
         font-weight: 500;
         height: 100%;
