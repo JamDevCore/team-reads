@@ -33,31 +33,11 @@ class TeamBookListContainer extends React.Component {
       })
     })
     }
-    if (teamId) {
-      this.setState({
-        loadingUsers: true,
-      })
-        api.get(`user?teamId=${teamId}`)
-        .then((res) => {
-          const users = res.data.data;
-          console.log(res)
-          this.setState({
-            teamMembers: users,
-            loadingUsers: false,
-          });
-        })
-        .catch(err => {
-          this.setState({
-            loadingUsers: false,
-          })
-          console.log(err)
-        })
-    }
-
   }
 
   assignOwnersToBooks() {
-    const { teamMembers, books } = this.state;
+    const { books } = this.state;
+    const { teamMembers } = this.props;
     let newBooks;
     if (books && teamMembers) {
       console.log('here')
@@ -78,8 +58,7 @@ class TeamBookListContainer extends React.Component {
       isLoading,
       books,
     } = this.state;
-    const { userId, teamId, teamName } = this.props;
-    const { teamMembers } = this.state;
+    const { userId, teamId, teamName, teamMembers} = this.props;
     console.log(books)
     return isLoading ? <Callback /> :
     <TeamBookList
@@ -94,7 +73,7 @@ class TeamBookListContainer extends React.Component {
 
 TeamBookListContainer.propTypes = {
   teamId: PropTypes.string,
-  teamMembers: PropTypes.arrayOf(PropTypes.string),
+  teamMembers: PropTypes.arrayOf(PropTypes.object),
   teamName: PropTypes.string,
 };
 

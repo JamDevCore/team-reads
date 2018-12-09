@@ -6,11 +6,32 @@ import Panel from '../components/_common/Panel';
 import ButtonGroup from '../components/_common/ButtonGroup';
 import Chip from '../components/_common/Chip';
 import HighlightButton from '../components/_common/HighlightButton';
-import DangerButton from '../components/_common/DangerButton';
+import IconButton from '../components/_common/IconButton';
 import Loading from '../components/Loading';
 import AddCommentForm from '../components/forms/AddCommentForm';
 import theme from '../theme';
 
+
+const Edit = styled.div`
+width: 100%;
+height: 25px;
+position: absolute;
+top: 0;
+left: 0;
+background-color: ${theme.colors.grey}
+button {
+  cursor: pointer;
+  float: right;
+  margin: 0px 5px;
+  color: ${theme.colors.black};
+  background: transparent;
+  border: none;
+  padding: 3px;
+  i {
+    font-size: 16px;
+  }
+}
+`
 
 class Comment extends React.Component {
   constructor() {
@@ -20,7 +41,7 @@ class Comment extends React.Component {
       isLoading: false,
       editing: false,
     }
-    this.setEditState = this.setEditState.bind(this);
+    this.toggleEditState = this.toggleEditState.bind(this);
   }
 
   componentDidMount() {
@@ -59,9 +80,10 @@ class Comment extends React.Component {
     })
   }
 
-  setEditState(editing) {
+  toggleEditState() {
+    const { editing } = this.state;
     this.setState({
-      editing,
+      editing: !editing,
     });
   }
   setLoading(isLoading) {
@@ -77,7 +99,7 @@ class Comment extends React.Component {
         userId={userId}
         text={text}
         discussionId={discussionId}
-        setEditState={this.setEditState}
+        toggleEditState={this.toggleEditState}
         commentId={commentId}
         updateComments={updateComments}
       />
@@ -93,26 +115,29 @@ class Comment extends React.Component {
           <h6>{username}</h6>
           </div>
           {editing ? this.renderEditCommentForm() : <p>{text}</p>}
-          {userId === ownerId &&
-            <ButtonGroup>
-              <HighlightButton
-                label="Edit"
-                onClick={() => this.setEditState(true)}
-              />
-            <DangerButton
-                label="Delete"
-                isLoading={isLoading}
-                onClick={() => this.deleteComment()}
-              />
-          </ButtonGroup>}
       </React.Fragment>
     )
   }
   render() {
-    const{ userId, className } = this.props;
-    const { username } = this.state;
+    const{ userId, className, ownerId } = this.props;
+    const { username, isLoading } = this.state;
     return (
       <Panel key={userId} className={className}>
+        {userId === ownerId &&
+        <Edit>
+          <button
+            onClick={() => this.deleteComment()}
+            >
+            {!isLoading && <i className="fas fa-times" />}
+            {isLoading && <i className="fas fa-spinner fa-spin" />}
+          </button>
+          <button
+
+            onClick={() => this.toggleEditState()}
+            >
+            <i className="fas fa-pen" />
+          </button>
+        </Edit>}
         {username  ? this.renderComment() : <Loading />}
       </Panel>
     );
@@ -144,7 +169,7 @@ Comment.defaultProps = {
 };
 
 export default styled(Comment)`
-padding: 30px;
+padding-top: 50px;
 position: relative;
 .header {
   display: flex;

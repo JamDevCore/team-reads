@@ -90,9 +90,9 @@ constructor() {
     return (
       <React.Fragment>
       <h3>Highlight</h3>
-      <p>{title}</p>
+      <p className="highlight">{title || "Untitled"}</p>
       <h3>Note</h3>
-      <p>{note}</p>
+      <p className="note">{note || "No note has been added"}</p>
       </React.Fragment>
     )
   }
@@ -119,7 +119,7 @@ constructor() {
       note,
       bookId,
       userId,
-      createdBy,
+      ownerId,
       discussionId,
       updateComments,
       removeComments,
@@ -139,18 +139,18 @@ constructor() {
             isLoading={isLoading}
             onClick={() => this.addNote()}
           />
-        <DangerButton
+        {ownerId === userId && <DangerButton
             label="Delete discussion"
             isLoading={isDeleting}
             onClick={() => this.deleteDiscussion()}
-          />
+          />}
         </ButtonGroup>
         </Panel>
           <AmazonLink href="http://www.amazon.co.uk">Purchase on Amazon</AmazonLink>
         </div>
         <div className="right">
           <Panel>
-            {userId === createdBy ? this.renderEditorView() : this.renderContributorView()}
+            {userId === ownerId ? this.renderEditorView() : this.renderContributorView()}
           </Panel>
           {comments && comments.length > 0 ?
           comments.map(comment =>
@@ -183,7 +183,7 @@ constructor() {
 DiscussionView.propTypes = {
   className: PropTypes.string,
   userId: PropTypes.string,
-  createdBy: PropTypes.string,
+  ownerId: PropTypes.string,
   discussionId: PropTypes.string,
   bookId: PropTypes.string,
   bookTitle: PropTypes.string,
@@ -200,7 +200,7 @@ DiscussionView.propTypes = {
 DiscussionView.defaultProps = {
   className: undefined,
   userId: undefined,
-  createdBy: undefined,
+  ownerId: undefined,
   discussionId: undefined,
   bookId: undefined,
   bookTitle: undefined,

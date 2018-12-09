@@ -34,10 +34,10 @@ class SidebarMenu extends React.Component {
           <p>View options</p>
         </div>}
         <div className={mobileNavMenu}>
-          <MobileNavLink to={`/team/${teamId}/books`}>Books</MobileNavLink>
+          <MobileNavLink onClick={() => this.toggleMobileNav()} to={`/team/${teamId}/books`}>Books</MobileNavLink>
           {/* <MobileNavLink to={`/team/${teamId}/members`}>Members</MobileNavLink> */}
-          <MobileNavLink to={`/team/${teamId}/discussions`}>Discussions</MobileNavLink>
-          <MobileNavLink to={`/team/${teamId}/settings`}>Settings</MobileNavLink>
+          <MobileNavLink onClick={() => this.toggleMobileNav()} to={`/team/${teamId}/discussions`}>Discussions</MobileNavLink>
+          <MobileNavLink onClick={() => this.toggleMobileNav()} to={`/team/${teamId}/settings`}>Settings</MobileNavLink>
         </div>
       </div>
     );

@@ -10,8 +10,6 @@ class DashboardViewContainer extends React.Component {
     super(props);
     this.state = {
       books: [],
-      shelves: [],
-      currentShelf: 'all',
       isLoading: true,
     }
     this.addBookToState = this.addBookToState.bind(this);
@@ -51,16 +49,12 @@ class DashboardViewContainer extends React.Component {
     const {
       isLoading,
       books,
-      currentShelf,
-      shelves,
     } = this.state;
     const { userId } = this.props;
     return isLoading ? <Callback /> :
     <DashboardView
       userId={userId}
       books={books}
-      currentShelf={currentShelf}
-      shelves={shelves}
       addBookToState={this.addBookToState}
     />
   }

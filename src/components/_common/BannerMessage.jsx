@@ -61,15 +61,20 @@ BannerMessage.defaultProps = {
 
 export default styled(BannerMessage)`
   box-sizing: border-box !important;
+  border-radius: ${theme.borderRadius}px;
   width: 95%;
   display: flex;
   .message {
     width: 70%;
     padding: 0;
     margin: auto 0;
-    color: ${theme.colors.primary};
+    color: #fff;
+    p {
+      font-weight: 500 !important;
+    }
+
   }
-  background: white;
+  background: ${theme.colors.alert};
   margin: 0px 20px ${theme.baseMargin}px 10px;
   padding: 0px 10px;
 `;

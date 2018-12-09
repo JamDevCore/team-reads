@@ -10,6 +10,7 @@ class BookViewContainer extends React.Component {
     this.state = {
       isLoading: true,
       bookId: undefined,
+      ownerId: undefined,
       discussions: [],
       bookTitle: undefined,
       author: undefined,
@@ -28,6 +29,7 @@ class BookViewContainer extends React.Component {
         bookTitle: book.name,
         author: book.author,
         readBy: book.readyBy,
+        ownerId: book.ownerId,
       }, this.setState({
         isLoading: false,
       }));
@@ -62,12 +64,15 @@ class BookViewContainer extends React.Component {
       readBy,
       personalStatus,
       bookId,
+      ownerId,
     } = this.state;
     const { userId, username, } = this.props;
+    console.log(ownerId)
     return isLoading && !bookId ? <Callback /> :
     <BookView
       key={bookId}
       userId={userId}
+      ownerId={ownerId}
       bookId={bookId}
       discussions={discussions}
       bookTitle={bookTitle}

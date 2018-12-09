@@ -66,7 +66,7 @@ export default styled(Button)`
   justify-content: center;
   background: ${theme.colors.success};
   font-size: ${theme.fontSize}px;
-  margin: ${theme.baseMargin / 2}px 0;
+  margin: ${theme.baseMargin / 2}px 0 0;
   border: none;
   color: white;
   border-radius: 3px;

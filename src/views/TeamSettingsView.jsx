@@ -193,7 +193,8 @@ TeamSettingsView.defaultProps = {
 export default styled(TeamSettingsView)`
 width: 95%;
 padding-top: 40px;
-h1 {
-  margin-left: 10px;
+@media(max-width: 950px) {
+  margin: 20px auto;
+  width: 100%;
 }
 `;

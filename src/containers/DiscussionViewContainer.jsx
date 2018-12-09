@@ -14,8 +14,7 @@ class DiscussionViewContainer extends React.Component {
       discussionId: undefined,
       bookTitle: undefined,
       author: undefined,
-      readBy: [],
-      createdBy: undefined,
+      ownerId: undefined,
       title: undefined,
       note: undefined,
       comments: [],
@@ -53,7 +52,7 @@ class DiscussionViewContainer extends React.Component {
         discussionId: discussion._id,
         title: discussion.title,
         note: discussion.note,
-        createdBy: discussion.userId,
+        ownerId: discussion.userId,
       });
     })
     .catch(err => {
@@ -118,13 +117,13 @@ class DiscussionViewContainer extends React.Component {
       comments,
       title,
       note,
-      createdBy,
+      ownerId,
     } = this.state;
     const { userId } = this.props;
     return isLoading ? <Callback /> :
     <DiscussionView
       key={bookId}
-      createdBy={createdBy}
+      ownerId={ownerId}
       updateDiscussion={this.updateDiscussion}
       updateComments={this.updateComments}
       removeComments={this.removeComments}

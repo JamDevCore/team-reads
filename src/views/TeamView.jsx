@@ -52,7 +52,7 @@ class TeamView extends React.Component {
   render() {
     const { className, teamId, userId } = this.props;
     const { teamMembers, teamName, joinRequests } = this.state;
-    console.log(teamId)
+    console.log(teamMembers, joinRequests)
     return (
       <div className={className}>
         <SidebarMenu teamId={teamId} />
@@ -122,7 +122,7 @@ TeamView.defaultProps = {
 export default styled(TeamView)`
 display: flex;
 .teamView {
-  margin-left: 350px;
+  margin-left: 300px;
   width: 100%;
   display: flex;
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { openAlert } from 'simple-react-alert';
+import history from '../modules/history';
 import api from '../modules/api-call'
 import Panel from '../components/_common/Panel';
 import BannerMessage from '../components/_common/BannerMessage';
@@ -49,13 +50,14 @@ class TeamSetup extends React.Component {
   acceptInvite(teamId) {
     const { userId } = this.props;
     console.log(userId, teamId)
-    this.setState({ isAcceptingTeam: userId });
+    this.setState({ isAcceptingTeam: teamId });
     api.put(`team/${teamId}`, {
       acceptInvite: userId,
     })
     .then(() => {
       this.setState({ isAcceptingTeam: false })
       openAlert({ message: "The invitation has beem requested", type: "success" });
+      history.push(`/team/${teamId}/books`);
     })
     .catch((err) => {
       this.setState({ isAcceptingTeam: false });
@@ -118,7 +120,7 @@ class TeamSetup extends React.Component {
             closeLoading={isDecliningTeam === team._id}
             action={this.acceptInvite}
             closeAction={this.declineInvite}
-            actionLabel="Accept request"
+            actionLabel="Accept invitation"
             closeLabel="Decline"
             message={`${team.teamName} has sent you an invitation to join their team`}
             />)})
@@ -169,7 +171,4 @@ TeamSetup.defaultProps = {
 export default styled(TeamSetup)`
 margin 40px auto;
 width: 1000px;
-h2 {
-  margin-top 40px;
-}
 `;

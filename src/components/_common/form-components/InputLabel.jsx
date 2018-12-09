@@ -8,5 +8,5 @@ export default styled.label`
   display: block;
   font-family: 'Maven Pro', sans-serif;
   text-align: left;
-  font-weight: 600;
+  font-weight: 500;
 `;

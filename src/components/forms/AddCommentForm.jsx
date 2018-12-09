@@ -39,6 +39,7 @@ AddCommentForm.propTypes = {
   text: PropTypes.string,
   isSubmitting: PropTypes.bool,
   commentId: PropTypes.string,
+  toggleEditState: PropTypes.func,
 };
 
 AddCommentForm.defaultProps = {
@@ -48,6 +49,7 @@ AddCommentForm.defaultProps = {
   text: undefined,
   isSubmitting: false,
   commentId: undefined,
+  toggleEditState: undefined,
 };
 
 export default withFormik({
@@ -93,9 +95,9 @@ export default withFormik({
           setSubmitting(false);
           const comment = response.data
           console.log(comment);
-          openAlert({ message: 'Success! You updated your discussion', type: 'success' });
+          openAlert({ message: 'Your comment has been updated', type: 'success' });
           props.updateComments(comment);
-          props.setEditState(false);
+          props.toggleEditState();
         })
 
     }

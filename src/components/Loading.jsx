@@ -8,7 +8,7 @@ class Loading extends React.Component {
     const { className } = this.props;
     return (
       <div className={className}>
-        <img src={Load} alt="loading"/>
+        <i className ="fas fa-spinner fa-spin" />
       </div>
     );
   }

@@ -90,7 +90,8 @@ class BookView extends React.Component {
   }
 
   render() {
-    const { className, bookTitle, author, readBy, bookId  } = this.props;
+    const { className, bookTitle, author, bookId, ownerId, userId  } = this.props;
+    console.log(ownerId, userId)
     const { isLoading, isDeleting } = this.state;
     return (
       <div className={className}>
@@ -107,20 +108,16 @@ class BookView extends React.Component {
                   isLoading={isLoading}
                   onClick={() => this.addNote()}
                 />
-              <DangerButton
+              {ownerId === userId && <DangerButton
                   label="Delete book"
                   isLoading={isDeleting}
                   onClick={() => this.deleteBook()}
-                />
+                />}
               </ButtonGroup>
               </Panel>
               <AmazonLink isLoading={isLoading} href="http://www.amazon.co.uk">Purchase on Amazon</AmazonLink>
             </div>
             <div className="right">
-              <Select>
-                <option>All notes</option>
-                <option>My notes</option>
-             </Select>
              {this.renderDiscussions()}
           </div>
         </React.Fragment> : <Fallback />}
@@ -130,22 +127,22 @@ class BookView extends React.Component {
 
 BookView.propTypes = {
  userId: PropTypes.string,
+ ownerId: PropTypes.string,
  bookId: PropTypes.string,
  discussions: PropTypes.arrayOf(PropTypes.object),
  bookTitle: PropTypes.string,
  author: PropTypes.string,
- readBy: PropTypes.arrayOf(PropTypes.string),
  personalStatus: PropTypes.string,
  username: PropTypes.string,
 };
 
 BookView.defaultProps = {
  userId: undefined,
+ ownerId: undefined,
  bookId: undefined,
  discussions: undefined,
  bookTitle: undefined,
  author: undefined,
- readBy: undefined,
  personalStatus: undefined,
  username: undefined,
 };
@@ -166,7 +163,7 @@ export default styled(BookView)`
   .right {
     box-sizing: border-box;
     width: 60%;
-    margin: 20px auto;
+    margin: 40px auto;
   }
   @media(max-width: 1124px) {
     .right {

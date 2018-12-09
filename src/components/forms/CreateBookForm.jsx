@@ -12,7 +12,7 @@ import SelectInput from '../_common/form-components/SelectInput';
 import Divider from '../_common/Divider';
 import theme from '../../theme';
 
-const CreateBookForm = ({ className, shelves, isSubmitting }) => {
+const CreateBookForm = ({ className, isSubmitting }) => {
     return (
       <div className={className}>
         <h3>To start a discussion, try adding a book to your collection</h3>
@@ -44,7 +44,6 @@ const CreateBookForm = ({ className, shelves, isSubmitting }) => {
 
 CreateBookForm.propTypes = {
   className: PropTypes.string,
-  shelves: PropTypes.arrayOf(PropTypes.object),
   userId: PropTypes.string,
   isSubmitting: PropTypes.bool,
   addBookToState: PropTypes.func,
@@ -52,7 +51,6 @@ CreateBookForm.propTypes = {
 
 CreateBookForm.defaultProps = {
   className: undefined,
-  shelves: undefined,
   userId: undefined,
   isSubmitting: undefined,
   addBookToState: undefined,
@@ -78,7 +76,7 @@ export default withFormik({
       ownerId: values.userId,
     })
       .then((response) => {
-        openAlert({ message: 'Success! You added a book to your shelf', type: 'success' });
+        openAlert({ message: 'This book has been added to your collection', type: 'success' });
         setSubmitting(false);
         const book = response.data
         console.log(book);

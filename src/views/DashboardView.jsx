@@ -29,28 +29,23 @@ class DashboardView extends React.Component {
         contributions={book.discussions.length}
         author={book.author}
         link={`/book/${book._id}`}
-      />)) : <Panel><h2>You don't have any books on this shelf</h2></Panel>
+      />)) : <Panel>
+      <h3 style={{textAlign: 'center'}}>Add a book to get started!</h3>
+    </Panel>
   }
   render() {
-    const { className, userId, shelves, addBookToState  } = this.props;
+    const { className, userId, addBookToState  } = this.props;
     return (
       <div className={className}>
         <div className="container left">
         <Panel>
         <CreateBookForm
-          shelves={shelves}
           userId={userId}
           addBookToState={addBookToState}
           />
         </Panel>
       </div>
       <div className="container right">
-          <Select
-            id="shelf"
-          >
-          <option value="all">All books</option>
-            {shelves.length > 0 ? shelves.map(shelf => <option key={shelf._id} value={shelf._id}>{shelf.name}</option>) : null}
-          </Select>
           {this.renderBooks()}
           </div>
       </div>
@@ -89,7 +84,7 @@ export default styled(DashboardView)`
   .right {
     box-sizing: border-box;
     width: 60%;
-    margin: 30px auto;
+    margin: 40px auto;
   }
   @media(max-width: 1124px) {
     .right {

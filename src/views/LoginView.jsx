@@ -45,6 +45,11 @@ export default styled(LoginView)`
 margin: 100px auto;
 max-width: 600px;
 .loginContainer {
-  width: 320px;
+  width: 380px;
+}
+@media(max-width: 950px) {
+  .loginContainer {
+    width: 100%;
+  }
 }
 `;
