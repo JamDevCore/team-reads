@@ -5,9 +5,9 @@ import history from './history';
 export default class Auth {
   constructor() {
     this.auth0 = new auth0.WebAuth({
-      domain: `${process.env.REACT_APP_AUTH_0_DOMAIM}`,
+      domain: 'jamesvitaly.eu.auth0.com',
       clientID: `${process.env.REACT_APP_AUTH_0_CLIENT_ID}`,
-      audience: `${process.env.REACT_APP_AUTH_0_DOMAIM}/userinfo`,
+      audience: 'https://jamesvitaly.eu.auth0.com/userinfo',
       redirectUri: `${process.env.REACT_APP_AUTH_CALLBACK}`,
       responseType: 'token id_token',
       scope: 'openid profile email app_metadata update:current_user_metadata update:users',
