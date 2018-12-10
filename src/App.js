@@ -45,8 +45,8 @@ class App extends Component {
 
   render() {
     return (
-    <Router history={history} component={App}>
-      <div className="App">
+  <div className="App">
+    <Router history={history}>
           <Switch>
             <Route path="/login" render={(props) => <LoginView handleLogin={this.login} auth={auth} {...props}/>} />
             <Route path="/callback" render={(props) => {
@@ -61,10 +61,9 @@ class App extends Component {
             <AuthenticatedRoute path="/team/:id" auth={auth} pathName="teamView" component={TeamView}/>
             <AuthenticatedRoute exact path="*" pathName="404" auth={auth} component={Fallback}/>
           </Switch>
-
-        <Alert />
-      </div>
-              </Router>
+      </Router>
+    <Alert />
+  </div>
     );
   }
 }
