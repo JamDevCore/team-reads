@@ -11,7 +11,7 @@ export default class Auth {
       audience: 'https://jamesvitaly.eu.auth0.com/userinfo',
       redirectUri: `${REACT_APP_TEAM_READS_DOMAIN}/callback`,
       responseType: 'token id_token',
-      scope: 'openid profile email app_metadata update:current_user_metadata update:users',
+      scope: 'openid profile email app_metadata',
     });
 
     this.login = this.login.bind(this);
@@ -37,9 +37,9 @@ export default class Auth {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult);
-        history.replace('/');
+        history.push('/');
       } else if (err) {
-        history.replace('/login');
+        history.push('/login');
         console.log(err);
       }
     });
