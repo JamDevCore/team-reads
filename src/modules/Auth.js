@@ -1,14 +1,15 @@
 import auth0 from 'auth0-js';
 import history from './history';
 
+const { REACT_APP_AUTH_CLIENT_ID, REACT_APP_TEAM_READS_DOMAIN } = process.env;
 
 export default class Auth {
   constructor() {
     this.auth0 = new auth0.WebAuth({
       domain: 'jamesvitaly.eu.auth0.com',
-      clientID: `${process.env.REACT_APP_AUTH_0_CLIENT_ID}`,
+      clientID: `${REACT_APP_AUTH_CLIENT_ID}`,
       audience: 'https://jamesvitaly.eu.auth0.com/userinfo',
-      redirectUri: `${process.env.REACT_APP_DOMAIN}/callback`,
+      redirectUri: `${REACT_APP_TEAM_READS_DOMAIN}/callback`,
       responseType: 'token id_token',
       scope: 'openid profile email app_metadata update:current_user_metadata update:users',
     });
