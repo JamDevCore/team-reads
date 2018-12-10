@@ -4,12 +4,11 @@ import history from './history';
 
 export default class Auth {
   constructor() {
-    const callback = process.env.REACT_APP_AUTH_CALLBACK;
     this.auth0 = new auth0.WebAuth({
       domain: 'jamesvitaly.eu.auth0.com',
       clientID: `${process.env.REACT_APP_AUTH_0_CLIENT_ID}`,
       audience: 'https://jamesvitaly.eu.auth0.com/userinfo',
-      redirectUri: callback,
+      redirectUri: `${process.env.REACT_APP_DOMAIN}/callback`,
       responseType: 'token id_token',
       scope: 'openid profile email app_metadata update:current_user_metadata update:users',
     });
