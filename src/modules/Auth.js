@@ -5,10 +5,10 @@ import history from './history';
 export default class Auth {
   constructor() {
     this.auth0 = new auth0.WebAuth({
-      domain: 'jamesvitaly.eu.auth0.com',
+      domain: `${process.env.REACT_APP_AUTH_0_DOMAIM}`,
       clientID: `${process.env.REACT_APP_AUTH_0_CLIENT_ID}`,
-      audience: 'https://jamesvitaly.eu.auth0.com/userinfo',
-      redirectUri: 'http://localhost:3000/callback',
+      audience: `${process.env.REACT_APP_AUTH_0_DOMAIM}/userinfo`,
+      redirectUri: `${process.env.REACT_APP_AUTH_CALLBACK}`,
       responseType: 'token id_token',
       scope: 'openid profile email app_metadata update:current_user_metadata update:users',
     });
