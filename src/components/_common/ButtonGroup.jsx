@@ -27,9 +27,12 @@ export default styled(ButtonGroup)`
   flex-direction: row;
   justify-content: flex-start;
   text-align: left;
+  flex-wrap: wrap;
   * {
     display: inline-block !important;
-    width: auto !important;
     margin-right: 10px !important;
+  }
+  *:last-child {
+    margin-right: 0 !important;
   }
 `;

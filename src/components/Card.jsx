@@ -88,7 +88,7 @@ export default styled(Card)`
     justify-content: flex-start;
   }
   .column-2 {
-    padding: ${theme.baseMargin / 2}px;
+    padding: 0 ${theme.baseMargin}px ${theme.baseMargin / 2}px 0;
     width: 20%;
     display: flex;
     flex-direction: column;

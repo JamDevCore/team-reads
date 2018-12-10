@@ -73,7 +73,7 @@ export default styled(Button)`
   font-weight: 500;
   min-width: 80px;
   width: ${(props) => props.isFullWidth ? '100%' : ''};
-  padding: 10px 15px;
+  padding: 10px 10px;
   cursor: pointer;
   font-family: 'Maven Pro', sans-serif;
   a {
@@ -84,7 +84,7 @@ export default styled(Button)`
     height: 100%;
   }
   i {
-    margin-right: 10px;
+    padding: 0 5px;
     width: auto;
     text-decoration: none !important;
   }

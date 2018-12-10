@@ -64,7 +64,7 @@ constructor() {
       console.log(res)
       api.get(`book/${bookId}`)
       .then((res) => {
-        openAlert({ message: "Success! Your discussion has been deleted", type: "info" });
+        openAlert({ message: "The discussion has been deleted", type: "success" });
         history.push(`/book/${bookId}`);
         console.log(res);
         const book = res.data;
