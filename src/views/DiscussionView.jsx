@@ -130,7 +130,7 @@ constructor() {
       <div className={className}>
         <div className="left">
         <Panel>
-          <Link to={`/book/${bookId}`}><h2>{bookTitle}</h2></Link>
+          <Link to={`/book/${bookId}`}><h3>{bookTitle}</h3></Link>
           <h4>{author}</h4>
           <Divider />
         <ButtonGroup>

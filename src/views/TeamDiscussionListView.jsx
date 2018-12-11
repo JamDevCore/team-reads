@@ -113,7 +113,7 @@ TeamDiscussionListView.defaultProps = {
 
 export default styled(TeamDiscussionListView)`
 width: 100%;
-padding-top: 40px;
+padding-top: 20px;
 @media(max-width: 950px) {
   margin: 20px auto;
   width: 100%;

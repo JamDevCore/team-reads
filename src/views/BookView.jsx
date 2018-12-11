@@ -10,6 +10,7 @@ import Divider from '../components/_common/Divider';
 import ButtonGroup from '../components/_common/ButtonGroup';
 import Button from '../components/_common/Button';
 import DangerButton from '../components/_common/DangerButton';
+import NoResults from '../components/_common/NoResults';
 import Select from '../components/_common/form-components/Select';
 import Card from '../components/Card';
 import Fallback from './Fallback';
@@ -86,7 +87,7 @@ class BookView extends React.Component {
         contributions={d.comments.length}
         link={`/book/${bookId}/discussion/${d._id}`}
       />
-  ) : <Panel><h3>No discussions on this book yet</h3></Panel>;
+  ) : <NoResults isDiscussion/>;
   }
 
   render() {
@@ -99,7 +100,7 @@ class BookView extends React.Component {
         <React.Fragment>
             <div className="left">
               <Panel>
-                <h2>{bookTitle}</h2>
+                <h3>{bookTitle}</h3>
                 <h4>{author}</h4>
                 <Divider />
               <ButtonGroup>

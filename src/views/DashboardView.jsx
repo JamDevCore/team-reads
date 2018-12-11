@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import CreateBookForm from '../components/forms/CreateBookForm';
 import Select from '../components/_common/form-components/Select';
 import Card from '../components/Card';
+import NoResults from '../components/_common/NoResults';
 import Panel from '../components/_common/Panel';
 import Callback from '../components/Callback';
 import theme from '../theme';
@@ -29,9 +30,7 @@ class DashboardView extends React.Component {
         contributions={book.discussions.length}
         author={book.author}
         link={`/book/${book._id}`}
-      />)) : <Panel>
-      <h3 style={{textAlign: 'center'}}>Add a book to get started!</h3>
-    </Panel>
+      />)) : <NoResults isBook />
   }
   render() {
     const { className, userId, addBookToState  } = this.props;
