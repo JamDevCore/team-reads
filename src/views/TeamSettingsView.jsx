@@ -161,7 +161,7 @@ class TeamSettingsView extends React.Component {
                   <h3>{user.username}</h3>
                   <Button
                     label="Send an invite"
-                    isLoading={isSendingRequest}
+                    isLoading={isSendingRequest === user._id}
                     onClick={() => this.sendRequest(user._id)}
                   />
                 </li>
