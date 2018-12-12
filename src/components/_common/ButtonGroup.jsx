@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const ButtonGroup = ({ className, children }) => (
-  <div className={className}>
+  <div className={`${className} ButtonGroup`}>
     {children}
   </div>
 );
@@ -30,9 +30,6 @@ export default styled(ButtonGroup)`
   flex-wrap: wrap;
   * {
     display: inline-block !important;
-    margin-right: 10px !important;
-  }
-  *:last-child {
-    margin-right: 0 !important;
+    margin: 5px 5px !important;
   }
 `;

@@ -22,7 +22,6 @@ List.defaultProps = {
 export default styled(List)`
   .list {
     list-style-type: none;
-    margin: 0;
     padding: 0;
     li {
       display: flex;

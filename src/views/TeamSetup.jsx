@@ -26,6 +26,7 @@ class TeamSetup extends React.Component {
     this.setSearchResults = this.setSearchResults.bind(this);
     this.acceptInvite = this.acceptInvite.bind(this);
     this.declineInvite = this.declineInvite.bind(this);
+    this.sendRequest = this.sendRequest.bind(this);
   }
 
   componentDidMount() {
@@ -56,8 +57,8 @@ class TeamSetup extends React.Component {
     })
     .then(() => {
       this.setState({ isAcceptingTeam: false })
-      openAlert({ message: "The invitation has beem requested", type: "success" });
-      history.push(`/team/${teamId}/books`);
+      openAlert({ message: "The invitation has been accepted", type: "success" });
+      window.location.reload(); 
     })
     .catch((err) => {
       this.setState({ isAcceptingTeam: false });
@@ -90,7 +91,10 @@ class TeamSetup extends React.Component {
     })
     .then((res )=> {
       openAlert({ message: 'Your request has been sent', type: 'info' });
-      this.setState({ isRequesting: false });
+      this.setState({
+        isRequesting: false,
+        teamSearchList: undefined,
+      });
     })
     .catch((err) => {
       openAlert({ message: `Error: ${err}`, type: 'danger' });
@@ -136,23 +140,22 @@ class TeamSetup extends React.Component {
           <FindTeamForm
             setSearchResults={this.setSearchResults}
           />
+        </Panel>
           {teamSearchList && teamSearchList.length > 0 ?
             <React.Fragment>
-            <h2>Search results</h2>
-            <List>
+            <Panel>
+              <h2>Search results</h2>
+            </Panel>
             {teamSearchList.map((team) => (
-              <li key={team._id}>
-                <h3>{team.teamName}</h3>
-                <Button
-                  label="Request to join"
-                  isLoading={isRequesting === team._id}
-                  onClick={() => this.sendRequest(team._id)}
-                />
-              </li>
-            ))}
-          </List>
+              <BannerMessage
+                key={team._id}
+                meta={team._id}
+                actionLoading={isRequesting === team._id}
+                action={this.sendRequest}
+                actionLabel="Send invitation"
+                message={team && team.teamName}
+              />))}
           </React.Fragment> : null}
-      </Panel>
       </div>
     );
   }

@@ -9,14 +9,33 @@ class SidebarMenu extends React.Component {
     super();
     this.state = {
       isMobileNavOpen: false,
+      windowWidth: undefined,
     }
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
   }
 
-  toggleMobileNav() {
+  componentDidMount() {
+    window.addEventListener('resize', this.updateWindowDimensions)
+  }
+
+  componentWillUnMount() {
+    window.removeEventListener('resize', this.updateWindowDimensions);
+  }
+
+  updateWindowDimensions() {
+    this.setState({ windowWidth: window.windowWidth });
+  }
+  toggleMobileNav(closeNav) {
     const { isMobileNavOpen } = this.state;
+    if (closeNav) {
+      this.setState({
+        isMobileNavOpen: false,
+        });
+    } else {
     this.setState({
       isMobileNavOpen: !isMobileNavOpen,
-    });
+      });
+    }
   }
 
   render() {
@@ -34,10 +53,10 @@ class SidebarMenu extends React.Component {
           <p>Team menu</p>
         </div>}
         <div className={mobileNavMenu}>
-          <MobileNavLink onClick={() => this.toggleMobileNav()} to={`/team/${teamId}/books`}>Books</MobileNavLink>
+          <MobileNavLink onClick={() => this.toggleMobileNav(true)} to={`/team/${teamId}/books`}>Books</MobileNavLink>
           {/* <MobileNavLink to={`/team/${teamId}/members`}>Members</MobileNavLink> */}
-          <MobileNavLink onClick={() => this.toggleMobileNav()} to={`/team/${teamId}/discussions`}>Discussions</MobileNavLink>
-          <MobileNavLink onClick={() => this.toggleMobileNav()} to={`/team/${teamId}/settings`}>Settings</MobileNavLink>
+          <MobileNavLink onClick={() => this.toggleMobileNav(true)} to={`/team/${teamId}/discussions`}>Discussions</MobileNavLink>
+          <MobileNavLink onClick={() => this.toggleMobileNav(true)} to={`/team/${teamId}/settings`}>Settings</MobileNavLink>
         </div>
       </div>
     );

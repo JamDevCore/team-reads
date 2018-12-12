@@ -86,8 +86,4 @@ export default withFormik({
   },
 })(styled(UserDetailsForm)`
   margin: 0;
-  button {
-    width: 200px;
-    margin: 0;
-  }
 `);

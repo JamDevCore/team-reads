@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { _ } from 'underscore';
 import { openAlert } from 'simple-react-alert';
 import api from '../modules/api-call';
 import theme from '../theme';
@@ -16,10 +17,10 @@ import PageTitle from '../components/_common/PageTitle';
 
 
 class TeamSettingsView extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      userRequests: [],
+      userRequests: this.props.joinRequests,
       userSearchList: [],
       isSendingRequest: false,
       isAcceptingUser: false,
@@ -29,26 +30,7 @@ class TeamSettingsView extends React.Component {
     this.acceptJoinRequest = this.acceptJoinRequest.bind(this);
     this.declineJoinRequest = this.declineJoinRequest.bind(this);
     this.setSearchResults = this.setSearchResults.bind(this);
-  }
-  componentDidMount() {
-    const { joinRequests } = this.props;
-    const { userRequests } = this.state;
-    console.log(joinRequests)
-    if (joinRequests.length > 0) {
-      joinRequests.forEach((id) => {
-        api.get(`user/${id}`)
-        .then((res) => {
-          const requests = userRequests;
-          console.log(requests)
-          console.log(res);
-          requests.push(res.data)
-          this.setState({
-            userRequests,
-          })
-        })
-        .catch(err => console.log(err));
-      })
-    }
+    this.sendRequest = this.sendRequest.bind(this);
   }
 
   acceptJoinRequest(userId) {
@@ -102,9 +84,11 @@ class TeamSettingsView extends React.Component {
   }
 
   setSearchResults (users) {
-    console.log(users)
+    const { teamMembers } = this.props;
+    const teamIds = _.pluck(teamMembers, '_id');
+    let userSearch = users.filter(user => !_.contains(teamIds, user._id) && user._id)
     this.setState({
-      userSearchList: users,
+      userSearchList: userSearch,
     })
   }
 
@@ -119,6 +103,7 @@ class TeamSettingsView extends React.Component {
           return (
             <BannerMessage
               key={user && user._id}
+              isAlert
               meta={user && user._id}
               actionLoading={user && isAcceptingUser === user._id}
               closeLoading={user && isDecliningUser === user._id}
@@ -152,24 +137,22 @@ class TeamSettingsView extends React.Component {
               teamId={teamId}
               setSearchResults={this.setSearchResults}
             />
-            {userSearchList && userSearchList.length > 0 ?
-              <React.Fragment>
-              <h2>Search results</h2>
-              <List>
-              {userSearchList.map((user) => (
-                <li key={user._id}>
-                  <h3>{user.username}</h3>
-                  <Button
-                    label="Send an invite"
-                    isLoading={isSendingRequest === user._id}
-                    onClick={() => this.sendRequest(user._id)}
-                  />
-                </li>
-              ))}
-            </List>
-            </React.Fragment> : null}
           </Panel>
-
+            {userSearchList && userSearchList.length > 0 ?
+              (<React.Fragment>
+                <Panel>
+                  <h2>Search results</h2>
+                </Panel>
+                {userSearchList.map((user) => (
+                  <BannerMessage
+                    key={user}
+                    meta={user._id}
+                    actionLoading={isSendingRequest === user._id}
+                    action={this.sendRequest}
+                    actionLabel="Invite user"
+                    message={user && `Username: ${user.username} - Email: ${user.email}`}
+                  />))}
+              </React.Fragment>) : null}
       </div>
     );
   }
@@ -194,6 +177,9 @@ TeamSettingsView.defaultProps = {
 export default styled(TeamSettingsView)`
 width: 95%;
 padding-top: 40px;
+h2 {
+  margin: 20px 0px;
+}
 @media(max-width: 950px) {
   margin: 20px auto;
   width: 100%;

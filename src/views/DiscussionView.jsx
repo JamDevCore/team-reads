@@ -65,7 +65,7 @@ constructor() {
       api.get(`book/${bookId}`)
       .then((res) => {
         openAlert({ message: "The discussion has been deleted", type: "success" });
-        history.push(`/book/${bookId}`);
+
         console.log(res);
         const book = res.data;
         const discussions = book.discussions.filter(id => id !== discussionId)
@@ -73,7 +73,10 @@ constructor() {
         api.put(`book/${bookId}`, {
           discussions,
         })
-        .then(() => this.setState({ isDeleting: false }))
+        .then(() => {
+          this.setState({ isDeleting: false })
+          history.push(`/book/${bookId}`)
+        })
         .catch(err => console.log(err));
       })
         .catch(err => console.log(err))

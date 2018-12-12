@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactTable from 'react-table';
 import { openAlert } from 'simple-react-alert';
+import history from '../modules/history';
 import 'react-table/react-table.css';
 import styled from 'styled-components';
 import DangerButton from './_common/DangerButton';
@@ -30,6 +31,7 @@ class TeamMembers extends React.Component {
         teamMembers: newTeamMembers,
       });
       openAlert({ message: "The user has been removed from your team", type: "success" });
+      window.location.reload(); 
     })
     .catch(err => {
       this.setState({

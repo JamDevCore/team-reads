@@ -17,7 +17,7 @@ const Button = (props) => {
   return !link ? (
     <button
       type={type}
-      className={className}
+      className={`${className} button`}
       onClick={onClick}
     >
       {icon && !isLoading ? <i className={icon} /> : null}
@@ -65,7 +65,7 @@ export default styled(Button)`
   height: 40px;
   justify-content: center;
   background: ${theme.colors.success};
-  font-size: ${theme.fontSize}px;
+  font-size: 16px;
   margin: ${theme.baseMargin / 2}px 0 0;
   border: none;
   color: white;
@@ -73,7 +73,7 @@ export default styled(Button)`
   font-weight: 500;
   min-width: 80px;
   width: ${(props) => props.isFullWidth ? '100%' : ''};
-  padding: 10px 10px;
+  padding: 0px 10px;
   cursor: pointer;
   font-family: 'Maven Pro', sans-serif;
   a {
@@ -84,8 +84,8 @@ export default styled(Button)`
     height: 100%;
   }
   i {
-    padding: 0 5px;
-    width: auto;
+    margin: 0;
+    padding: 0 7px;
     text-decoration: none !important;
   }
 `;

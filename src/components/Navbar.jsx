@@ -49,8 +49,8 @@ class Navbar extends React.Component {
   }
 
   renderMobileNav() {
-    const { teamId } = this.props;
-    const { mobileNavIsOpen, handleLogout } = this.state;
+    const { teamId, handleLogout } = this.props;
+    const { mobileNavIsOpen } = this.state;
     return mobileNavIsOpen && (
       <MobileNav mobileNavIsOpen={mobileNavIsOpen}>
         <i
@@ -60,7 +60,7 @@ class Navbar extends React.Component {
       <MobileNavLink onClick={() => this.toggleMobileNav()} to="/">Your books</MobileNavLink>
         <MobileNavLink onClick={() => this.toggleMobileNav()}to={`/team/${teamId}/books`}>View team</MobileNavLink>
         <MobileNavLink onClick={() => this.toggleMobileNav()} to="/settings">Settings</MobileNavLink>
-        <MobileNavLink to="#" onClick={handleLogout}>Logout</MobileNavLink>
+        <MobileNavLink onClick={() => handleLogout()} to="/login">Logout</MobileNavLink>
       </MobileNav>);
   }
 
@@ -80,7 +80,7 @@ class Navbar extends React.Component {
         <Link className="navLink" to="/">Your books</Link>
         <Link className="navLink" to={`/team/${teamId}/books`}>View team</Link>
         <Link className="navLink" to="/settings">Settings</Link>
-        <Link className="navLink" to="#" onClick={handleLogout}>Logout</Link>
+        <Link className="navLink" to="/login" onClick={() => handleLogout()}>Logout</Link>
         <i
           className="fas fa-bars"
           onClick={() => this.toggleMobileNav()}

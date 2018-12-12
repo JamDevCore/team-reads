@@ -16,6 +16,7 @@ const BannerMessage = ({
   meta,
   actionLoading,
   closeLoading,
+  isAlert,
 }) => (
   <div className={className}>
     <div className="message">
@@ -23,15 +24,15 @@ const BannerMessage = ({
     </div>
     <div className="actions">
       <ButtonGroup>
-        <Button
+        {action && <Button
           label={actionLabel}
           isLoading={actionLoading}
           onClick={() => action(meta)}
-          />
-        <DangerButton
+          />}
+        {closeAction && <DangerButton
           label={closeLabel}
           onClick={() => closeAction(meta)}
-          />
+          />}
       </ButtonGroup>
     </div>
   </div>
@@ -46,6 +47,7 @@ BannerMessage.propTypes = {
   actionLoading: PropTypes.bool,
   closeLoading: PropTypes.bool,
   meta: PropTypes.string,
+  isAlert: PropTypes.bool,
 };
 
 BannerMessage.defaultProps = {
@@ -54,9 +56,10 @@ BannerMessage.defaultProps = {
   closeAction: undefined,
   actionLabel: undefined,
   closeLabel: undefined,
-  actionLoading: PropTypes.bool,
-  closeLoading: PropTypes.bool,
-  meta: PropTypes.string,
+  actionLoading: undefined,
+  closeLoading: undefined,
+  meta: undefined,
+  isAlert: false,
 };
 
 export default styled(BannerMessage)`
@@ -64,17 +67,34 @@ export default styled(BannerMessage)`
   border-radius: ${theme.borderRadius}px;
   width: 95%;
   display: flex;
-  .message {
-    width: 70%;
-    padding: 0;
+  flex-direction: row;
+  flex-wrap: wrap;
+  button {
     margin: auto 0;
-    color: #fff;
-    p {
-      font-weight: 500 !important;
-    }
-
   }
-  background: ${theme.colors.alert};
+  .actions {
+    padding: 0; margi-top: 5px;
+    .ButtonGroup {
+      flex-direction: row;
+      align-content: flex-end;
+      justify-content: flex-end;
+    }
+  }
+  .message {
+    width: 90%;
+    display: inline-block;
+    max-width: 65%;
+    padding: 0 10px;
+    margin: 10px 0 10px 0;
+    color:  ${({ isAlert }) => !isAlert ? theme.colors.black : '#fff'};
+    p {
+      margin: 0;
+      padding:  0;
+      font-weight: 500 !important;
+      color:  ${({ isAlert }) => !isAlert ? theme.colors.black : '#fff'};
+    }
+  }
+  background: ${({ isAlert }) => isAlert ? theme.colors.alert : '#fff'};
   margin: 0px 20px ${theme.baseMargin}px 10px;
-  padding: 0px 10px;
+  padding: 10px 10px;
 `;
