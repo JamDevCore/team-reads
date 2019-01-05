@@ -66,8 +66,7 @@ class BookViewContainer extends React.Component {
       bookId,
       ownerId,
     } = this.state;
-    const { userId, username, } = this.props;
-    console.log(ownerId)
+    const { userId, username } = this.props;
     return isLoading && !bookId ? <Callback /> :
     <BookView
       key={bookId}

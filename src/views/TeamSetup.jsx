@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import { openAlert } from 'simple-react-alert';
 import history from '../modules/history';
@@ -58,7 +59,7 @@ class TeamSetup extends React.Component {
     .then(() => {
       this.setState({ isAcceptingTeam: false })
       openAlert({ message: "The invitation has been accepted", type: "success" });
-      window.location.reload(); 
+      history.replace(`/team/${teamId}/books`);
     })
     .catch((err) => {
       this.setState({ isAcceptingTeam: false });
@@ -102,7 +103,7 @@ class TeamSetup extends React.Component {
     })
   }
 
-  setSearchResults (teams) {
+  setSearchResults(teams) {
     this.setState({
       teamSearchList: teams,
     })
@@ -120,6 +121,7 @@ class TeamSetup extends React.Component {
           <BannerMessage
             key={team._id}
             meta={team._id}
+            isAlert
             actionLoading={isAcceptingTeam === team._id}
             closeLoading={isDecliningTeam === team._id}
             action={this.acceptInvite}
@@ -152,7 +154,7 @@ class TeamSetup extends React.Component {
                 meta={team._id}
                 actionLoading={isRequesting === team._id}
                 action={this.sendRequest}
-                actionLabel="Send invitation"
+                actionLabel="Send request"
                 message={team && team.teamName}
               />))}
           </React.Fragment> : null}

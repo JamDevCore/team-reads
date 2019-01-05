@@ -11,7 +11,8 @@ const colors = {
   error: '#f44336',
   grey: '#d3d3d3',
   black: '#484848',
-}
+  info: '#3F8CC4',
+};
 
 const theme = {
   colors,

@@ -1,15 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components'
+import { openAlert } from 'simple-react-alert';
+import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import api from '../modules/api-call';
 import history from '../modules/history';
-import { openAlert } from 'simple-react-alert';
 import Panel from '../components/_common/Panel';
 import Divider from '../components/_common/Divider';
 import ButtonGroup from '../components/_common/ButtonGroup';
 import Button from '../components/_common/Button';
-import DangerButton from '../components/_common/DangerButton';
 import Select from '../components/_common/form-components/Select';
 import Comment from '../components/Comment';
 import CreateDiscussionForm from '../components/forms/CreateDiscussionForm';
@@ -24,67 +23,55 @@ const AmazonLink = styled.a`
 `;
 
 class DiscussionView extends React.Component {
-constructor() {
-  super();
-  this.state = {
-    isLoading: false,
-    isDeleting: false,
+  constructor() {
+    super();
+    this.state = {
+      isLoading: false,
+      isDeleting: false,
+    };
   }
-}
 
   addNote() {
-    const { bookId, userId, username, bookTitle } = this.props;
-    console.log(bookId, userId, username)
+    const {
+      bookId, userId, username, bookTitle
+    } = this.props;
     this.setState({
       isLoading: true,
     });
-    api.post(`discussion`, {
+    api.post('discussion', {
       userId,
       username,
       bookId,
       bookTitle,
     })
-    .then((res) => {
-      this.setState({ isLoading: true });
-      console.log(res);
-      const discussion = res.data;
-      history.push(`/book/${bookId}/discussion/${discussion._id}`);
-    })
-    .catch((err) => {
-      this.setState({ isLoading: false });
-      console.log(err);
-    })
+      .then((res) => {
+        this.setState({ isLoading: false });
+        const discussion = res.data;
+        console.log(discussion)
+        history.push(`/book/${bookId}/discussion/${discussion._id}`);
+        console.log(res);
+      })
+      .catch((err) => {
+        this.setState({ isLoading: false });
+        console.log(err);
+      })
   }
 
   deleteDiscussion() {
     const { discussionId, bookId } = this.props;
     this.setState({ isDeleting: true });
     api.delete(`discussion/${discussionId}`)
-    .then((res) => {
-      console.log(res)
-      api.get(`book/${bookId}`)
       .then((res) => {
-        openAlert({ message: "The discussion has been deleted", type: "success" });
-
-        console.log(res);
+        openAlert({ message: 'The discussion has been deleted', type: 'success' });
+        console.log(res)
         const book = res.data;
-        const discussions = book.discussions.filter(id => id !== discussionId)
-        console.log(discussions);
-        api.put(`book/${bookId}`, {
-          discussions,
-        })
-        .then(() => {
-          this.setState({ isDeleting: false })
-          history.push(`/book/${bookId}`)
-        })
-        .catch(err => console.log(err));
+        this.setState({ isDeleting: false });
+        history.push(`/book/${bookId}`);
       })
-        .catch(err => console.log(err))
-    })
-    .catch((err) => {
-      this.setState({ isDeleting: false });
-      openAlert({ message: `Error: ${err}`, type: "danger" })
-    });
+      .catch((err) => {
+        this.setState({ isDeleting: false });
+        openAlert({ message: `Error: ${err}`, type: 'danger' });
+      });
   }
 
 
@@ -92,25 +79,27 @@ constructor() {
     const { title, note } = this.props;
     return (
       <React.Fragment>
-      <h3>Highlight</h3>
-      <p className="highlight">{title || "Untitled"}</p>
-      <h3>Note</h3>
-      <p className="note">{note || "No note has been added"}</p>
+        <h3>Highlight</h3>
+        <p className="highlight">{title || "Untitled"}</p>
+        <h3>Note</h3>
+        <p className="note">{note || "No note has been added"}</p>
       </React.Fragment>
     )
   }
 
-    renderEditorView() {
-      const { updateDiscussion, discussionId, title, note } = this.props;
-      return (
-        <CreateDiscussionForm
-          discussionId={discussionId}
-          title={title}
-          note={note}
-          updateDiscussion={updateDiscussion}
-        />
-      )
-    }
+  renderEditorView() {
+    const {
+      updateDiscussion, discussionId, title, note,
+    } = this.props;
+    return (
+      <CreateDiscussionForm
+        discussionId={discussionId}
+        title={title}
+        note={note}
+        updateDiscussion={updateDiscussion}
+      />
+    )
+  }
 
   render() {
     const {
@@ -132,51 +121,58 @@ constructor() {
     return (
       <div className={className}>
         <div className="left">
-        <Panel>
-          <Link to={`/book/${bookId}`}><h3>{bookTitle}</h3></Link>
-          <h4>{author}</h4>
-          <Divider />
-        <ButtonGroup>
-          <Button
-            label="Start new discussion"
-            isLoading={isLoading}
-            onClick={() => this.addNote()}
-          />
-        {ownerId === userId && <DangerButton
-            label="Delete discussion"
-            isLoading={isDeleting}
-            onClick={() => this.deleteDiscussion()}
-          />}
-        </ButtonGroup>
-        </Panel>
-          <AmazonLink href="http://www.amazon.co.uk">Purchase on Amazon</AmazonLink>
+          <Panel>
+            <Link to={`/book/${bookId}`}><h3>{bookTitle}</h3></Link>
+            <h4>{author}</h4>
+            <Divider />
+            <Button
+              theme="link"
+              link="http://www.amazon.co.uk"
+              icon="fab fa-amazon"
+              label="Get this on amazon" />
+            <Divider />
+            <ButtonGroup>
+              <Button
+                label="Start new discussion"
+                isLoading={isLoading}
+                onClick={() => this.addNote()}
+              />
+              {ownerId === userId && (
+                <Button
+                  theme="danger"
+                  label="Delete discussion"
+                  isLoading={isDeleting}
+                  onClick={() => this.deleteDiscussion()}
+                />)}
+            </ButtonGroup>
+          </Panel>
         </div>
         <div className="right">
           <Panel>
             {userId === ownerId ? this.renderEditorView() : this.renderContributorView()}
           </Panel>
-          {comments && comments.length > 0 ?
-          comments.map(comment =>
-            <Comment
-              key={comment._id}
-              userId={userId}
-              ownerId={comment.userId}
-              discussionId={discussionId}
-              text={comment.text}
-              commentId={comment._id}
-              updateComments={updateComments}
-              comments={comments}
-              removeComments={removeComments}
-            />
-            ) : null}
-          {title && note && <Panel>
+          {comments && comments.length > 0
+            ? comments.map(comment => (
+              <Comment
+                key={comment._id}
+                userId={userId}
+                ownerId={comment.userId}
+                discussionId={discussionId}
+                text={comment.text}
+                commentId={comment._id}
+                updateComments={updateComments}
+                comments={comments}
+                removeComments={removeComments}
+              />)) : null}
+          {title && (
+            <Panel>
               <AddCommentForm
                 userId={userId}
                 discussionId={discussionId}
                 comments={comments}
                 updateComments={updateComments}
               />
-            </Panel>}
+            </Panel>)}
         </div>
       </div>
     );
@@ -226,7 +222,9 @@ li {
   margin-right: 10px;
 }
 .left {
+  position: fixed;
   margin: 40px auto;
+  margin-left: 30px;
   width: 450px;
   min-width: 300px;
     select {
@@ -236,7 +234,9 @@ li {
 .right {
   box-sizing: border-box;
   width: 60%;
+  position: relative;
   margin: 40px auto;
+  margin-left: 500px;
   .lightbulbs {
     display: inline-block !important;
     margin-left: 10px;
@@ -252,6 +252,7 @@ li {
   .left {
     width: 100%;
     margin: 40px 0px auto;
+    position: relative;
   }
 }
 `;

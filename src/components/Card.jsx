@@ -1,73 +1,72 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import history from '../modules/history';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import theme from '../theme'
 import trimText from '../modules/trim-text';
 import Button from './_common/Button';
 
-class Card extends React.Component {
-  render() {
-    const {
-      className,
-      title,
-      author,
-      lightbulbs,
-      contributions,
-      bookId,
-      link,
-      owner,
-    } = this.props;
-    const heading = author ? `${trimText(title, 160)} - ${author}` : trimText(title, 160);
-    return (
-      <div className={className}>
-        <div className="column-1">
-          <h4>{heading}</h4>
-            {owner && <div className="owner">
-                <i className="fas fa-book"></i>
-                <p>{owner}</p>
-            </div>}
-          <div className="iconList">
-            <i className="fas fa-lightbulb"></i>
-            <p>{lightbulbs || 0}</p>
-            <i className="fas fa-comments"></i>
-            <p>{contributions}</p>
-          </div>
-
+const Card = ({
+  className,
+  title,
+  author,
+  lightbulbs,
+  isDiscussion,
+  contributions,
+  bookId,
+  link,
+  owner,
+}) => {
+  const heading = author ? `${trimText(title, 160)} - ${author}` : trimText(title, 160);
+  return (
+    <div className={className}>
+      <div className="column-1">
+        <Link to={link || '#'}><h4>{heading}</h4></Link>
+        {owner && (
+          <div className="owner">
+            <i className="fas fa-book" />
+            <p>Added by {owner}</p>
+          </div>)}
+        <div className="iconList">
+          <i className="fas fa-lightbulb" />
+          <p>Insight rating: {lightbulbs || 0}</p>
+          <i className="fas fa-comments" />
+          <p>{isDiscussion ? `Comments: ${contributions}` : `Discussions: ${contributions}`}</p>
         </div>
-        <div className="column-2">
-          <Button
-            label="View"
-            link={link}
-            isFullWidth
-          />
-        </div>
-      </div>);
-    }
-}
+      </div>
+      <div className="column-2">
+        <Button
+          label="View"
+          theme="info"
+          link={link}
+          isFullWidth
+        />
+      </div>
+    </div>);
+};
 
 Card.propTypes = {
   className: PropTypes.string,
   bookId: PropTypes.string,
   title: PropTypes.string,
-  readers: PropTypes.arrayOf(PropTypes.string),
   lightbulbs: PropTypes.number,
   contributions: PropTypes.number,
   author: PropTypes.string,
   link: PropTypes.string,
   owner: PropTypes.string,
+  isDiscussion: PropTypes.number,
 };
 
 Card.defaultProps = {
   className: undefined,
   bookId: undefined,
   title: undefined,
-  readers: undefined,
   lightbulbs: undefined,
   contributions: undefined,
   author: undefined,
   link: undefined,
   owner: undefined,
+  isDiscussion: undefined,
 };
 
 export default styled(Card)`
@@ -80,6 +79,9 @@ export default styled(Card)`
   box-sizing: border-box;
   margin: 0px 20px ${theme.baseMargin}px 10px;
   padding: 15px;
+  h4 {
+    padding-left: 10px;
+  }
   .column-1 {
     padding: 10px 10px 10px 20px;
     width: 80%;

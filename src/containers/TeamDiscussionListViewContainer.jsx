@@ -40,10 +40,12 @@ class TeamDiscussionListViewContainer extends React.Component {
       discussions,
     } = this.state;
     const {
-      teamMembers
+      teamMembers,
+      teamId,
     } = this.props;
     return isLoading && !discussions.length > 0 ? <Callback /> :
     <TeamDiscussionListView
+      teamId={teamId}
       key={discussions.length}
       discussions={discussions}
       teamMembers={teamMembers}
@@ -54,11 +56,13 @@ class TeamDiscussionListViewContainer extends React.Component {
 TeamDiscussionListViewContainer.propTypes = {
   userId: PropTypes.string,
   username: PropTypes.string,
+  teamId: PropTypes.string,
   teamMembers: PropTypes.arrayOf(PropTypes.object)
 };
 
 TeamDiscussionListViewContainer.defaultProps = {
   userId: undefined,
+  teamId: undefined,
   username: undefined,
   teamMembers: undefined,
 };

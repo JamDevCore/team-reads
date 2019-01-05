@@ -5,6 +5,7 @@ import Card from '../components/Card';
 import Select from '../components/_common/form-components/Select';
 import PageTitle from '../components/_common/PageTitle';
 import Panel from '../components/_common/Panel';
+import NoResults from '../components/_common/NoResults';
 
 class TeamBookList extends React.Component {
   constructor(props) {
@@ -42,7 +43,7 @@ class TeamBookList extends React.Component {
           onChange={() => this.selectUser()}
         >
           <option key="all" value="all">All team members</option>
-          {teamMembers && teamMembers.length > 0 ? teamMembers.map(user => {
+          {teamMembers && teamMembers.length > 0 ? teamMembers.map((user )=> {
             console.log(user)
             return (
             <option key={user._id} value={user._id}>{user.username}</option>
@@ -55,12 +56,14 @@ class TeamBookList extends React.Component {
             title={book.name}
             author={book.author}
             bookId={book._id}
-            readers={book.readers || ["Not read"]}
             lightbulbs={book.lightbulbs || 0}
             contributions={book.discussions.length}
             link={`/book/${book._id}`}
           />
-      ): null}
+      ):
+      <NoResults
+        isBook
+      />}
       </div>
     );
   }

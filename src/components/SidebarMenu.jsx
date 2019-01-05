@@ -79,7 +79,7 @@ export default styled(SidebarMenu)`
   top: 60px;
   height: 100vh;
   z-index: 1;
-  width: 250px;
+  width: 300px;
   background-color: white;
   margin: 0;
   .button {

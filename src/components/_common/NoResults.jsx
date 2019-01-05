@@ -8,17 +8,17 @@ const NoResults = ({ isDiscussion, isBook, className }) => (
   <Panel>
     <div className={className}>
       <i className="fas fa-edit" />
-      {isDiscussion &&
+      {isDiscussion && (
         <React.Fragment>
-        <h2>No discussions here</h2>
-        <p>Create one now to start generating insights</p>
-        </React.Fragment>
+          <h2>No discussions here</h2>
+          <p>Add a new book, or start a discussion on an existing one</p>
+        </React.Fragment>)
       }
-      {isBook &&
+      {isBook && (
         <React.Fragment>
-        <h2>No books here</h2>
-        <p>Add one now to start discussing your insights</p>
-        </React.Fragment>
+          <h2>No books here</h2>
+          <p>Add one now to start discussing your insights</p>
+        </React.Fragment>)
       }
     </div>
   </Panel>

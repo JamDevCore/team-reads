@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Button from '../components/_common/Button';
-import DangerButton from '../components/_common/DangerButton';
 import ButtonGroup from '../components/_common/ButtonGroup';
 import Panel from '../components/_common/Panel';
 
@@ -20,7 +19,8 @@ class LoginView extends React.Component {
                 icon="fas fa-door-open"
                 onClick={() => handleLogin()}
               />
-              <DangerButton
+              <Button
+                theme="danger"
                 label="Contact us"
               />
             </ButtonGroup>

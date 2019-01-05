@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import DashboardView from '../views/DashboardView';
+import BookListView from '../views/BookListView';
 import Callback from '../components/Callback';
 import api from '../modules/api-call';
 import { ascending } from '../modules/sort-by-date';
 
-class DashboardViewContainer extends React.Component {
+class BookListViewContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,6 +24,7 @@ class DashboardViewContainer extends React.Component {
       console.log(response);
       const books = response.data.data;
       const sortedBooks = ascending(books);
+      console.log(sortedBooks)
       this.setState({
         books: sortedBooks,
         isLoading: false,
@@ -52,7 +53,7 @@ class DashboardViewContainer extends React.Component {
     } = this.state;
     const { userId } = this.props;
     return isLoading ? <Callback /> :
-    <DashboardView
+    <BookListView
       userId={userId}
       books={books}
       addBookToState={this.addBookToState}
@@ -60,12 +61,12 @@ class DashboardViewContainer extends React.Component {
   }
 }
 
-DashboardViewContainer.propTypes = {
+BookListViewContainer.propTypes = {
   userId: PropTypes.string,
 };
 
-DashboardViewContainer.defaultProps = {
+BookListViewContainer.defaultProps = {
   userId: undefined,
 };
 
-export default DashboardViewContainer;
+export default BookListViewContainer;

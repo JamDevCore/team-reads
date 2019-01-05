@@ -9,18 +9,25 @@ import Panel from '../components/_common/Panel';
 import Divider from '../components/_common/Divider';
 import ButtonGroup from '../components/_common/ButtonGroup';
 import Button from '../components/_common/Button';
-import DangerButton from '../components/_common/DangerButton';
 import NoResults from '../components/_common/NoResults';
 import Select from '../components/_common/form-components/Select';
+import Icon from '../components/_common/Icon';
 import Card from '../components/Card';
 import Fallback from './Fallback';
 import theme from '../theme';
 
 const AmazonLink = styled.a`
-  text-decoration: underline;
-  display: block;
-  text-align: center;
-  margin-top: 20px;
+display: flex;
+font-style: italic;
+justify-content: flex-start;
+font-weight: 500;
+padding: auto 0;
+font-size: 18px;
+margin-top: 20px;
+i {
+  padding-top: 3px;
+  margin-right: 10px;
+}
 `;
 
 class BookView extends React.Component {
@@ -84,6 +91,7 @@ class BookView extends React.Component {
         title={d.title || 'Untitled'}
         readers={d.readers}
         lightbulbs={d.lightbulbs}
+        isDiscussion
         contributions={d.comments.length}
         link={`/book/${bookId}/discussion/${d._id}`}
       />
@@ -96,56 +104,64 @@ class BookView extends React.Component {
     const { isLoading, isDeleting } = this.state;
     return (
       <div className={className}>
-        {bookId ?
-        <React.Fragment>
+        {bookId ? (
+          <React.Fragment>
             <div className="left">
               <Panel>
-                <h3>{bookTitle}</h3>
+                <h2>{bookTitle}</h2>
                 <h4>{author}</h4>
                 <Divider />
-              <ButtonGroup>
                 <Button
-                  label="Start new discussion"
-                  isLoading={isLoading}
-                  onClick={() => this.addNote()}
+                  theme="link"
+                  link="http://www.amazon.co.uk"
+                  icon="fab fa-amazon"
+                  label="Get this on amazon"
                 />
-              {ownerId === userId && <DangerButton
-                  label="Delete book"
-                  isLoading={isDeleting}
-                  onClick={() => this.deleteBook()}
-                />}
-              </ButtonGroup>
+                <Divider />
+                <ButtonGroup>
+                  <Button
+                    label="Start new discussion"
+                    isLoading={isLoading}
+                    onClick={() => this.addNote()}
+                  />
+                  {ownerId === userId && (
+                  <Button
+                    theme="danger"
+                    label="Delete book"
+                    isLoading={isDeleting}
+                    onClick={() => this.deleteBook()}
+                  />)}
+                </ButtonGroup>
               </Panel>
-              <AmazonLink isLoading={isLoading} href="http://www.amazon.co.uk">Purchase on Amazon</AmazonLink>
             </div>
             <div className="right">
-             {this.renderDiscussions()}
-          </div>
-        </React.Fragment> : <Fallback />}
-    </div>)
+              {this.renderDiscussions()}
+            </div>
+          </React.Fragment>) : <Fallback />}
+      </div>);
   }
 }
 
 BookView.propTypes = {
- userId: PropTypes.string,
- ownerId: PropTypes.string,
- bookId: PropTypes.string,
- discussions: PropTypes.arrayOf(PropTypes.object),
- bookTitle: PropTypes.string,
- author: PropTypes.string,
- personalStatus: PropTypes.string,
- username: PropTypes.string,
+  userId: PropTypes.string,
+  ownerId: PropTypes.string,
+  bookId: PropTypes.string,
+  discussions: PropTypes.arrayOf(PropTypes.object),
+  bookTitle: PropTypes.string,
+  author: PropTypes.string,
+  personalStatus: PropTypes.string,
+  username: PropTypes.string,
 };
 
 BookView.defaultProps = {
- userId: undefined,
- ownerId: undefined,
- bookId: undefined,
- discussions: undefined,
- bookTitle: undefined,
- author: undefined,
- personalStatus: undefined,
- username: undefined,
+  userId: undefined,
+  ownerId: undefined,
+  bookId: undefined,
+  discussions: undefined,
+  bookTitle: undefined,
+  author: undefined,
+  personalStatus: undefined,
+  username: undefined,
 };
 
 export default styled(BookView)`
@@ -154,7 +170,15 @@ export default styled(BookView)`
   flex-wrap: wrap;
   width: 100%;
   .left {
+    h2 {
+      padding-left: 10px;
+    }
+    h4 {
+      padding-left: 10px;
+    }
+    position: fixed;
     margin: 40px auto;
+    margin-left: 30px;
     width: 450px;
     min-width: 300px;
     select {
@@ -165,6 +189,7 @@ export default styled(BookView)`
     box-sizing: border-box;
     width: 60%;
     margin: 40px auto;
+        margin-left: 500px;
   }
   @media(max-width: 1124px) {
     .right {
@@ -173,6 +198,7 @@ export default styled(BookView)`
 
     }
     .left {
+      position: relative;
       width: 100%;
       margin: 40px 0px auto;
     }

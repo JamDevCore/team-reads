@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from './Button';
-import DangerButton from './DangerButton';
 import ButtonGroup from './ButtonGroup';
 import theme from '../../theme';
 import styled from 'styled-components';
@@ -29,8 +28,10 @@ const BannerMessage = ({
           isLoading={actionLoading}
           onClick={() => action(meta)}
           />}
-        {closeAction && <DangerButton
+        {closeAction && <Button
+          theme="danger"
           label={closeLabel}
+          isLoading={closeLoading}
           onClick={() => closeAction(meta)}
           />}
       </ButtonGroup>
@@ -65,6 +66,7 @@ BannerMessage.defaultProps = {
 export default styled(BannerMessage)`
   box-sizing: border-box !important;
   border-radius: ${theme.borderRadius}px;
+  border: 1px solid ${theme.colors.grey};
   width: 95%;
   display: flex;
   flex-direction: row;
@@ -85,7 +87,7 @@ export default styled(BannerMessage)`
     display: inline-block;
     max-width: 65%;
     padding: 0 10px;
-    margin: 10px 0 10px 0;
+    margin: auto 0;
     color:  ${({ isAlert }) => !isAlert ? theme.colors.black : '#fff'};
     p {
       margin: 0;

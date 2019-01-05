@@ -65,12 +65,12 @@ class Comment extends React.Component {
     .then((res) => {
       const newCommentArray = comments.filter(comment => comment._id !== commentId);
       this.setState({ isLoading: false })
+      removeComments(commentId);
       api.put(`discussion/${discussionId}`, {
         comments: newCommentArray,
       })
         .then(() => {
           console.log("success")
-          removeComments(commentId);
         })
         .catch((err) => console.log(err));
     })

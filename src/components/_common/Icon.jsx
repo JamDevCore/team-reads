@@ -1,21 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TAPi18n } from 'meteor/tap:i18n';
 
-const t = (key, options) => TAPi18n.__(`Icon.${key}`, options);
-
-const Icon = (props) => (
+const Icon = ({ icon }) => (
   <div className="Icon">
-
+    <i className={icon} />
   </div>
 );
 
 Icon.propTypes = {
-
+icon: PropTypes.string,
 };
 
 Icon.defaultProps = {
-
+icon: undefined,
 };
 
 export default Icon;

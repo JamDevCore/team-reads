@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import theme from '../../theme';
 
+
 const Button = (props) => {
   const {
     className,
@@ -13,28 +14,33 @@ const Button = (props) => {
     type,
     isLoading,
     link,
+    theme,
   } = props;
   return !link ? (
-    <button
-      type={type}
-      className={`${className} button`}
-      onClick={onClick}
-    >
-      {icon && !isLoading ? <i className={icon} /> : null}
-      {isLoading && <i className="fas fa-spinner fa-spin" />}
-      {label}
-    </button>) :
-      <Link to={link}>
+    <div className={className}>
+      <button
+        type={type}
+        className={theme}
+        onClick={onClick}
+      >
+        {icon && !isLoading ? <i className={icon} /> : null}
+        {isLoading && <i className="fas fa-spinner fa-spin" />}
+        {label}
+      </button>
+    </div>) :
+    <div className={className}>
+      <a href={link}>
         <button
           type={type}
-          className={className}
+          className={theme}
           onClick={onClick}
         >
       {icon && !isLoading ? <i className={icon} /> : null}
       {isLoading && <i className="fas fa-spinner fa-spin" />}
       {label}
           </button>
-      </Link>
+      </a>
+    </div>
 };
 
 Button.propTypes = {
@@ -46,6 +52,7 @@ Button.propTypes = {
   isLoading: PropTypes.bool,
   link: PropTypes.string,
   isFullWidth: PropTypes.bool,
+  theme: PropTypes.string,
 };
 
 Button.defaultProps = {
@@ -57,10 +64,43 @@ Button.defaultProps = {
   type: undefined,
   isLoading: undefined,
   link: undefined,
+  theme: undefined,
 };
 
 export default styled(Button)`
   @import url('https://fonts.googleapis.com/css?family=Maven+Pro');
+  .info {
+    background-color: ${theme.colors.info} !important;
+  }
+  .success {
+    background: ${theme.colors.success};
+  }
+  .highlight {
+    background: ${theme.colors.highlight};
+  }
+  .danger {
+    background: ${theme.colors.danger};
+  }
+  .link {
+    background-color: transparent;
+    color: ${theme.colors.primary};
+    i {
+      padding: 3px;
+      margin-right: 8px;
+      text-decoration: none !important;
+    }
+    &:hover {
+      background-color: ${theme.colors.lightGrey};
+    }
+  }
+  a {
+    margin: 0;
+    padding: 0;
+    color: white;
+    width: 100%;
+    height: 100%;
+  }
+  button {
   display: flex;
   height: 40px;
   justify-content: center;
@@ -72,20 +112,15 @@ export default styled(Button)`
   border-radius: 3px;
   font-weight: 500;
   min-width: 80px;
-  width: ${(props) => props.isFullWidth ? '100%' : ''};
+  width: ${props => props.isFullWidth ? '100%' : ''};
   padding: 0px 10px;
   cursor: pointer;
   font-family: 'Maven Pro', sans-serif;
-  a {
-    margin: 0;
-    padding: 0;
-    color: white;
-    width: 100%;
-    height: 100%;
-  }
+
   i {
     margin: 0;
     padding: 0 7px;
     text-decoration: none !important;
+  }
   }
 `;

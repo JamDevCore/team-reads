@@ -12,10 +12,9 @@ import SelectInput from '../_common/form-components/SelectInput';
 import Divider from '../_common/Divider';
 import theme from '../../theme';
 
-const CreateBookForm = ({ className, isSubmitting }) => {
-    return (
+const CreateBookForm = ({ className, isSubmitting }) => (
       <div className={className}>
-        <h3>To start a discussion, try adding a book to your collection</h3>
+        <h3>Add a book to your collection</h3>
         <Divider />
         <Form>
           <Field
@@ -33,6 +32,7 @@ const CreateBookForm = ({ className, isSubmitting }) => {
               component={TextInput}
               />
           <Button
+            isFullWidth
             type="submit"
             label="Add new book"
             isLoading={isSubmitting}
@@ -40,7 +40,7 @@ const CreateBookForm = ({ className, isSubmitting }) => {
         </Form>
       </div>
     );
-  }
+
 
 CreateBookForm.propTypes = {
   className: PropTypes.string,
@@ -88,5 +88,4 @@ export default withFormik({
       });
   },
 })(styled(CreateBookForm)`
-  margin: 0;
 `);

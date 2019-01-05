@@ -6,7 +6,6 @@ import Button from './Button';
 import theme from '../../theme';
 
 const DangerButton = styled(Button)`
-  background-color: ${theme.colors.danger};
 `;
 
 export default DangerButton;

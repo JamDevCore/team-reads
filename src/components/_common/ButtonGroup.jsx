@@ -30,6 +30,9 @@ export default styled(ButtonGroup)`
   flex-wrap: wrap;
   * {
     display: inline-block !important;
-    margin: 5px 5px !important;
+    margin: 5px 5px;
+  }
+  button:first-of-type {
+    margin-left: 0;
   }
 `;

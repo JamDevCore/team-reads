@@ -25,16 +25,18 @@ class TeamSettingsView extends React.Component {
       isSendingRequest: false,
       isAcceptingUser: false,
       isDecliningUser: false,
+      teamMembers: this.props.teamMembers,
     }
 
     this.acceptJoinRequest = this.acceptJoinRequest.bind(this);
     this.declineJoinRequest = this.declineJoinRequest.bind(this);
     this.setSearchResults = this.setSearchResults.bind(this);
     this.sendRequest = this.sendRequest.bind(this);
+    this.removeTeamMember = this.removeTeamMember.bind(this);
   }
 
   acceptJoinRequest(userId) {
-    const { teamId } = this.props;
+    const { teamId, updateTeam } = this.props;
     console.log(userId, teamId)
     this.setState({ isAcceptingUser: userId });
     api.put(`team/${teamId}`, {
@@ -43,6 +45,13 @@ class TeamSettingsView extends React.Component {
     .then(() => {
       this.setState({ isAcceptingUser: false })
       openAlert({ message: "This request has been accepted", type: "success" });
+      api.get(`user/${userId}`)
+        .then((response) => {
+          const user = response.data;
+          this.updateTeam(user)
+          this.removeJoinRequests();
+        })
+        .catch(err => console.log(err))
     })
     .catch((err) => {
       this.setState({ isAcceptingUser: false });
@@ -60,6 +69,7 @@ class TeamSettingsView extends React.Component {
     .then(() => {
       this.setState({ isDecliningUser: false })
       openAlert({ message: "This request has been declined", type: "success" });
+
     })
     .catch((err) => {
       this.setState({ isDecliningUser: false });
@@ -68,33 +78,81 @@ class TeamSettingsView extends React.Component {
   }
 
   sendRequest(userId) {
+    console.log(userId)
     const { teamId } = this.props;
+    console.log(userId)
     this.setState({ isSendingRequest: userId });
     api.put(`team/${teamId}`, {
       sendInvitation: userId,
     })
-    .then((res )=> {
-      openAlert({ message: 'Your invite has been sent', type: 'info' });
-      this.setState({ isSendingRequest: false });
-    })
-    .catch((err) => {
-      openAlert({ message: `Error: ${err}`, type: 'danger' });
-      this.setState({ isSendingRequest: false });
-    })
+      .then((res) => {
+        console.log(res)
+        openAlert({ message: 'Your invite has been sent', type: 'info' });
+        this.setState({ isSendingRequest: false });
+        api.get(`user/${userId}`)
+          .then((response) => {
+            const user = response.data;
+            this.updateTeam(user)
+            this.resetSearchResults();
+          })
+          .catch(err => console.log(err))
+      })
+      .catch((err) => {
+        openAlert({ message: `Error: ${err}`, type: 'danger' });
+        this.setState({ isSendingRequest: false });
+      })
   }
 
-  setSearchResults (users) {
-    const { teamMembers } = this.props;
+  resetSearchResults() {
+    this.setState({
+      userSearchList: [],
+    });
+  }
+
+  updateTeam(user) {
+    const { teamMembers } = this.state;
+    const team = teamMembers;
+    team.push(user);
+    this.setState({
+      teamMembers: team,
+    });
+  }
+
+  removeJoinRequests(userId) {
+    const { userRequests } = this.state;
+    let requests = userRequests;
+    requests = requests.filter(user => user._id !== userId);
+    this.setState({
+      userRequests: requests,
+    });
+  }
+
+  removeTeamMember(userId) {
+    const { teamMembers } = this.state;
+    let team = teamMembers;
+    team = team.filter(user => user._id !== userId);
+    this.setState({
+      teamMembers: team,
+    });
+  }
+
+  setSearchResults(users) {
+    const { teamMembers } = this.state;
+    console.log(teamMembers)
     const teamIds = _.pluck(teamMembers, '_id');
-    let userSearch = users.filter(user => !_.contains(teamIds, user._id) && user._id)
+    const userSearch = users.filter(user => !_.contains(teamIds, user._id) && user._id)
     this.setState({
       userSearchList: userSearch,
     })
   }
 
   render() {
-    const { className, userId, teamId, teamName, teamMembers } = this.props;
-    const { userRequests, isAcceptingUser, isDecliningUser, userSearchList, isSendingRequest } = this.state;
+    const {
+      className, userId, teamId, teamName, sentInvitations,
+    } = this.props;
+    const {
+      userRequests, isAcceptingUser, isDecliningUser, userSearchList, isSendingRequest, teamMembers,
+    } = this.state;
     console.log(teamId)
     return (
       <div className={className}>
@@ -130,6 +188,7 @@ class TeamSettingsView extends React.Component {
               teamName={teamName}
               teamMembersId={teamMembers}
               teamMembers={teamMembers}
+              removeTeamMember={this.removeTeamMember}
             />
           </Panel>
           <Panel>
@@ -140,9 +199,6 @@ class TeamSettingsView extends React.Component {
           </Panel>
             {userSearchList && userSearchList.length > 0 ?
               (<React.Fragment>
-                <Panel>
-                  <h2>Search results</h2>
-                </Panel>
                 {userSearchList.map((user) => (
                   <BannerMessage
                     key={user}
@@ -160,18 +216,22 @@ class TeamSettingsView extends React.Component {
 
 TeamSettingsView.propTypes = {
   joinRequests: PropTypes.arrayOf(PropTypes.object),
+  sentInvitations: PropTypes.arrayOf(PropTypes.object),
   userId: PropTypes.string,
   teamId: PropTypes.string,
   teamName: PropTypes.string,
   teamMembers: PropTypes.arrayOf(PropTypes.object),
+  updateTeam: PropTypes.func,
 };
 
 TeamSettingsView.defaultProps = {
   joinRequests: undefined,
+  sentInvitations: undefined,
   userId: undefined,
   teamId: undefined,
   teamName: undefined,
   teamMembers: undefined,
+  updateTeam: undefined,
 };
 
 export default styled(TeamSettingsView)`

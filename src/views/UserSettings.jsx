@@ -90,7 +90,7 @@ componentDidMount() {
         </Panel>
         <Panel>
           <HighlightButton
-            label="Send password reset email"
+            label="Reset password"
             icon="fas fa-envelope"
             isLoading={isLoading}
             onClick={() => this.requestChangePasswordEmail()}

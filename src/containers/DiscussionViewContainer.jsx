@@ -47,15 +47,15 @@ class DiscussionViewContainer extends React.Component {
     .then((res) => {
       console.log(res);
       const discussion = res.data;
-      console.log(discussion.bookId[0]._id);
+      console.log(discussion.bookId._id);
       this.setState({
         discussionId: discussion._id,
         title: discussion.title,
         note: discussion.note,
         ownerId: discussion.userId._id,
-        bookId: discussion.bookId[0]._id,
-        bookTitle: discussion.bookId[0].name,
-        author: discussion.bookId[0].author,
+        bookId: discussion.bookId._id,
+        bookTitle: discussion.bookId.name,
+        author: discussion.bookId.author,
         comments: discussion.comments,
         isLoading: false,
       });

@@ -7,7 +7,7 @@ import { openAlert } from 'simple-react-alert';
 import api from '../../modules/api-call';
 import Form from '../_common/form-components/Form';
 import Textarea from '../_common/form-components/Textarea';
-import LinkButton from '../_common/LinkButton';
+import Button from '../_common/Button';
 
 class AddCommentForm extends React.Component {
   render() {
@@ -21,9 +21,11 @@ class AddCommentForm extends React.Component {
             component={Textarea}
             rows={5}
           />
-        <LinkButton
+        <Button
+          theme="link"
           type="submit"
           isLoading={isSubmitting}
+          isFullWidth
           label={!commentId ? "Add comment" : "Update comment"}
           />
         </Form>

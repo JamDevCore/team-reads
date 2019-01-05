@@ -7,10 +7,11 @@ import Card from '../components/Card';
 import NoResults from '../components/_common/NoResults';
 import Panel from '../components/_common/Panel';
 import Callback from '../components/Callback';
+import Divider from '../components/_common/Divider';
 import theme from '../theme';
 import api from '../modules/api-call';
 
-class DashboardView extends React.Component {
+class AddBookView extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -36,7 +37,7 @@ class DashboardView extends React.Component {
     const { className, userId, addBookToState  } = this.props;
     return (
       <div className={className}>
-        <div className="container left">
+        <div className="container">
         <Panel>
         <CreateBookForm
           userId={userId}
@@ -44,58 +45,26 @@ class DashboardView extends React.Component {
           />
         </Panel>
       </div>
-      <div className="container right">
-          {this.renderBooks()}
-          </div>
       </div>
     );
   }
 }
 
-DashboardView.propTypes = {
+AddBookView.propTypes = {
   className: PropTypes.string,
   userId: PropTypes.string,
   books: PropTypes.arrayOf(PropTypes.object),
   addBookToState: PropTypes.func,
 };
 
-DashboardView.defaultProps = {
+AddBookView.defaultProps = {
   className: undefined,
   userId: undefined,
   books: undefined,
-  currentShelf: undefined,
   addBookToState: undefined,
 };
 
-export default styled(DashboardView)`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  .left {
-    margin: 40px auto;
-    width: 450px;
-    min-width: 300px;
-    select {
-      margin-left: 0 !important;
-    }
-  }
-  .right {
-    box-sizing: border-box;
-    width: 60%;
-    margin: 40px auto;
-  }
-  @media(max-width: 1124px) {
-    .right {
-      margin: 20px auto;
-      width: 100%;
-
-    }
-    .left {
-      width: 100%;
-      margin: 40px 0px auto;
-    }
-  }
-
-  }
+export default styled(AddBookView)`
+  max-width: 600px;
+  margin: 100px auto;
 `;
