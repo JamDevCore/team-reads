@@ -120,6 +120,7 @@ class TeamMembers extends React.Component {
           className="table -striped"
           data={teamMembers}
           columns={columns}
+          minRows={0}
           defaultPageSize={5}
           showPagination={false}
           showPaginationBottom={false}
