@@ -35,30 +35,6 @@ class TeamSettingsView extends React.Component {
     this.removeTeamMember = this.removeTeamMember.bind(this);
   }
 
-  acceptJoinRequest(userId) {
-    const { teamId, updateTeam } = this.props;
-    console.log(userId, teamId)
-    this.setState({ isAcceptingUser: userId });
-    api.put(`team/${teamId}`, {
-      newUser: userId,
-    })
-    .then(() => {
-      this.setState({ isAcceptingUser: false })
-      openAlert({ message: "This request has been accepted", type: "success" });
-      api.get(`user/${userId}`)
-        .then((response) => {
-          const user = response.data;
-          this.updateTeam(user)
-          this.removeJoinRequests();
-        })
-        .catch(err => console.log(err))
-    })
-    .catch((err) => {
-      this.setState({ isAcceptingUser: false });
-      openAlert({ message: `Error: ${err}`, type: "danger" });
-    })
-  }
-
   declineJoinRequest(userId) {
     const { teamId } = this.props;
     console.log(userId, teamId)
@@ -146,6 +122,34 @@ class TeamSettingsView extends React.Component {
     })
   }
 
+  acceptJoinRequest(userId) {
+    const { teamId, updateTeam } = this.props;
+    console.log(userId, teamId)
+    this.setState({ isAcceptingUser: userId });
+    api.put(`team/${teamId}`, {
+      newUser: userId,
+    })
+      .then(() => {
+        this.setState({ isAcceptingUser: false })
+        openAlert({ message: 'This request has been accepted', type: "success" });
+        api.get(`user/${userId}`)
+          .then((response) => {
+            const user = response.data;
+            this.updateTeam(user)
+            this.removeJoinRequests();
+          })
+          .catch(err => console.log(err))
+      })
+      .catch((err) => {
+        this.setState({ isAcceptingUser: false });
+        openAlert({ message: `Error: ${err}`, type: "danger" });
+      })
+  }
+
+  updateTeamName() {
+    console.log('add to context')
+  }
+
   render() {
     const {
       className, userId, teamId, teamName, sentInvitations,
@@ -178,6 +182,7 @@ class TeamSettingsView extends React.Component {
               userId={userId}
               teamId={teamId}
               teamName={teamName}
+              updateTeamName={this.updateTeamName}
             />
           </Panel>
           <Panel>
