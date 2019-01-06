@@ -18,7 +18,7 @@ const TeamView = ({
   sentInvitations,
   updateTeamName,
   updateTeamMembers,
-  updateJoinRequests,
+  removeJoinRequests,
 }) => (
   <div className={className}>
     <React.Fragment>
@@ -64,7 +64,7 @@ const TeamView = ({
                 userId={userId}
                 updateTeamMembers={updateTeamMembers}
                 updateTeamName={updateTeamName}
-                updateJoinRequests={updateJoinRequests}
+                removeJoinRequests={removeJoinRequests}
                 {...props}
               />)}
           />
@@ -84,10 +84,10 @@ TeamView.propTypes = {
   userId: PropTypes.string,
   teamId: PropTypes.string,
   teamName: PropTypes.string,
-  teamMembers: PropTypes.arrayOf(PropTypes.string),
+  teamMembers: PropTypes.arrayOf(PropTypes.object),
   updateTeamMembers: PropTypes.func,
   updateTeamName: PropTypes.func,
-  updateJoinRequests: PropTypes.func,
+  removeJoinRequests: PropTypes.func,
 };
 
 TeamView.defaultProps = {
@@ -97,7 +97,7 @@ TeamView.defaultProps = {
   teamMembers: undefined,
   updateTeamMembers: undefined,
   updateTeamName: undefined,
-  updateJoinRequests: undefined,
+  removeJoinRequests: undefined,
 };
 
 export default styled(TeamView)`

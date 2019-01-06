@@ -79,7 +79,7 @@ class TeamSettingsView extends React.Component {
         this.setState({ isDecliningUser: false });
         openAlert({ message: 'This request has been declined', type: 'success' });
         const user = { _id: userId };
-        removeJoinRequests(user);
+        removeJoinRequests(userId);
       })
       .catch((err) => {
         this.setState({ isDecliningUser: false });
@@ -101,7 +101,7 @@ class TeamSettingsView extends React.Component {
           .then((response) => {
             const user = response.data;
             updateTeamMembers(user, true);
-            removeJoinRequests(user);
+            removeJoinRequests(userId);
           })
           .catch(err => console.log(err));
       })

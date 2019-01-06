@@ -15,7 +15,7 @@ class CreateDiscussionForm extends React.Component {
     const { className, discussionId, isSubmitting } = this.props;
     return (
       <div className={className}>
-        <h4>Begin a discussion by adding a quote or highlight from text. Explain your thoughts in the notes</h4>
+        <h4>Begin a discussion by adding a quote or highlight from the text. Explain your thoughts in the notes</h4>
         <Form>
           <Field
             name="title"

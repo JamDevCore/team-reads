@@ -218,6 +218,9 @@ display: flex;
 flex-direction: row;
 flex-wrap: wrap;
 width: 100%;
+.highlight {
+  font-style: italic;
+}
 li {
   margin-right: 10px;
 }

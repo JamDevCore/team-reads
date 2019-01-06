@@ -17,18 +17,22 @@ class TeamMembers extends React.Component {
     };
   }
 
-  removeUserFromTeam(userId) {
-    const { teamId, updateTeamMembers } = this.props;
-    this.setState({ isRemovingUser: userId });
+  removeUserFromTeam(id, isSelf) {
+    const { teamId, updateTeamMembers,userId } = this.props;
+    this.setState({ isRemovingUser: id });
     api.put(`team/${teamId}`, {
-      removeUser: userId,
+      removeUser: id,
     })
       .then(() => {
         this.setState({
           isRemovingUser: false,
         });
         openAlert({ message: 'The user has been removed from your team', type: 'success' });
-        updateTeamMembers(userId);
+        if (userId === id) {
+          window.location.reload();
+        } else {
+          updateTeamMembers(id);
+        }
       })
       .catch((err) => {
         this.setState({
@@ -83,9 +87,11 @@ class TeamMembers extends React.Component {
       Header: 'Role',
       accessor: 'role',
       Cell: props => <p>{props.value}</p>,
+      maxWidth: 120,
     }, {
       Header: 'Delete user',
       accessor: '_id',
+      minWidth: 150,
       Cell: (props) => {
         console.log(props);
         const isPending = props.original.teams[0] !== teamId;
@@ -151,6 +157,7 @@ p {
   font-weight: 500;
 }
 button {
-  margin: auto 10px !important;
+  float: right;
+  margin-right: 15px;
 }
 `;

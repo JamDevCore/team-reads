@@ -76,11 +76,11 @@ class TeamViewContainer extends React.Component {
     }
   }
 
-  removeJoinRequests(user) {
-    console.log(user)
+  removeJoinRequests(userId) {
+    console.log(userId)
     const { joinRequests } = this.state;
     let requests = joinRequests;
-    requests = joinRequests.filter(u => u._id !== user._id);
+    requests = joinRequests.filter(user => user._id !== userId);
     this.setState({
       joinRequests: requests,
     });
@@ -107,7 +107,7 @@ class TeamViewContainer extends React.Component {
         sentInvitations={sentInvitations}
         updateTeamName={this.updateTeamName}
         updateTeamMembers={this.updateTeamMembers}
-        updateJoinRequests={this.updateJoinRequests}
+        removeJoinRequests={this.removeJoinRequests}
       />);
   }
 }

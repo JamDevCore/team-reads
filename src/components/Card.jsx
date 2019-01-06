@@ -54,7 +54,7 @@ Card.propTypes = {
   author: PropTypes.string,
   link: PropTypes.string,
   owner: PropTypes.string,
-  isDiscussion: PropTypes.number,
+  isDiscussion: PropTypes.bool,
 };
 
 Card.defaultProps = {
