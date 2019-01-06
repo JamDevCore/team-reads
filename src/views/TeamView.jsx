@@ -1,48 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import styled from 'styled-components';
-import history from '../modules/history';
-import api from '../modules/api-call';
 import SidebarMenu from '../components/SidebarMenu';
-import TeamOverview from './TeamOverview';
-import TeamSetup from './TeamSetup';
 import TeamSettingsView from './TeamSettingsView';
 import TeamDiscussionListViewContainer from '../containers/TeamDiscussionListViewContainer';
 import TeamBookListContainer from '../containers/TeamBookListContainer';
-import TeamMembersView from './TeamMembersView';
 import Fallback from './Fallback';
-import Callback from '../components/Callback';
 
-class TeamView extends React.Component {
-  constructor() {
-    super();
-  }
-
-  componentDidMount() {
-  }
-
-  updateTeam() {
-
-  }
-
-  render() {
-    const { className, teamId, userId } = this.props;
-    const {
-      teamMembers, teamName, joinRequests, sentInvitations, isLoading
-    } = this.props;
-    console.log(teamMembers, joinRequests)
-    return (
-      <div className={className}>
-        <React.Fragment>
-          <SidebarMenu teamId={teamId} />
-          <div className="teamView">
-          {/*<TeamBookListContainer
-            teamId={teamId}
-            teamMembers={teamMembers}
-            teamName={teamName}
-            {...this.props}
-          />*/}
+const TeamView = ({
+  teamId,
+  className,
+  userId,
+  teamName,
+  teamMembers,
+  joinRequests,
+  sentInvitations,
+  updateTeamName,
+  updateTeamMembers,
+  updateJoinRequests,
+}) => (
+  <div className={className}>
+    <React.Fragment>
+      <SidebarMenu teamId={teamId} />
+      <div className="teamView">
         <Switch>
           {/* <Route exact path="/team/:id" teamName={teamName} teamId={teamId} component={TeamOverview} /> */}
           {/* <Route exact path="/team/:id/members" teamId={teamId} component={TeamMembersView}/> */}
@@ -68,7 +49,7 @@ class TeamView extends React.Component {
                 teamName={teamName}
                 {...props}
               />)}
-            />
+          />
           <Route
             exact
             path="/team/:id/settings"
@@ -81,6 +62,9 @@ class TeamView extends React.Component {
                 teamId={teamId}
                 teamMembers={teamMembers}
                 userId={userId}
+                updateTeamMembers={updateTeamMembers}
+                updateTeamName={updateTeamName}
+                updateJoinRequests={updateJoinRequests}
                 {...props}
               />)}
           />
@@ -91,18 +75,19 @@ class TeamView extends React.Component {
             render={() => <Fallback />}
           />
         </Switch>
-          </div>
-        </React.Fragment>
       </div>
-    );
-  }
-}
+    </React.Fragment>
+  </div>
+);
 
 TeamView.propTypes = {
   userId: PropTypes.string,
   teamId: PropTypes.string,
   teamName: PropTypes.string,
   teamMembers: PropTypes.arrayOf(PropTypes.string),
+  updateTeamMembers: PropTypes.func,
+  updateTeamName: PropTypes.func,
+  updateJoinRequests: PropTypes.func,
 };
 
 TeamView.defaultProps = {
@@ -110,6 +95,9 @@ TeamView.defaultProps = {
   teamId: undefined,
   teamName: undefined,
   teamMembers: undefined,
+  updateTeamMembers: undefined,
+  updateTeamName: undefined,
+  updateJoinRequests: undefined,
 };
 
 export default styled(TeamView)`

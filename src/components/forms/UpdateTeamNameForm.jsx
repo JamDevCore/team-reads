@@ -37,14 +37,14 @@ UpdateTeamNameForm.propTypes = {
   userId: PropTypes.string,
   teamId: PropTypes.string,
   teamName: PropTypes.string,
-  updateName: PropTypes.func,
+  updateTeamName: PropTypes.func,
 };
 
 UpdateTeamNameForm.defaultProps = {
   userId: undefined,
   teamId: undefined,
   teamName: undefined,
-  updateName: undefined,
+  updateTeamName: undefined,
 };
 
 export default withFormik({
@@ -61,7 +61,7 @@ export default withFormik({
     })
       .then(() => {
         setSubmitting(false);
-        props.updateName(values.teamName);
+        props.updateTeamName(values.teamName);
         openAlert({ message: 'Success! Your team name has been updated', type: 'success' });
       })
       .catch((error) => {

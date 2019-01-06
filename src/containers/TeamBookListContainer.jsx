@@ -11,12 +11,11 @@ class TeamBookListContainer extends React.Component {
     this.state = {
       books: [],
       isLoading: true,
-      teamMembers: [],
     }
   }
 
   componentDidMount() {
-    const { teamId, teamMembers } = this.props;
+    const { teamId } = this.props;
     console.log(teamId)
     if (teamId) {
     api.get(`book?teamId=${teamId}`)

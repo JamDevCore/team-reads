@@ -14,23 +14,21 @@ class TeamMembers extends React.Component {
     this.state = {
       isRemovingUser: false,
       isCancellingInvite: false,
-    }
+    };
   }
 
   removeUserFromTeam(userId) {
-    const { teamId, removeTeamMember, teamMembers } = this.props;
+    const { teamId, updateTeamMembers } = this.props;
     this.setState({ isRemovingUser: userId });
     api.put(`team/${teamId}`, {
       removeUser: userId,
     })
       .then(() => {
-        const newTeamMembers = teamMembers.filter(user => user._id !== userId);
         this.setState({
           isRemovingUser: false,
-          teamMembers: newTeamMembers,
         });
         openAlert({ message: 'The user has been removed from your team', type: 'success' });
-        removeTeamMember(userId);
+        updateTeamMembers(userId);
       })
       .catch((err) => {
         this.setState({
@@ -42,26 +40,24 @@ class TeamMembers extends React.Component {
   }
 
   cancelPendingInvite(userId) {
-    const { teamId, removeTeamMember, teamMembers } = this.props;
+    const { teamId, updateTeamMembers } = this.props;
     this.setState({ isCancellingInvite: userId });
     api.put(`team/${teamId}`, {
       cancelInvitation: userId,
     })
       .then(() => {
-        const newTeamMembers = teamMembers.filter(user => user._id !== userId);
         this.setState({
           isCancellingInvite: false,
-          teamMembers: newTeamMembers,
         });
         openAlert({ message: 'This invite has been cancelled', type: 'success' });
-        removeTeamMember(userId)
+        updateTeamMembers(userId);
       })
       .catch((err) => {
         this.setState({
           isCancellingInvite: false,
         });
-        console.log(err)
-        openAlert({ message: `Error: ${err}`});
+        console.log(err);
+        openAlert({ message: `Error: ${err}` });
       });
   }
 
@@ -73,14 +69,16 @@ class TeamMembers extends React.Component {
       accessor: 'username',
       Cell: (props) => {
         const isPending = props.original.teams[0] !== teamId;
-        return isPending ? <p><span style={{fontStyle: 'italic'}}>Pending</span>: {props.value}</p> : <p>{props.value}</p>
-      }
+        return isPending ? (
+          <p>
+            <span style={{ fontStyle: 'italic' }}>Pending : </span>
+            {props.value}
+          </p>) : <p>{props.value}</p>;
+      },
     }, {
       Header: 'Email',
       accessor: 'email',
-      Cell: (props) => {
-        return <p>{props.value}</p>
-      }
+      Cell: props => <p>{props.value}</p>,
     }, {
       Header: 'Role',
       accessor: 'role',
@@ -89,29 +87,30 @@ class TeamMembers extends React.Component {
       Header: 'Delete user',
       accessor: '_id',
       Cell: (props) => {
-        console.log(props)
+        console.log(props);
         const isPending = props.original.teams[0] !== teamId;
         return isPending ? (
           <Button
             theme="danger"
-            label={"Cancel invitation"}
+            label="Cancel invitation"
             isLoading={isCancellingInvite === props.value}
-            onClick={() => this.cancelPendingInvite(props.value)}/>)
+            onClick={() => this.cancelPendingInvite(props.value)}
+          />)
           : (
             <Button
               theme="danger"
-              label={userId === props.value ? "Leave team" : "Remove user"}
+              label={userId === props.value ? 'Leave team' : 'Remove user'}
               isLoading={isRemovingUser === props.value}
               onClick={() => this.removeUserFromTeam(props.value)}
-            />)
-      }
+            />);
+      },
     }];
-}
+  }
 
   render() {
     const { className, teamMembers } = this.props;
     const columns = this.columns()
-    console.log(teamMembers)
+    console.log(teamMembers);
     return (
       <div className={className}>
         <h2>Team members</h2>
@@ -132,17 +131,19 @@ class TeamMembers extends React.Component {
 }
 
 TeamMembers.propTypes = {
+  className: PropTypes.string,
   teamId: PropTypes.string,
   userId: PropTypes.string,
   teamMembers: PropTypes.arrayOf(PropTypes.object),
-  removeTeamMember: PropTypes.func,
+  updateTeamMembers: PropTypes.func,
 };
 
 TeamMembers.defaultProps = {
+  className: undefined,
   teamId: undefined,
   userId: undefined,
   teamMembers: undefined,
-  removeTeamMember: undefined,
+  updateTeamMembers: undefined,
 };
 
 export default styled(TeamMembers)`

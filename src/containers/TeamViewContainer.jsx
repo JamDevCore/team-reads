@@ -16,24 +16,27 @@ class TeamViewContainer extends React.Component {
       teamMembers: [],
       joinRequests: [],
       sentInvitations: [],
-    }
+    };
+    this.updateTeamName = this.updateTeamName.bind(this);
+    this.updateTeamMembers = this.updateTeamMembers.bind(this);
+    this.removeJoinRequests = this.removeJoinRequests.bind(this);
   }
 
   componentDidMount() {
-    const { teamId, userId } = this.props;
-    this.setState({
-      isLoading: true,
-    })
+    const { userId } = this.props;
     if (userId) {
+      this.setState({
+        isLoading: true,
+      })
       api.get(`user/${userId}`)
         .then((res) => {
-          console.log(res)
+          console.log(res);
           const user = res.data;
           if (user.teams[0]) {
             api.get(`team/${user.teams[0]}`)
               .then((response) => {
                 const team = response.data;
-                console.log(team)
+                console.log(team);
                 this.setState({
                   teamId: team._id,
                   teamName: team.teamName,
@@ -47,8 +50,40 @@ class TeamViewContainer extends React.Component {
             history.push('/team-setup');
           }
         });
-
     }
+  }
+
+  updateTeamName(newName) {
+    this.setState({
+      teamName: newName,
+    });
+  }
+
+  updateTeamMembers(user, isJoining) {
+    console.log('here', user, isJoining)
+    const { teamMembers } = this.state;
+    let team = teamMembers;
+    if (isJoining) {
+      team.push(user);
+      this.setState({
+        teamMembers: team,
+      });
+    } else {
+      team = team.filter(u => u._id !== user);
+      this.setState({
+        teamMembers: team,
+      });
+    }
+  }
+
+  removeJoinRequests(user) {
+    console.log(user)
+    const { joinRequests } = this.state;
+    let requests = joinRequests;
+    requests = joinRequests.filter(u => u._id !== user._id);
+    this.setState({
+      joinRequests: requests,
+    });
   }
 
   render() {
@@ -70,20 +105,19 @@ class TeamViewContainer extends React.Component {
         teamMembers={teamMembers}
         joinRequests={joinRequests}
         sentInvitations={sentInvitations}
-      />)
+        updateTeamName={this.updateTeamName}
+        updateTeamMembers={this.updateTeamMembers}
+        updateJoinRequests={this.updateJoinRequests}
+      />);
   }
 }
 
 TeamViewContainer.propTypes = {
   userId: PropTypes.string,
-  username: PropTypes.string,
-  teamMembers: PropTypes.arrayOf(PropTypes.object)
 };
 
 TeamViewContainer.defaultProps = {
   userId: undefined,
-  username: undefined,
-  teamMembers: undefined,
 };
 
 
