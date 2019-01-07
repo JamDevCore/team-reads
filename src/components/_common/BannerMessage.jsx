@@ -51,7 +51,7 @@ BannerMessage.propTypes = {
   isAlert: PropTypes.bool,
 };
 
-BannerMessage.defaultProps = {
+  BannerMessage.defaultProps = {
   message: undefined,
   action: undefined,
   closeAction: undefined,

@@ -17,7 +17,7 @@ class TeamMembers extends React.Component {
     };
   }
 
-  removeUserFromTeam(id, isSelf) {
+  removeUserFromTeam(id) {
     const { teamId, updateTeamMembers,userId } = this.props;
     this.setState({ isRemovingUser: id });
     api.put(`team/${teamId}`, {
@@ -91,21 +91,21 @@ class TeamMembers extends React.Component {
     }, {
       Header: 'Delete user',
       accessor: '_id',
-      minWidth: 150,
+      maxWidth: 150,
       Cell: (props) => {
         console.log(props);
         const isPending = props.original.teams[0] !== teamId;
         return isPending ? (
           <Button
-            theme="danger"
-            label="Cancel invitation"
+            theme="danger link"
+            icon="fas fa-user-times"
             isLoading={isCancellingInvite === props.value}
             onClick={() => this.cancelPendingInvite(props.value)}
           />)
           : (
             <Button
-              theme="danger"
-              label={userId === props.value ? 'Leave team' : 'Remove user'}
+              theme="danger link"
+              icon="fas fa-user-times"
               isLoading={isRemovingUser === props.value}
               onClick={() => this.removeUserFromTeam(props.value)}
             />);

@@ -124,13 +124,12 @@ class DiscussionView extends React.Component {
           <Panel>
             <Link to={`/book/${bookId}`}><h3>{bookTitle}</h3></Link>
             <h4>{author}</h4>
-            <Divider />
             <Button
               theme="link"
               link="http://www.amazon.co.uk"
               icon="fab fa-amazon"
-              label="Get this on amazon" />
-            <Divider />
+              label="Get this on amazon"
+            />
             <ButtonGroup>
               <Button
                 label="Start new discussion"
@@ -218,6 +217,12 @@ display: flex;
 flex-direction: row;
 flex-wrap: wrap;
 width: 100%;
+h3 {
+  padding-left: 10px;
+}
+h4 {
+  padding-left: 10px;
+}
 .highlight {
   font-style: italic;
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { openAlert } from 'simple-react-alert';
 import history from '../modules/history';
 import api from '../modules/api-call';
@@ -69,22 +70,22 @@ class BookView extends React.Component {
       bookId,
       bookTitle,
     })
-    .then((res) => {
-      this.setState({ isLoading: true });
-      console.log(res);
-      const discussion = res.data;
-      history.push(`/book/${bookId}/discussion/${discussion._id}`);
-    })
-    .catch((err) => {
-      this.setState({ isLoading: false });
-      console.log(err);
-    })
+      .then((res) => {
+        this.setState({ isLoading: true });
+        console.log(res);
+        const discussion = res.data;
+        history.push(`/book/${bookId}/discussion/${discussion._id}`);
+      })
+      .catch((err) => {
+        this.setState({ isLoading: false });
+        console.log(err);
+      })
   }
 
   renderDiscussions() {
     const { discussions, bookId } = this.props;
     console.log(discussions)
-    return discussions.length > 0 ? discussions.map(d =>
+    return discussions.length > 0 ? discussions.map(d => (
       <Card
         key={d._id}
         owner={d.username}
@@ -94,8 +95,7 @@ class BookView extends React.Component {
         isDiscussion
         contributions={d.comments.length}
         link={`/book/${bookId}/discussion/${d._id}`}
-      />
-  ) : <NoResults isDiscussion/>;
+      />)) : <NoResults isDiscussion />;
   }
 
   render() {
@@ -108,16 +108,14 @@ class BookView extends React.Component {
           <React.Fragment>
             <div className="left">
               <Panel>
-                <h2>{bookTitle}</h2>
+                <Link to={`/book/${bookId}`}><h3>{bookTitle}</h3></Link>
                 <h4>{author}</h4>
-                <Divider />
                 <Button
                   theme="link"
                   link="http://www.amazon.co.uk"
                   icon="fab fa-amazon"
                   label="Get this on amazon"
                 />
-                <Divider />
                 <ButtonGroup>
                   <Button
                     label="Start new discussion"
@@ -170,7 +168,7 @@ export default styled(BookView)`
   flex-wrap: wrap;
   width: 100%;
   .left {
-    h2 {
+    h3 {
       padding-left: 10px;
     }
     h4 {

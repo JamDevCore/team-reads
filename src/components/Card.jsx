@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import theme from '../theme'
 import trimText from '../modules/trim-text';
 import Button from './_common/Button';
+import pluralize from '../modules/pluralize';
 
 const Card = ({
   className,
@@ -25,13 +26,26 @@ const Card = ({
         {owner && (
           <div className="owner">
             <i className="fas fa-book" />
-            <p>Added by {owner}</p>
+            <p>
+              {'Added by '}
+              <span style={{ fontWeight: 'bold' }}>
+                {owner}
+              </span>
+            </p>
           </div>)}
         <div className="iconList">
           <i className="fas fa-lightbulb" />
-          <p>Insight rating: {lightbulbs || 0}</p>
+          <p>
+            <span style={{ fontWeight: '600' }}>{lightbulbs || 0}</span>
+            {pluralize(lightbulbs, ' insight')}
+          </p>
           <i className="fas fa-comments" />
-          <p>{isDiscussion ? `Comments: ${contributions}` : `Discussions: ${contributions}`}</p>
+          <p>
+            <span style={{ fontWeight: '600' }}>{contributions}</span>
+            {isDiscussion ?
+              `${pluralize(contributions, ' comment')}`
+              : `${pluralize(contributions, ' discussion')}`}
+          </p>
         </div>
       </div>
       <div className="column-2">

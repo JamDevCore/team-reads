@@ -4,7 +4,9 @@ import styled from 'styled-components';
 import { _ } from 'underscore';
 import { openAlert } from 'simple-react-alert';
 import api from '../modules/api-call';
+import theme from '../theme';
 import Panel from '../components/_common/Panel';
+import Button from '../components/_common/Button';
 import BannerMessage from '../components/_common/BannerMessage';
 import UpdateTeamNameForm from '../components/forms/UpdateTeamNameForm';
 import FindUserForm from '../components/forms/FindUserForm';
@@ -168,19 +170,30 @@ class TeamSettingsView extends React.Component {
             teamId={teamId}
             setSearchResults={this.setSearchResults}
           />
+          {userSearchList && userSearchList.length > 0 ? (
+            <React.Fragment>
+              <ul className="userSearchList">
+                {userSearchList.map(user => (
+                  <li
+                    key={user}
+                    className="userSearchItem"
+                  >
+                    <div className="userDetails">
+                      <p className="name">{user.username}</p>
+                      <p>{user.email}</p>
+                    </div>
+                    <div className="actions">
+                      <Button
+                        theme="link"
+                        icon="fas fa-user-plus"
+                        isLoading={isSendingRequest === user._id}
+                        onClick={() => this.sendRequest(user._id)}
+                      />
+                    </div>
+                  </li>))}
+              </ul>
+            </React.Fragment>) : null}
         </Panel>
-        {userSearchList && userSearchList.length > 0 ? (
-          <React.Fragment>
-            {userSearchList.map(user => (
-              <BannerMessage
-                key={user}
-                meta={user._id}
-                actionLoading={isSendingRequest === user._id}
-                action={this.sendRequest}
-                actionLabel="Invite user"
-                message={user && `Username: ${user.username} - Email: ${user.email}`}
-              />))}
-          </React.Fragment>) : null}
       </div>
     );
   }
@@ -219,5 +232,51 @@ h2 {
 @media(max-width: 950px) {
   margin: 20px auto;
   width: 100%;
+}
+@media(max-width: 450px) {
+  .userSearchItem {
+    flex-direction: column;
+    .actions {
+    button {
+      float: left;
+      margin: 0;
+      }
+    }
+  }
+}
+h3 {
+  margin: 20px 20px;
+}
+.userSearchList {
+  display: column;
+  margin-top: ${theme.baseMargin * 3};
+  padding: 10px 0;
+  list-style-type: none;
+}
+.userSearchItem {
+  display: flex;
+  padding: 10px 0;
+  border-bottom: 1px solid ${theme.colors.black};
+}
+.actions {
+  flex-grow: 2;
+  padding: 5px;
+  button {
+    float: right;
+    margin: 10px;
+  }
+}
+.userDetails {
+  flex-grow: 5;
+  max-width: 60%;
+  padding: 5px;
+  .name {
+    font-weight: bold;
+    margin-bottom: 0;
+    padding: 0;
+  }
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 `;
