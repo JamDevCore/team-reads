@@ -15,12 +15,13 @@ const Button = (props) => {
     isLoading,
     link,
     theme,
+    status,
   } = props;
   return !link ? (
     <div className={className}>
       <button
         type={type}
-        className={theme}
+        className={`${theme} ${status}`}
         onClick={onClick}
       >
         {icon && !isLoading ? <i className={icon} /> : null}
@@ -32,7 +33,7 @@ const Button = (props) => {
       <a href={link}>
         <button
           type={type}
-          className={theme}
+          className={`${theme} ${status}`}
           onClick={onClick}
         >
       {icon && !isLoading ? <i className={icon} /> : null}
@@ -53,6 +54,7 @@ Button.propTypes = {
   link: PropTypes.string,
   isFullWidth: PropTypes.bool,
   theme: PropTypes.string,
+  status: PropTypes.string,
 };
 
 Button.defaultProps = {
@@ -65,10 +67,21 @@ Button.defaultProps = {
   isLoading: undefined,
   link: undefined,
   theme: undefined,
+  status: undefined,
 };
 
 export default styled(Button)`
-  @import url('https://fonts.googleapis.com/css?family=Maven+Pro');
+  i {
+    font-size: 14px;
+    margin: 0;
+    padding: 0px 7px 0px 7px;
+    text-decoration: none !important;
+  }
+  .secondary {
+    background-color: transparent !important;
+    border: ${props => `2px solid ${theme.colors[props.theme]}`};
+    color: ${props => `${theme.colors[props.theme]}`};
+  }
   .info {
     background-color: ${theme.colors.info} !important;
   }
@@ -76,7 +89,7 @@ export default styled(Button)`
     background: ${theme.colors.success};
   }
   .highlight {
-    background: ${theme.colors.highlight};
+    background: ${theme.colors.primary};
   }
   .danger {
     background: ${theme.colors.danger};
@@ -84,11 +97,7 @@ export default styled(Button)`
   .link {
     background-color: transparent;
     color: ${theme.colors.primary};
-    i {
-      padding: 3px;
-      margin-right: 8px;
-      text-decoration: none !important;
-    }
+    border: 2px solid ${theme.colors.grey};
     &:hover {
       background-color: ${theme.colors.lightGrey};
     }
@@ -97,30 +106,28 @@ export default styled(Button)`
     margin: 0;
     padding: 0;
     color: white;
-    width: 100%;
-    height: 100%;
   }
   button {
-  display: flex;
-  height: 40px;
-  justify-content: center;
-  background: ${theme.colors.success};
-  font-size: 16px;
-  margin: ${theme.baseMargin / 2}px 0 0;
-  border: none;
-  color: white;
-  border-radius: 3px;
-  font-weight: 500;
-  min-width: 80px;
-  width: ${props => props.isFullWidth ? '100%' : ''};
-  padding: 0px 10px;
-  cursor: pointer;
-  font-family: 'Maven Pro', sans-serif;
-
-  i {
-    margin: 0;
-    padding: 0 7px;
-    text-decoration: none !important;
-  }
+    display: flex;
+    height: 40px;
+    justify-content: center;
+    background: ${theme.colors.success};
+    font-size: 16px;
+    margin: ${theme.baseMargin / 2}px 0 0;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    font-weight: bold;
+    min-width: 80px;
+    width: ${props => props.isFullWidth ? '100%' : ''};
+    padding: 0px 20px;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    i {
+      font-size: 14px;
+      margin: auto 0;
+      padding: auto 7px;
+      text-decoration: none !important;
+    }
   }
 `;

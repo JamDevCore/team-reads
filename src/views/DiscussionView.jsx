@@ -33,7 +33,7 @@ class DiscussionView extends React.Component {
 
   addNote() {
     const {
-      bookId, userId, username, bookTitle
+      bookId, userId, username, bookTitle, updateDiscussionId,
     } = this.props;
     this.setState({
       isLoading: true,
@@ -47,8 +47,8 @@ class DiscussionView extends React.Component {
       .then((res) => {
         this.setState({ isLoading: false });
         const discussion = res.data;
-        console.log(discussion)
-        history.push(`/book/${bookId}/discussion/${discussion._id}`);
+        updateDiscussionId({ discussionId: discussion._id });
+        history.replace(`/book/${bookId}/discussion/${discussion._id}`);
         console.log(res);
       })
       .catch((err) => {
@@ -124,12 +124,6 @@ class DiscussionView extends React.Component {
           <Panel>
             <Link to={`/book/${bookId}`}><h3>{bookTitle}</h3></Link>
             <h4>{author}</h4>
-            <Button
-              theme="link"
-              link="http://www.amazon.co.uk"
-              icon="fab fa-amazon"
-              label="Get this on amazon"
-            />
             <ButtonGroup>
               <Button
                 label="Start new discussion"
@@ -138,12 +132,21 @@ class DiscussionView extends React.Component {
               />
               {ownerId === userId && (
                 <Button
+                  status="secondary"
                   theme="danger"
                   label="Delete discussion"
                   isLoading={isDeleting}
                   onClick={() => this.deleteDiscussion()}
                 />)}
             </ButtonGroup>
+            <Button
+              status="secondary"
+              isFullWidth
+              theme="link"
+              link="http://www.amazon.co.uk"
+              icon="fab fa-amazon"
+              label="Get this on amazon"
+            />
           </Panel>
         </div>
         <div className="right">
@@ -179,6 +182,7 @@ class DiscussionView extends React.Component {
 }
 
 DiscussionView.propTypes = {
+  updateDiscussionId: PropTypes.func,
   className: PropTypes.string,
   userId: PropTypes.string,
   ownerId: PropTypes.string,
@@ -196,6 +200,7 @@ DiscussionView.propTypes = {
 };
 
 DiscussionView.defaultProps = {
+  updateDiscussionId: undefined,
   className: undefined,
   userId: undefined,
   ownerId: undefined,
@@ -217,12 +222,7 @@ display: flex;
 flex-direction: row;
 flex-wrap: wrap;
 width: 100%;
-h3 {
-  padding-left: 10px;
-}
-h4 {
-  padding-left: 10px;
-}
+
 .highlight {
   font-style: italic;
 }
@@ -233,7 +233,7 @@ li {
   position: fixed;
   margin: 40px auto;
   margin-left: 30px;
-  width: 450px;
+  width: 480px;
   min-width: 300px;
     select {
       margin-left: 0 !important;
@@ -249,7 +249,7 @@ li {
     display: inline-block !important;
     margin-left: 10px;
     font-size: 16px;
-    font-family: 'Maven Pro';
+    font-family: 'Nunito';
   }
 }
 @media(max-width: 1124px) {

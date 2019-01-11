@@ -89,7 +89,8 @@ componentDidMount() {
           />
         </Panel>
         <Panel>
-          <HighlightButton
+          <Button
+            theme="highlight"
             label="Reset password"
             icon="fas fa-envelope"
             isLoading={isLoading}

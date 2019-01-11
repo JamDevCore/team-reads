@@ -6,7 +6,7 @@ export default styled.label`
   margin-bottom: 10px;
   font-size: ${theme.fontSize}px;
   display: block;
-  font-family: 'Maven Pro', sans-serif;
+  font-family: 'Nunito', sans-serif;
   text-align: left;
-  font-weight: 500;
+  font-weight: semi-bold;
 `;

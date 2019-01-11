@@ -88,7 +88,7 @@ export default styled(SidebarMenu)`
     padding: 0;
     p {
     margin:0;
-    font-weight: 500;
+    font-weight: semi-bold;
     width: 100%;
     padding:0;
     text-align: center;
@@ -128,7 +128,7 @@ export default styled(SidebarMenu)`
         margin: 0;
         padding: 20px 20px;
         font-size: 20px;
-        font-weight: 500;
+        font-weight: semi-bold;
         height: 100%;
         width: 100%;
       }

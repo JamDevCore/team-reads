@@ -8,6 +8,7 @@ import NoResults from '../components/_common/NoResults';
 import Panel from '../components/_common/Panel';
 import Callback from '../components/Callback';
 import theme from '../theme';
+import DashboardTotals from '../components/DashboardTotals';
 import api from '../modules/api-call';
 
 class BookListView extends React.Component {
@@ -44,6 +45,7 @@ class BookListView extends React.Component {
           />
         </Panel>
       </div>
+      <DashboardTotals />
       <div className="BookList">
         <h2>Your books</h2>
           {this.renderBooks()}
@@ -72,11 +74,10 @@ export default styled(BookListView)`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  width: 100%;
   .AddBookForm {
     position: fixed;
     margin: 40px 30px;
-    width: 400px;
+    width: 480px;
     min-width: 300px;
     select {
       margin-left: 0 !important;
@@ -86,7 +87,7 @@ export default styled(BookListView)`
     h2 {
       padding: 15px;
     }
-    width: 850px;
+    width: 950px;
     box-sizing: border-box;
     margin: 40px auto;
     margin-left: 500px;
@@ -98,7 +99,8 @@ export default styled(BookListView)`
 
     }
     .AddBookForm {
-      width: 100%;
+      width: 480px;
+      min-width: 300px;
       position: relative;
       margin: 40px 0px auto;
     }

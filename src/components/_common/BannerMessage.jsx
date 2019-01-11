@@ -92,7 +92,7 @@ export default styled(BannerMessage)`
     p {
       margin: 0;
       padding:  0;
-      font-weight: 500 !important;
+      font-weight: semi-bold !important;
       color:  ${({ isAlert }) => !isAlert ? theme.colors.black : '#fff'};
     }
   }

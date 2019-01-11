@@ -27,7 +27,7 @@ const SelectInput = ({
   form: { touched, errors },
   placeholder,
   children,
-  ...props,
+  ...props
 }) => {
   const error = errors[name];
   const touch = touched[name];

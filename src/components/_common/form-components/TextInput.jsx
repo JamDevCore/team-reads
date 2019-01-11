@@ -25,7 +25,7 @@ const TextInput = ({
   placeholder,
   searchBar,
   type,
-  ...props,
+  ...props
 }) => {
   const error = errors[name];
   const touch = touched[name];

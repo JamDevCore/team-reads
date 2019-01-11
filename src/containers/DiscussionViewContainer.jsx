@@ -11,78 +11,82 @@ class DiscussionViewContainer extends React.Component {
     this.state = {
       isLoading: true,
       bookId: undefined,
-      discussionId: undefined,
-      bookTitle: undefined,
+      discussionId: this.props.match.params.discussionId,
+      bookTitle: this.props.match.params.bookId,
       author: undefined,
       ownerId: undefined,
       title: undefined,
       note: undefined,
       comments: [],
     }
-
+    this.updateDiscussionId = this.updateDiscussionId.bind(this);
     this.updateDiscussion = this.updateDiscussion.bind(this);
     this.updateComments = this.updateComments.bind(this);
     this.removeComments = this.removeComments.bind(this);
   }
 
   componentDidMount() {
-    const { discussionId, bookId } = this.props.match.params;
-    // api.get(`book/${bookId}`)
-    // .then((res) => {
-    //   console.log(res);
-    //   const book = res.data;
-    //   this.setState({
-    //     bookId: book._id,
-    //     bookTitle: book.name,
-    //     author: book.author,
-    //   });
-    // })
-    // .catch(err => {
-    //   this.setState({
-    //     isLoading: false,
-    //   })
-    //   console.log(err)
-    // })
+    const { discussionId, bookId } = this.state;
+    console.log(discussionId)
     api.get(`discussion/${discussionId}`)
-    .then((res) => {
-      console.log(res);
-      const discussion = res.data;
-      console.log(discussion.bookId._id);
-      this.setState({
-        discussionId: discussion._id,
-        title: discussion.title,
-        note: discussion.note,
-        ownerId: discussion.userId._id,
-        bookId: discussion.bookId._id,
-        bookTitle: discussion.bookId.name,
-        author: discussion.bookId.author,
-        comments: discussion.comments,
-        isLoading: false,
-      });
-    })
-    .catch((err) => {
-      this.setState({
-        isLoading: false,
+      .then((res) => {
+        console.log(res);
+        const discussion = res.data;
+        console.log(discussion.bookId._id);
+        this.setState({
+          discussionId: discussion._id,
+          title: discussion.title,
+          note: discussion.note,
+          ownerId: discussion.userId._id,
+          bookId: discussion.bookId._id,
+          bookTitle: discussion.bookId.name,
+          author: discussion.bookId.author,
+          comments: discussion.comments,
+          isLoading: false,
+        });
       })
-      console.log(err)
-    })
-    // api.get(`comment?discussionId=${discussionId}`)
-    // .then((res) => {
-    //   console.log(res);
-    //   const comments = res.data.data;
-    //   console.log(comments)
-    //   this.setState({
-    //     comments,
-    //   }, this.setState({
-    //     isLoading: false,
-    //   }));
-    // })
-    // .catch(err => {
-    //   this.setState({
-    //     isLoading: false,
-    //   })
-    //   console.log(err)
-    // })
+      .catch((err) => {
+        this.setState({
+          isLoading: false,
+        })
+        console.log(err)
+      })
+  }
+
+  componentDidUpdate(prevProps){
+    const { discussionId } = this.props.match.params;
+    if (prevProps.match.params.discussionId !== this.props.match.params.discussionId) {
+      api.get(`discussion/${discussionId}`)
+        .then((res) => {
+          console.log(res);
+          const discussion = res.data;
+          console.log(discussion.bookId._id);
+          this.setState({
+            discussionId: discussion._id,
+            title: discussion.title,
+            note: discussion.note,
+            ownerId: discussion.userId._id,
+            bookId: discussion.bookId._id,
+            bookTitle: discussion.bookId.name,
+            author: discussion.bookId.author,
+            comments: discussion.comments,
+            isLoading: false,
+          });
+        })
+        .catch((err) => {
+          this.setState({
+            isLoading: false,
+          })
+          console.log(err)
+        })
+    }
+  }
+
+  updateDiscussionId({ discussionId }) {
+    console.log(discussionId)
+    this.setState({
+      discussionId,
+    });
   }
 
   updateDiscussion(title, note) {
@@ -127,9 +131,10 @@ class DiscussionViewContainer extends React.Component {
     const { userId } = this.props;
     return isLoading ? <Callback /> :
     <DiscussionView
-      key={bookId}
+      key={discussionId}
       ownerId={ownerId}
       updateDiscussion={this.updateDiscussion}
+      updateDiscussionId={this.updateDiscussionId}
       updateComments={this.updateComments}
       removeComments={this.removeComments}
       discussionId={discussionId}

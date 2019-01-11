@@ -13,33 +13,33 @@ import Divider from '../_common/Divider';
 import theme from '../../theme';
 
 const CreateBookForm = ({ className, isSubmitting }) => (
-      <div className={className}>
-        <h3>Add a book to your collection</h3>
-        <Divider />
-        <Form>
-          <Field
-            name="title"
-            type="text"
-            label="Title"
-            placeholder="The lean startup"
-            component={TextInput}
-            />
-            <Field
-              name="author"
-              type="text"
-              label="Who wrote it"
-              placeholder="Eric Reis"
-              component={TextInput}
-              />
-          <Button
-            isFullWidth
-            type="submit"
-            label="Add new book"
-            isLoading={isSubmitting}
-          />
-        </Form>
-      </div>
-    );
+  <div className={className}>
+    <h2>Add new books</h2>
+    <Divider />
+    <Form>
+      <Field
+        name="title"
+        type="text"
+        label="Title"
+        placeholder="The lean startup"
+        component={TextInput}
+      />
+      <Field
+        name="author"
+        type="text"
+        label="Who wrote it"
+        placeholder="Eric Reis"
+        component={TextInput}
+      />
+      <Button
+        isFullWidth
+        type="submit"
+        label="Add new book"
+        isLoading={isSubmitting}
+      />
+    </Form>
+  </div>
+);
 
 
 CreateBookForm.propTypes = {

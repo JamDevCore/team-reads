@@ -121,7 +121,7 @@ AuthenticatedRoute.defaultProps = {
   auth: undefined,
   routeName: undefined,
   path: undefined,
-  user:undefined,
+  user: undefined,
 };
 
 export default styled(AuthenticatedRoute)`

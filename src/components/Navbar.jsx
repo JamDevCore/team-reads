@@ -9,9 +9,9 @@ import MobileNavLink from './_common/MobileNavLink';
 const MobileNav = styled.div`
   position: fixed;
   transition: right 1000ms;
-  font-weight: 400;
+  font-weight: bold;
   right: ${props => props.mobileNavIsOpen ? 0 : '-2000px'};
-  width:300px;
+  width: 300px;
   background-color: white;
   height: 100%;
   padding-top: 20px;
@@ -136,7 +136,7 @@ export default styled(Navbar)`
   }
   .navLink {
     color: white;
-    font-weight: 500;
+    font-weight: bold;
     margin: auto 20px;
     padding: 5px 0px;
     border-bottom: 2px solid ${theme.colors.primary};

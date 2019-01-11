@@ -10,7 +10,7 @@ const MobileNavLink = styled(Link)`
   margin: 20px 0px;
   padding: 10px 25px;
   font-size: 28px;
-  font-weight: 500;
+  font-weight: bold;
   text-align: left;
   color: ${theme.colors.black};
   &:focus,

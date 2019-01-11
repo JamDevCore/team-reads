@@ -24,15 +24,17 @@ ButtonGroup.defaultProps = {
 export default styled(ButtonGroup)`
   width: 100%;
   display: flex;
+  padding: 0;
+  margin: 0;
   flex-direction: row;
   justify-content: flex-start;
   text-align: left;
   flex-wrap: wrap;
   * {
     display: inline-block !important;
-    margin: 5px 5px;
+    margin-right: 5px;
   }
   button:first-of-type {
-    margin-left: 0;
+    margin-left: 0 !important;
   }
 `;

@@ -51,7 +51,7 @@ const Card = ({
       <div className="column-2">
         <Button
           label="View"
-          theme="info"
+          theme="highlight"
           link={link}
           isFullWidth
         />
@@ -111,7 +111,7 @@ export default styled(Card)`
     justify-content: flex-end;
   }
   i {
-    margin: 10px 10px;
+    margin: 5px 10px;
     color: ${theme.colors.light};
   }
   p {

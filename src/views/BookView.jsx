@@ -17,20 +17,6 @@ import Card from '../components/Card';
 import Fallback from './Fallback';
 import theme from '../theme';
 
-const AmazonLink = styled.a`
-display: flex;
-font-style: italic;
-justify-content: flex-start;
-font-weight: 500;
-padding: auto 0;
-font-size: 18px;
-margin-top: 20px;
-i {
-  padding-top: 3px;
-  margin-right: 10px;
-}
-`;
-
 class BookView extends React.Component {
   constructor(props) {
     super(props)
@@ -110,12 +96,6 @@ class BookView extends React.Component {
               <Panel>
                 <Link to={`/book/${bookId}`}><h3>{bookTitle}</h3></Link>
                 <h4>{author}</h4>
-                <Button
-                  theme="link"
-                  link="http://www.amazon.co.uk"
-                  icon="fab fa-amazon"
-                  label="Get this on amazon"
-                />
                 <ButtonGroup>
                   <Button
                     label="Start new discussion"
@@ -124,12 +104,22 @@ class BookView extends React.Component {
                   />
                   {ownerId === userId && (
                   <Button
+                    status="secondary"
                     theme="danger"
                     label="Delete book"
                     isLoading={isDeleting}
                     onClick={() => this.deleteBook()}
                   />)}
                 </ButtonGroup>
+                <Button
+                  theme="link"
+                  status="secondary"
+                  isFullWidth
+                  link="http://www.amazon.co.uk"
+                  icon="fab fa-amazon"
+                  label="Get this on amazon"
+                />
+
               </Panel>
             </div>
             <div className="right">
@@ -168,16 +158,10 @@ export default styled(BookView)`
   flex-wrap: wrap;
   width: 100%;
   .left {
-    h3 {
-      padding-left: 10px;
-    }
-    h4 {
-      padding-left: 10px;
-    }
     position: fixed;
     margin: 40px auto;
     margin-left: 30px;
-    width: 450px;
+    width: 480px;
     min-width: 300px;
     select {
       margin-left: 0 !important;
@@ -187,7 +171,7 @@ export default styled(BookView)`
     box-sizing: border-box;
     width: 60%;
     margin: 40px auto;
-        margin-left: 500px;
+    margin-left: 500px;
   }
   @media(max-width: 1124px) {
     .right {

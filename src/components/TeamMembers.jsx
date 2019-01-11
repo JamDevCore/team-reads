@@ -154,7 +154,7 @@ TeamMembers.defaultProps = {
 
 export default styled(TeamMembers)`
 p {
-  font-weight: 500;
+  font-weight: semi-bold;
 }
 button {
   float: right;

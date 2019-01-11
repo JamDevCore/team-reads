@@ -9,7 +9,7 @@ const SelectLabel = styled.label`
   font-size: ${theme.fontSize}px;
   display: block;
   margin: 0px 10px;
-  font-family: 'Maven Pro', sans-serif;
+  font-family: 'Nunito', sans-serif;
   text-align: left;
   font-weight: bold;
 `;
