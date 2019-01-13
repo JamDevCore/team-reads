@@ -18,6 +18,7 @@ class DiscussionViewContainer extends React.Component {
       title: undefined,
       note: undefined,
       comments: [],
+      lightbulbs: [],
     }
 
     this.updateDiscussion = this.updateDiscussion.bind(this);
@@ -57,6 +58,7 @@ class DiscussionViewContainer extends React.Component {
         bookTitle: discussion.bookId.name,
         author: discussion.bookId.author,
         comments: discussion.comments,
+        lightbulbs: discussion.lightbulbs,
         isLoading: false,
       });
     })
@@ -85,10 +87,11 @@ class DiscussionViewContainer extends React.Component {
     // })
   }
 
-  updateDiscussion(title, note) {
+  updateDiscussion(title, note, lightbulbs) {
     this.setState({
       title,
       note,
+      lightbulbs,
     });
   }
 
@@ -123,6 +126,7 @@ class DiscussionViewContainer extends React.Component {
       title,
       note,
       ownerId,
+      lightbulbs,
     } = this.state;
     const { userId } = this.props;
     return isLoading ? <Callback /> :
@@ -143,6 +147,7 @@ class DiscussionViewContainer extends React.Component {
       author={author}
       readBy={readBy}
       personalStatus={personalStatus}
+      lightbulbs={lightbulbs}
     />
   }
 }

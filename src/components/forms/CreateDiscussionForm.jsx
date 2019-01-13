@@ -12,7 +12,7 @@ import Textarea from '../_common/form-components/Textarea';
 class CreateDiscussionForm extends React.Component {
 
   render() {
-    const { className, discussionId, isSubmitting } = this.props;
+    const { className, discussionId, isSubmitting,} = this.props;
     return (
       <div className={className}>
         <h4>Begin a discussion by adding a quote or highlight from text. Explain your thoughts in the notes</h4>
@@ -33,11 +33,11 @@ class CreateDiscussionForm extends React.Component {
               component={Textarea}
               rows={6}
               />
-            <Button
-              type="submit"
-              label="Update notes"
-              isLoading={isSubmitting}
-            />
+              <Button
+                type="submit"
+                label="Update notes"
+                isLoading={isSubmitting}
+              />
           </Form>
       </div>
     );
@@ -92,6 +92,8 @@ export default withFormik({
         setSubmitting(false);
       });
   },
-})(styled(CreateDiscussionForm)`
+})
+
+(styled(CreateDiscussionForm)`
   margin: 0;
 `);

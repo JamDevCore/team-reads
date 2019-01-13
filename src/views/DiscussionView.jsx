@@ -31,6 +31,19 @@ class DiscussionView extends React.Component {
     };
   }
 
+  addIdea() {
+    //const {lightbulbs} = this.state;
+    const {lightbulbs} = this.props;
+    const newLightbulbs = lightbulbs+1
+    this.setState({lightbulbs: newLightbulbs});
+    api.put(`lightbulbs/${this.props.discussionId}`, {
+    lightbulbs: 1,
+    })
+    .catch((error) => {
+      openAlert({ message: `Error: ${error}`, type: 'danger' });
+    });
+  }
+
   addNote() {
     const {
       bookId, userId, username, bookTitle
@@ -115,8 +128,11 @@ class DiscussionView extends React.Component {
       discussionId,
       updateComments,
       removeComments,
+      isSubmitting,
+      addIdea,
+      lightbulbs,
     } = this.props;
-    const { isDeleting, isLoading } = this.state;
+    const { isDeleting, isLoading,} = this.state;
     console.log(comments)
     return (
       <div className={className}>
@@ -150,22 +166,33 @@ class DiscussionView extends React.Component {
         <div className="right">
           <Panel>
             {userId === ownerId ? this.renderEditorView() : this.renderContributorView()}
-          </Panel>
-          {comments && comments.length > 0
-            ? comments.map(comment => (
-              <Comment
-                key={comment._id}
-                userId={userId}
-                ownerId={comment.userId}
-                discussionId={discussionId}
-                text={comment.text}
-                commentId={comment._id}
-                updateComments={updateComments}
-                comments={comments}
-                removeComments={removeComments}
-              />)) : null}
-          {title && (
-            <Panel>
+            &nbsp;
+            &nbsp;
+            <div className="iconRow">
+              <i
+                className="fas fa-lightbulb"
+                onClick={() => this.addIdea()}
+              />
+              &nbsp;
+              <p>{lightbulbs || 0}</p>
+            </div>
+            </Panel>
+            {comments && comments.length > 0
+              ? comments.map(comment => (
+                <Comment
+                  key={comment._id}
+                  userId={userId}
+                  ownerId={comment.userId}
+                  discussionId={discussionId}
+                  text={comment.text}
+                  commentId={comment._id}
+                  updateComments={updateComments}
+                  comments={comments}
+                  removeComments={removeComments}
+                />)) : null}
+
+              {title && (
+              <Panel>
               <AddCommentForm
                 userId={userId}
                 discussionId={discussionId}
@@ -194,6 +221,7 @@ DiscussionView.propTypes = {
   updateDiscussion: PropTypes.func,
   updateComments: PropTypes.func,
   removeComments: PropTypes.func,
+  lightbulbs: PropTypes.number,
 };
 
 DiscussionView.defaultProps = {
@@ -211,6 +239,7 @@ DiscussionView.defaultProps = {
   updateDiscussion: undefined,
   updateComments: undefined,
   removeComments: undefined,
+  lightbulbs: undefined,
 };
 
 export default styled(DiscussionView)`
@@ -254,5 +283,14 @@ li {
     margin: 40px 0px auto;
     position: relative;
   }
+}
+i:hover {
+color: GoldenRod;
+}
+i:onClick: {addIdea};
+.iconRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
 }
 `;
