@@ -23,20 +23,20 @@ const AmazonLink = styled.a`
 `;
 
 class DiscussionView extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       isLoading: false,
       isDeleting: false,
+      lighbulbs: this.props.lightbulbs,
     };
   }
 
   addIdea() {
-    //const {lightbulbs} = this.state;
-    const {lightbulbs} = this.props;
+    const {lightbulbs} = this.state;
     const newLightbulbs = lightbulbs+1
     this.setState({lightbulbs: newLightbulbs});
-    api.put(`lightbulbs/${this.props.discussionId}`, {
+    api.put(`discussion/${this.props.discussionId}`, {
     lightbulbs: 1,
     })
     .catch((error) => {
@@ -129,10 +129,8 @@ class DiscussionView extends React.Component {
       updateComments,
       removeComments,
       isSubmitting,
-      addIdea,
-      lightbulbs,
     } = this.props;
-    const { isDeleting, isLoading,} = this.state;
+    const { isDeleting, isLoading, lightbulbs, addIdea,} = this.state;
     console.log(comments)
     return (
       <div className={className}>
@@ -287,7 +285,6 @@ li {
 i:hover {
 color: GoldenRod;
 }
-i:onClick: {addIdea};
 .iconRow {
   display: flex;
   flex-direction: row;
