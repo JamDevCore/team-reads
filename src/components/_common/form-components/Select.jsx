@@ -58,12 +58,8 @@ Select.defaultProps = {
 };
 
 export default styled(Select)`
-width: 95%;
-box-sizing: border-box;
-
+margin: 20px;
 select {
-  margin: 20px 10px 20px 10px;
-  box-sizing: border-box;
   height: 40px;
   background-color: white;
   padding: 0px 10px;

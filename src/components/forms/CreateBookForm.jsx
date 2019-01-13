@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Field, withFormik } from 'formik';
 import { openAlert } from 'simple-react-alert';
 import * as Yup from 'yup';
+import history from '../../modules/history';
 import api from '../../modules/api-call';
 import TextInput from '../_common/form-components/TextInput';
 import Form from '../_common/form-components/Form';
@@ -14,7 +15,7 @@ import theme from '../../theme';
 
 const CreateBookForm = ({ className, isSubmitting }) => (
   <div className={className}>
-    <h2>Add new books</h2>
+    <h2>Add a new book</h2>
     <Divider />
     <Form>
       <Field
@@ -33,6 +34,7 @@ const CreateBookForm = ({ className, isSubmitting }) => (
       />
       <Button
         isFullWidth
+        icon="fas fa-plus"
         type="submit"
         label="Add new book"
         isLoading={isSubmitting}
@@ -80,7 +82,7 @@ export default withFormik({
         setSubmitting(false);
         const book = response.data
         console.log(book);
-        props.addBookToState(response.data);
+        history.push(`/book/${book._id}`);
       })
       .catch((error) => {
         openAlert({ message: `Error: ${error}`, type: 'danger' });
@@ -88,4 +90,11 @@ export default withFormik({
       });
   },
 })(styled(CreateBookForm)`
+button {
+  margin-top: 20px;
+}
+h2 {
+  margin-left: 20px;
+}
+padding: 20px 0px;
 `);

@@ -65,6 +65,6 @@ AddBookView.defaultProps = {
 };
 
 export default styled(AddBookView)`
-  max-width: 600px;
-  margin: 100px auto;
+  max-width: 500px;
+  margin: 60px auto;
 `;

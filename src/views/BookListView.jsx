@@ -48,6 +48,7 @@ class BookListView extends React.Component {
           theme="success"
           icon="fas fa-plus"
           label="Add book"
+          link="/add-book"
           />
         </div>
           <DashboardTotals

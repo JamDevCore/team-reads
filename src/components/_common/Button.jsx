@@ -71,7 +71,8 @@ Button.defaultProps = {
 };
 
 export default styled(Button)`
-    margin: ${theme.baseMargin / 2}px 0 0;
+    margin: 0 20px;
+    margin-bottom: 20px;
   i {
     font-size: 14px;
     margin: 0;

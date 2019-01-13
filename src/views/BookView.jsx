@@ -157,6 +157,12 @@ export default styled(BookView)`
   flex-direction: row;
   flex-wrap: wrap;
   width: 100%;
+  h3 {
+    margin: 20px;
+  }
+  h4{
+    margin: 20px;
+  }
   .left {
     position: fixed;
     margin: 40px auto;

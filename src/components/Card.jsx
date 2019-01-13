@@ -89,6 +89,7 @@ export default styled(Card)`
   border-radius: ${theme.borderRadius}px;
   background-color: white;
   margin: 0px 20px;
+  margin-bottom: 20px;
   padding: 20px;
   h4 {
     padding-left: 10px;
