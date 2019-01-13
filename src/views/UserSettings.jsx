@@ -24,9 +24,10 @@ componentDidMount() {
   const { userId } = this.props;
   api.get(`user/${userId}`)
   .then((res) => {
+    const { user } = res.data;
     this.setState({
-      email: res.data.email,
-      username: res.data.username,
+      email: user.email,
+      username: user.username,
       isLoading: false,
     });
   })

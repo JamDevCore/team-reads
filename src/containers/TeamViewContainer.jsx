@@ -31,7 +31,7 @@ class TeamViewContainer extends React.Component {
       api.get(`user/${userId}`)
         .then((res) => {
           console.log(res);
-          const user = res.data;
+          const user = res.data.user;
           if (user.teams[0]) {
             api.get(`team/${user.teams[0]}`)
               .then((response) => {

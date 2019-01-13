@@ -20,6 +20,7 @@ class AuthenticatedRoute extends React.Component {
       teamId: undefined,
       teamInvites: undefined,
       isLoading: false,
+      totals: undefined,
       email: undefined,
     }
   }
@@ -33,12 +34,14 @@ class AuthenticatedRoute extends React.Component {
       const userId = formatId(user.sub);
       api.get(`user/${userId}`)
         .then((res) => {
+          console.log(res.data.totals)
           this.setState({
             teamId: res.data && res.data.teams && res.data.teams[0],
-            username: res.data.username,
-            teamInvites: res.data.teamInvites,
-            email: res.data.email,
+            username: res.data.user.username,
+            teamInvites: res.data.user.teamInvites,
+            email: res.data.user.email,
             isLoading: false,
+            totals: res.data.totals,
           });
         })
         .catch(() => {
@@ -65,41 +68,43 @@ class AuthenticatedRoute extends React.Component {
       ...rest
     } = this.props;
     const {
-      userId, username, isLoading, teamId, teamInvites, email, userSub,
+      userId, username, isLoading, teamId, teamInvites, email, userSub, totals,
     } = this.state;
     console.log(pathName)
     return (
       <div className={className}>
         <Navbar handleLogout={auth.logout} teamId={teamId}/>
         <div className="view">
-        {!isLoading ? <Route
-          {...rest}
-          render={(props) => {
-            if (!auth.isAuthenticated()) {
-              if (pathName !== 'login') {
-                return <Redirect to="/login" />;
-              }
-            }
-            /* If the user is heading towards a team based pathName
-            they need to have a team, so we check and redirect them to team
-            setup if they don't have one */
-            console.log(teamId)
-            if(this.props.auth.isAuthenticated() && teamId && pathName === "teamSetup") {
-              return <Redirect to ={`/team/${teamId}/books`} />
-            }
-            return React.createElement(component, {
-              ...props,
-              userId,
-              username: username,
-              teamId: teamId,
-              userSub,
-              auth,
-              email: email,
-              teamInvites: teamInvites,
-              isAuthenticated: auth.isAuthenticated(),
-            });
-          }}
-        /> : <Callback />}
+          {!isLoading ? (
+            <Route
+              {...rest}
+              render={(props) => {
+                if (!auth.isAuthenticated()) {
+                  if (pathName !== 'login') {
+                    return <Redirect to="/login" />;
+                  }
+                }
+                /* If the user is heading towards a team based pathName
+                they need to have a team, so we check and redirect them to team
+                setup if they don't have one */
+                console.log(teamId)
+                if(this.props.auth.isAuthenticated() && teamId && pathName === "teamSetup") {
+                  return <Redirect to ={`/team/${teamId}/books`} />
+                }
+                return React.createElement(component, {
+                  ...props,
+                  userId,
+                  username: username,
+                  teamId: teamId,
+                  userSub,
+                  auth,
+                  email: email,
+                  teamInvites: teamInvites,
+                  isAuthenticated: auth.isAuthenticated(),
+                  totals,
+                });
+              }}
+              />) : <Callback />}
         </div>
       </div>
     );

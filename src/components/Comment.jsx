@@ -48,8 +48,9 @@ class Comment extends React.Component {
     const { ownerId } = this.props;
     this.setState({ isLoading: true });
     api.get(`user/${ownerId}`)
-      .then(res => {
-        this.setState({ username: res.data.username, isLoading: false })
+      .then((res) => {
+        const user = res.data.user;
+        this.setState({ username: user.username, isLoading: false })
       })
       .catch(err => {
         this.setState({ isLoading: false });

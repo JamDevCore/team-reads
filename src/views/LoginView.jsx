@@ -57,17 +57,12 @@ height: 100%;
   background-color: transparent;
   height: 150px;
 }
-.link {
-}
 .taglineContainer {
   width: 100%;
   margin: 40px;
 }
 .login {
   max-width: 600px;
-  h1 {
-    font-weight: bold !important;
-  }
 
 }
 @media(max-width: 950px) {

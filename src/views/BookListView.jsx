@@ -4,8 +4,10 @@ import styled from 'styled-components';
 import CreateBookForm from '../components/forms/CreateBookForm';
 import Select from '../components/_common/form-components/Select';
 import Card from '../components/Card';
+import TextInput from '../components/_common/form-components/TextInput';
 import NoResults from '../components/_common/NoResults';
 import Panel from '../components/_common/Panel';
+import Button from '../components/_common/Button';
 import Callback from '../components/Callback';
 import theme from '../theme';
 import DashboardTotals from '../components/DashboardTotals';
@@ -33,21 +35,27 @@ class BookListView extends React.Component {
         link={`/book/${book._id}`}
       />)) : <NoResults isBook />
   }
+
   render() {
-    const { className, userId, addBookToState  } = this.props;
+    const { className, userId, addBookToState, totals } = this.props;
     return (
       <div className={className}>
-        <div className="AddBookForm">
-        <Panel>
-        <CreateBookForm
-          userId={userId}
-          addBookToState={addBookToState}
-          />
-        </Panel>
-      </div>
-      <DashboardTotals />
+
       <div className="BookList">
-        <h2>Your books</h2>
+        <div className="header">
+        <h5>Dashboard</h5>
+        <Button
+          theme="success"
+          icon="fas fa-plus"
+          label="Add book"
+          />
+        </div>
+          <DashboardTotals
+            bookTotal={totals.bookTotal}
+            discussionTotal={totals.discussionTotal}
+            insightTotal={totals.insightTotal}
+            />
+          <TextInput searchBar id="bookSearch"/>
           {this.renderBooks()}
           </div>
       </div>
@@ -60,6 +68,7 @@ BookListView.propTypes = {
   userId: PropTypes.string,
   books: PropTypes.arrayOf(PropTypes.object),
   addBookToState: PropTypes.func,
+  totals: PropTypes.object,
 };
 
 BookListView.defaultProps = {
@@ -68,14 +77,26 @@ BookListView.defaultProps = {
   books: undefined,
   currentShelf: undefined,
   addBookToState: undefined,
+  totals: undefined,
 };
 
 export default styled(BookListView)`
+  .header {
+    h5 {
+      margin: auto 20px;
+    }
+    display: flex;
+    div:first-of-type {
+      float: right;
+      margin: auto 20px auto auto;
+    }
+  }
+  .header:
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: wrap;
+
   .AddBookForm {
-    position: fixed;
     margin: 40px 30px;
     width: 480px;
     min-width: 300px;
@@ -84,13 +105,12 @@ export default styled(BookListView)`
     }
   }
   .BookList {
+    margin: 25px auto;
     h2 {
       padding: 15px;
     }
-    width: 950px;
-    box-sizing: border-box;
-    margin: 40px auto;
-    margin-left: 500px;
+    width: 1200px;
+
   }
   @media(max-width: 1124px) {
     .BookList {

@@ -51,11 +51,12 @@ class BookListViewContainer extends React.Component {
       isLoading,
       books,
     } = this.state;
-    const { userId } = this.props;
+    const { userId, totals } = this.props;
     return isLoading ? <Callback /> :
     <BookListView
       userId={userId}
       books={books}
+      totals={totals}
       addBookToState={this.addBookToState}
     />
   }
@@ -63,10 +64,12 @@ class BookListViewContainer extends React.Component {
 
 BookListViewContainer.propTypes = {
   userId: PropTypes.string,
+  totals: PropTypes.object,
 };
 
 BookListViewContainer.defaultProps = {
   userId: undefined,
+  totals: undefined,
 };
 
 export default BookListViewContainer;

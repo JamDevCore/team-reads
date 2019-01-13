@@ -71,6 +71,7 @@ Button.defaultProps = {
 };
 
 export default styled(Button)`
+    margin: ${theme.baseMargin / 2}px 0 0;
   i {
     font-size: 14px;
     margin: 0;
@@ -113,7 +114,6 @@ export default styled(Button)`
     justify-content: center;
     background: ${theme.colors.success};
     font-size: 16px;
-    margin: ${theme.baseMargin / 2}px 0 0;
     border: none;
     color: white;
     border-radius: 4px;

@@ -53,7 +53,6 @@ const Card = ({
           label="View"
           theme="highlight"
           link={link}
-          isFullWidth
         />
       </div>
     </div>);
@@ -86,13 +85,11 @@ Card.defaultProps = {
 export default styled(Card)`
   display: flex;
   flex-direction: row;
-  width: 95%;
   border: 1px solid ${theme.colors.grey};
   border-radius: ${theme.borderRadius}px;
   background-color: white;
-  box-sizing: border-box;
-  margin: 0px 20px ${theme.baseMargin}px 10px;
-  padding: 15px;
+  margin: 0px 20px;
+  padding: 20px;
   h4 {
     padding-left: 10px;
   }
@@ -109,6 +106,10 @@ export default styled(Card)`
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    div:first-of-type {
+      margin-left: auto;
+      margin-right: 5px;
+    }
   }
   i {
     margin: 5px 10px;

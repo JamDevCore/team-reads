@@ -58,7 +58,7 @@ class TeamSettingsView extends React.Component {
         this.setState({ isSendingRequest: false });
         api.get(`user/${userId}`)
           .then((response) => {
-            const user = response.data;
+            const { user } = response.data;
             updateTeamMembers(user, true);
             this.resetSearchResults();
           })
@@ -101,7 +101,7 @@ class TeamSettingsView extends React.Component {
         openAlert({ message: 'This request has been accepted', type: 'success' });
         api.get(`user/${userId}`)
           .then((response) => {
-            const user = response.data;
+            const { user  }= response.data;
             updateTeamMembers(user, true);
             removeJoinRequests(userId);
           })

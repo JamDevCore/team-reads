@@ -20,20 +20,21 @@ const Input = styled.input`
 const TextInput = ({
   label,
   className,
-  field: { name, ...field },
-  form: { touched, errors },
+  field,
+  form,
   placeholder,
   searchBar,
   type,
+  id,
   ...props
 }) => {
-  const error = errors[name];
-  const touch = touched[name];
+  const error = field && form ? form.errors[field.name] : '';
+  const touch = field && form ? form.touched[field.name] : '';
   return (
     <div className={className}>
-      <InputLabel htmlFor={name} error={error}>{label}</InputLabel>
+      <InputLabel htmlFor={(field && field.name) || id} error={error}>{label}</InputLabel>
         <Input
-          id={name}
+          id={(field && field.name) || id}
           type={type || "text"}
           placeholder={placeholder}
           hasError={error && touch}
@@ -41,7 +42,7 @@ const TextInput = ({
           {...props}
         />
       {searchBar && <i className="fas fa-search" />}
-      {touch && error && <InputError>{error}</InputError>}
+      {form && form.touch && form.error && <InputError>{form.error}</InputError>}
     </div>);
 }
 
@@ -51,6 +52,7 @@ TextInput.propTypes = {
   placeholder: PropTypes.string,
   searchBar: PropTypes.bool,
   type: PropTypes.string,
+  id: PropTypes.string,
   /* eslint-disable react/forbid-prop-types,react/require-default-props */
   field: PropTypes.object,
   form: PropTypes.object,
@@ -64,12 +66,11 @@ TextInput.defaultProps = {
   label: undefined,
   field: undefined,
   form: undefined,
+  id: PropTypes.string,
 };
 
 export default styled(TextInput)`
-margin: 0 0 ${theme.baseMargin}px 0;
-width: 100%;
-box-sizing: border-box;
+margin: 0px 20px;
 i {
   position: relative;
   top: -30px;

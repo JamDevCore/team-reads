@@ -15,7 +15,7 @@ const deleteBook = async ({ bookId, userId }, promise) => {
         await api.get(`user/${userId}`)
           .then((res) => {
             console.log(res)
-            const books = res.data;
+            const { books } = res.data.user;
             return api.put(`user/${userId}`, {
               books,
             })
