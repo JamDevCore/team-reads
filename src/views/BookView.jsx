@@ -178,12 +178,12 @@ export default styled(BookView)`
   .right {
     box-sizing: border-box;
     width: 60%;
-    margin: 40px auto;
-    margin-left: 500px;
+    margin: 60px 10px;
+    margin-left: 550px;
   }
   @media(max-width: 1124px) {
     .right {
-      margin: 20px auto;
+      margin: 20px 10px;
       width: 100%;
 
     }
