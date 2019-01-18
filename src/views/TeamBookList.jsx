@@ -84,8 +84,9 @@ TeamBookList.defaultProps = {
 export default styled(TeamBookList)`
 width: 100%;
 padding-top: 20px;
+margin: 20px;
 @media(max-width: 950px) {
-  margin: 20px auto;
+  margin: 20px 10px;
   width: 100%;
 }
 `;

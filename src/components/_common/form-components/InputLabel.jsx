@@ -8,5 +8,6 @@ export default styled.label`
   display: block;
   font-family: 'Nunito', sans-serif;
   text-align: left;
-  font-weight: semi-bold;
+  font-weight: bold;
+  color: ${theme.colors.black};
 `;

@@ -114,7 +114,7 @@ export default styled(Navbar)`
   flex-direction: row;
   justify-content: flex-end;
   box-shadow: ${theme.boxShadow};
-  background-color: ${theme.colors.primary};
+  background-color: ${theme.colors.primaryBright};
   i {
     display: none;
     font-size: 24px;
@@ -139,7 +139,7 @@ export default styled(Navbar)`
     font-weight: bold;
     margin: auto 20px;
     padding: 5px 0px;
-    border-bottom: 2px solid ${theme.colors.primary};
+    border-bottom: 2px solid ${theme.colors.primaryBright};
   }
   }
   .navLink:last-of-type {

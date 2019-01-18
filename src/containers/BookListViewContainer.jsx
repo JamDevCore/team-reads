@@ -10,6 +10,7 @@ class BookListViewContainer extends React.Component {
     super(props);
     this.state = {
       books: [],
+      totals: {},
       isLoading: true,
     }
     this.addBookToState = this.addBookToState.bind(this);
@@ -18,6 +19,13 @@ class BookListViewContainer extends React.Component {
   componentDidMount() {
     const { userId } = this.props;
     if (userId) {
+      api.get(`user/${userId}`)
+      .then((res) => {
+        const totals = res.data.totals;
+        this.setState({
+          totals,
+        })
+      })
     console.log(userId)
     api.get(`book?ownerId=${userId}`)
     .then((response) => {
@@ -50,8 +58,9 @@ class BookListViewContainer extends React.Component {
     const {
       isLoading,
       books,
+      totals,
     } = this.state;
-    const { userId, totals } = this.props;
+    const { userId } = this.props;
     return isLoading ? <Callback /> :
     <BookListView
       userId={userId}

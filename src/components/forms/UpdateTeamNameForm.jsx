@@ -71,8 +71,8 @@ export default withFormik({
   },
 })(styled(UpdateTeamNameForm)`
   margin: 0;
-  button {
+  .Button {
     width: 200px;
-    margin: 0;
+    margin-top: 20px !important;
   }
 `);

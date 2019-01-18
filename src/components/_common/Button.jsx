@@ -18,7 +18,7 @@ const Button = (props) => {
     status,
   } = props;
   return !link ? (
-    <div className={className}>
+    <div className={`${className} Button`}>
       <button
         type={type}
         className={`${theme} ${status}`}
@@ -26,10 +26,11 @@ const Button = (props) => {
       >
         {icon && !isLoading ? <i className={icon} /> : null}
         {isLoading && <i className="fas fa-spinner fa-spin" />}
-        {label}
+        {!isLoading && label}
+        {isLoading && "Loading"}
       </button>
     </div>) :
-    <div className={className}>
+    <div className={`${className} Button-link`}>
       <a href={link}>
         <button
           type={type}
@@ -38,7 +39,8 @@ const Button = (props) => {
         >
       {icon && !isLoading ? <i className={icon} /> : null}
       {isLoading && <i className="fas fa-spinner fa-spin" />}
-      {label}
+      {!isLoading && label}
+      {isLoading && "Loading"}
           </button>
       </a>
     </div>
@@ -71,8 +73,7 @@ Button.defaultProps = {
 };
 
 export default styled(Button)`
-    margin: 0 20px;
-    margin-bottom: 20px;
+    margin: 0px 0px 0px 0px;
   i {
     font-size: 14px;
     margin: 0;
@@ -91,7 +92,10 @@ export default styled(Button)`
     background: ${theme.colors.success};
   }
   .highlight {
-    background: ${theme.colors.primary};
+    background: ${theme.colors.light};
+  }
+  .highlight:hover {
+    background: ${theme.colors.primaryBright};
   }
   .danger {
     background: ${theme.colors.danger};

@@ -37,13 +37,12 @@ class AddBookView extends React.Component {
     const { className, userId, addBookToState  } = this.props;
     return (
       <div className={className}>
+        <h2>Add a new book to your collection</h2>
         <div className="container">
-        <Panel>
         <CreateBookForm
           userId={userId}
           addBookToState={addBookToState}
           />
-        </Panel>
       </div>
       </div>
     );
@@ -65,6 +64,13 @@ AddBookView.defaultProps = {
 };
 
 export default styled(AddBookView)`
-  max-width: 500px;
-  margin: 60px auto;
+  margin: 80px 10px;
+  .container{
+    max-width: 500px;
+    margin: 40px auto;
+}
+  h2 {
+    text-align: center;
+
+  }
 `;

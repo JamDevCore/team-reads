@@ -58,7 +58,7 @@ Select.defaultProps = {
 };
 
 export default styled(Select)`
-margin: 20px;
+margin: 20px 0;
 select {
   height: 40px;
   background-color: white;

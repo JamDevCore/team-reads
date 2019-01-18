@@ -11,7 +11,7 @@ text-align:left;
 `
 
 const Panel = ({ children, className, heading }) => (
-  <div className={className}>
+  <div className={`${className} Panel`}>
     {heading && <Heading><h5>{heading}</h5></Heading>}
     {children}
   </div>
@@ -28,13 +28,11 @@ Panel.defaultProps = {
 };
 
 export default styled(Panel)`
-  width: 95%;
   position:relative;
   max-height: 600px;
-  padding: 30px;
+  padding: 40px;
   background-color: white;
-  box-sizing: border-box;
   border: 1px solid ${theme.colors.grey};
   border-radius: ${theme.borderRadius}px;
-  margin: 0px 10px 30px 10px;
+  margin: 20px 10px;
 `;

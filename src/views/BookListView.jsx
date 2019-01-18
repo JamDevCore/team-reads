@@ -82,9 +82,11 @@ BookListView.defaultProps = {
 };
 
 export default styled(BookListView)`
+margin: 10px;
   .header {
     h5 {
       margin: auto 20px;
+      font-weight: 700;
     }
     display: flex;
     div:first-of-type {

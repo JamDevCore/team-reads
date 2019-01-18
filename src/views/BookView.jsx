@@ -114,7 +114,6 @@ class BookView extends React.Component {
                 <Button
                   theme="link"
                   status="secondary"
-                  isFullWidth
                   link="http://www.amazon.co.uk"
                   icon="fab fa-amazon"
                   label="Get this on amazon"
@@ -158,12 +157,15 @@ export default styled(BookView)`
   flex-wrap: wrap;
   width: 100%;
   h3 {
-    margin: 20px;
-  }
-  h4{
-    margin: 20px;
   }
   .left {
+    button {
+      margin-bottom: 20px;
+    }
+
+    h4{
+      margin-bottom: 40px;
+    }
     position: fixed;
     margin: 40px auto;
     margin-left: 30px;

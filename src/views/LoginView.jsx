@@ -52,6 +52,13 @@ background-image: url(${background});
 background-repeat: no-repeat;
 background-position: center right;
 height: 100%;
+h1 {
+  margin-left: 20px;
+}
+h3 {
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
 .logo {
   width: 100px;
   background-color: transparent;
@@ -60,6 +67,9 @@ height: 100%;
 .taglineContainer {
   width: 100%;
   margin: 40px;
+  .ButtonGroup {
+    margin-left: 20px;
+  }
 }
 .login {
   max-width: 600px;

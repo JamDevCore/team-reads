@@ -11,6 +11,7 @@ import Button from '../components/_common/Button';
 import List from '../components/_common/List';
 import CreateTeamForm from '../components/forms/CreateTeamForm';
 import FindTeamForm from '../components/forms/FindTeamForm';
+import theme from '../theme';
 
 
 class TeamSetup extends React.Component {
@@ -142,22 +143,30 @@ class TeamSetup extends React.Component {
           <FindTeamForm
             setSearchResults={this.setSearchResults}
           />
-        </Panel>
-          {teamSearchList && teamSearchList.length > 0 ?
+        {teamSearchList && teamSearchList.length > 0 ? (
             <React.Fragment>
-            <Panel>
-              <h2>Search results</h2>
-            </Panel>
-            {teamSearchList.map((team) => (
-              <BannerMessage
-                key={team._id}
-                meta={team._id}
-                actionLoading={isRequesting === team._id}
-                action={this.sendRequest}
-                actionLabel="Send request"
-                message={team && team.teamName}
-              />))}
-          </React.Fragment> : null}
+              <ul className="userSearchList">
+                {teamSearchList.map(team => (
+                  <li
+                    key={team}
+                    className="userSearchItem"
+                  >
+                    <div className="userDetails">
+                      <p className="name">{team.teamName}</p>
+                      <p>{`${team.numberOfUsers} users`}</p>
+                    </div>
+                    <div className="actions">
+                      <Button
+                        theme="link"
+                        icon="fas fa-user-plus"
+                        isLoading={isRequesting === team._id}
+                        onClick={() => this.sendRequest(team._id)}
+                      />
+                    </div>
+                  </li>))}
+              </ul>
+            </React.Fragment>) : null}
+        </Panel>
       </div>
     );
   }
@@ -176,4 +185,36 @@ TeamSetup.defaultProps = {
 export default styled(TeamSetup)`
 margin 40px auto;
 width: 1000px;
+.userSearchList {
+  display: column;
+  margin-top: ${theme.baseMargin * 3};
+  padding: 10px 0;
+  list-style-type: none;
+}
+.userSearchItem {
+  display: flex;
+  padding: 10px 0;
+  border-bottom: 1px solid ${theme.colors.black};
+}
+.actions {
+  flex-grow: 2;
+  padding: 5px;
+  button {
+    float: right;
+    margin: 10px;
+  }
+}
+.userDetails {
+  flex-grow: 5;
+  max-width: 60%;
+  padding: 5px;
+  .name {
+    font-weight: bold;
+    margin-bottom: 0;
+    padding: 0;
+  }
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
 `;

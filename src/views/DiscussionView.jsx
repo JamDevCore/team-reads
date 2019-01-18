@@ -139,14 +139,6 @@ class DiscussionView extends React.Component {
                   onClick={() => this.deleteDiscussion()}
                 />)}
             </ButtonGroup>
-            <Button
-              status="secondary"
-              isFullWidth
-              theme="link"
-              link="http://www.amazon.co.uk"
-              icon="fab fa-amazon"
-              label="Get this on amazon"
-            />
           </Panel>
         </div>
         <div className="right">
@@ -230,10 +222,15 @@ li {
   margin-right: 10px;
 }
 .left {
+  h4 {
+    margin-top: 15px;
+    margin-bottom: 30px;
+  }
+  button { margin-bottom: 20px;}
   position: fixed;
   margin: 40px auto;
   margin-left: 30px;
-  width: 480px;
+  width: 520px;
   min-width: 300px;
     select {
       margin-left: 0 !important;
@@ -244,7 +241,7 @@ li {
   width: 60%;
   position: relative;
   margin: 40px auto;
-  margin-left: 500px;
+  margin-left: 550px;
   .lightbulbs {
     display: inline-block !important;
     margin-left: 10px;

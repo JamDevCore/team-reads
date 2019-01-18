@@ -36,6 +36,8 @@ NoResults.defaultProps = {
 
 export default styled(NoResults)`
 text-align: center;
+margin: 0px auto;
+width: 100%;
 i {
   font-size: 48px;
 }

@@ -18,6 +18,7 @@ class BookViewContainer extends React.Component {
       personalStatus: undefined,
     }
   }
+
   componentDidMount() {
     const { bookId } = this.props.match.params;
     api.get(`book/${bookId}`)

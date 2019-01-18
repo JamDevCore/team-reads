@@ -1,7 +1,9 @@
 const colors = {
   lightGrey: '#F3F7FA',
   light: '#2196f3',
+  primaryFade: '#D1E1FA',
   primary: '#2B67C9',
+  primaryBright: '#1F56E7',
   dark: '#0086c3',
   highlight: '#3985BF',
   alert: '#f8b700',
@@ -12,6 +14,7 @@ const colors = {
   grey: '#d3d3d3',
   black: '#484848',
   info: '#3F8CC4',
+  blueGrey: '#6699cc',
 };
 
 const theme = {

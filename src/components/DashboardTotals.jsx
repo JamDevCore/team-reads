@@ -14,16 +14,16 @@ const DashboardTotals = ({
   <div className={className}>
     <div className="totals">
     <div className="total">
+      <h6>Books</h6>
       <h1>{bookTotal || 0}</h1>
-      <h5>Books</h5>
     </div>
     <div className="total">
+      <h6>Discussions</h6>
       <h1>{discussionTotal || 0}</h1>
-      <h5>Discussions</h5>
     </div>
     <div className="total">
+      <h6>Insights</h6>
       <h1>{insightTotal || 0}</h1>
-      <h5>Insights</h5>
     </div>
     </div>
   </div>
@@ -45,27 +45,32 @@ export default styled(DashboardTotals)`
   display: flex;
   flex-direction: column;
   background: white;
-  margin: 20px 20px;
-  color:${theme.colors.primary};
-  padding: ${theme.baseMargin}px;
+  margin: 20px 0px;
   border: 1px solid ${theme.colors.grey}
+  color: ${theme.colors.primary}
+  padding: ${theme.baseMargin}px;
+  background-color: ${theme.colors.white};
   h1 {
-    text-align: center;
+    font-size: 64px;
+    text-align: center
     padding: 0;
     margin: 0;
   }
   border-radius: ${theme.borderRadius}px;
   .totals {
-
     display: flex;
-    justify-content: space-around;
   }
   .total {
+    flex: 1;
+    margin: 0px 10px;
     display: flex;
     flex-direction: column;
-      h5 {
+      h6 {
+        text-decoration: underline;
         padding-top: 10px;
         margin: 0;
+        font-weight: bold;
+        color: ${theme.colors.primaryLight};
         text-align:center;
       }
   }

@@ -39,7 +39,7 @@ componentDidMount() {
   requestChangePasswordEmail() {
     const { email } = this.state;
     this.setState({ isLoading: true });
-    var options = {
+    const options = {
       method: 'POST',
       url: 'https://jamesvitaly.eu.auth0.com/dbconnections/change_password',
       headers: { 'content-type': 'application/json' },
@@ -47,24 +47,24 @@ componentDidMount() {
         client_id: REACT_APP_AUTH_0_CLIENT_ID,
         email,
         connection: 'Username-Password-Authentication'
-        },
+      },
       json: true
-      };
-      axios(options)
+    };
+    axios(options)
       .then((res) => {
         this.setState({
           isLoading: false,
-        })
+        });
         openAlert({ message: `${res.data}`, type: 'success' });
-        console.log(res)
+        console.log(res);
       })
-      .catch((err )=> {
+      .catch((err) => {
         this.setState({
           isLoading: false,
         })
         openAlert({ message: `Err: ${err}`, type: 'danger' });
         console.log(err)
-      })
+      });
   }
 
   updateUserDetails({ email, username }) {

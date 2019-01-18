@@ -64,10 +64,8 @@ BannerMessage.propTypes = {
 };
 
 export default styled(BannerMessage)`
-  box-sizing: border-box !important;
   border-radius: ${theme.borderRadius}px;
   border: 1px solid ${theme.colors.grey};
-  width: 95%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -75,7 +73,10 @@ export default styled(BannerMessage)`
     margin: auto 0;
   }
   .actions {
-    padding: 0; margi-top: 5px;
+    flex: 1;
+    display: inline-block;
+    padding: 0;
+    margin-top: 5px;
     .ButtonGroup {
       flex-direction: row;
       align-content: flex-end;
@@ -83,7 +84,7 @@ export default styled(BannerMessage)`
     }
   }
   .message {
-    width: 90%;
+    flex: 4;
     display: inline-block;
     max-width: 65%;
     padding: 0 10px;
@@ -91,12 +92,11 @@ export default styled(BannerMessage)`
     color:  ${({ isAlert }) => !isAlert ? theme.colors.black : '#fff'};
     p {
       margin: 0;
+      font-size: 18px;
       padding:  0;
-      font-weight: semi-bold !important;
+      font-weight: bold !important;
       color:  ${({ isAlert }) => !isAlert ? theme.colors.black : '#fff'};
     }
   }
   background: ${({ isAlert }) => isAlert ? theme.colors.alert : '#fff'};
-  margin: 0px 20px ${theme.baseMargin}px 10px;
-  padding: 10px 10px;
 `;

@@ -88,7 +88,7 @@ export default styled(Card)`
   border: 1px solid ${theme.colors.grey};
   border-radius: ${theme.borderRadius}px;
   background-color: white;
-  margin: 0px 20px;
+  margin: 0px 0px;
   margin-bottom: 20px;
   padding: 20px;
   h4 {

@@ -28,6 +28,7 @@ class TeamViewContainer extends React.Component {
       this.setState({
         isLoading: true,
       })
+      console.log(userId)
       api.get(`user/${userId}`)
         .then((res) => {
           console.log(res);

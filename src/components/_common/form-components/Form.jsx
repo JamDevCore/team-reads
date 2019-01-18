@@ -26,5 +26,4 @@ export default styled(FormComponent)`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  margin-top: 20px;
 `;
