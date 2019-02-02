@@ -111,13 +111,13 @@ class BookView extends React.Component {
                     onClick={() => this.deleteBook()}
                   />)}
                 </ButtonGroup>
-                <Button
+                {/*<Button
                   theme="link"
                   status="secondary"
                   link="http://www.amazon.co.uk"
                   icon="fab fa-amazon"
                   label="Get this on amazon"
-                />
+                />*/}
 
               </Panel>
             </div>
@@ -157,6 +157,7 @@ export default styled(BookView)`
   flex-wrap: wrap;
   width: 100%;
   h3 {
+    margin-bottom: 0;
   }
   .left {
     button {
@@ -164,7 +165,8 @@ export default styled(BookView)`
     }
 
     h4{
-      margin-bottom: 40px;
+      color: ${theme.colors.black_75};
+      margin-bottom: 30px;
     }
     position: fixed;
     margin: 40px auto;

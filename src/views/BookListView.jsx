@@ -40,7 +40,6 @@ class BookListView extends React.Component {
     const { className, userId, addBookToState, totals } = this.props;
     return (
       <div className={className}>
-
       <div className="BookList">
         <div className="header">
         <h5>Dashboard</h5>

@@ -13,6 +13,7 @@ class DiscussionViewContainer extends React.Component {
       bookId: undefined,
       discussionId: this.props.match.params.discussionId,
       bookTitle: this.props.match.params.bookId,
+      ideas: 0,
       author: undefined,
       ownerId: undefined,
       title: undefined,
@@ -23,6 +24,7 @@ class DiscussionViewContainer extends React.Component {
     this.updateDiscussion = this.updateDiscussion.bind(this);
     this.updateComments = this.updateComments.bind(this);
     this.removeComments = this.removeComments.bind(this);
+    this.addInsight = this.addInsight.bind(this);
   }
 
   componentDidMount() {
@@ -32,7 +34,7 @@ class DiscussionViewContainer extends React.Component {
       .then((res) => {
         console.log(res);
         const discussion = res.data;
-        console.log(discussion.bookId._id);
+        console.log(discussion);
         this.setState({
           discussionId: discussion._id,
           title: discussion.title,
@@ -42,6 +44,7 @@ class DiscussionViewContainer extends React.Component {
           bookTitle: discussion.bookId.name,
           author: discussion.bookId.author,
           comments: discussion.comments,
+          ideas: discussion.ideas,
           isLoading: false,
         });
       })
@@ -113,6 +116,22 @@ class DiscussionViewContainer extends React.Component {
     })
   }
 
+  addInsight() {
+    const { ideas, discussionId } = this.state;
+    this.setState({
+      ideas: ideas + 1,
+    });
+    api.put(`discussion/${discussionId}`, {
+      ideas: 1,
+    })
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
+
   render() {
     const {
       isLoading,
@@ -127,12 +146,15 @@ class DiscussionViewContainer extends React.Component {
       title,
       note,
       ownerId,
+      ideas,
     } = this.state;
     const { userId } = this.props;
     return isLoading ? <Callback /> :
     <DiscussionView
       key={discussionId}
       ownerId={ownerId}
+      ideas={ideas}
+      addInsight={this.addInsight}
       updateDiscussion={this.updateDiscussion}
       updateDiscussionId={this.updateDiscussionId}
       updateComments={this.updateComments}

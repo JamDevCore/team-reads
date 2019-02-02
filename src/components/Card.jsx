@@ -18,43 +18,47 @@ const Card = ({
   link,
   owner,
 }) => {
-  const heading = author ? `${trimText(title, 160)} - ${author}` : trimText(title, 160);
+  const heading =`${trimText(title, 160)}`;
   return (
     <div className={className}>
       <div className="column-1">
-        <Link to={link || '#'}><h4>{heading}</h4></Link>
-        {owner && (
-          <div className="owner">
-            <i className="fas fa-book" />
-            <p>
-              {'Added by '}
-              <span style={{ fontWeight: 'bold' }}>
-                {owner}
-              </span>
-            </p>
-          </div>)}
+        <div className="titleBlock">
+          <Link to={link || '#'}><h3>{heading}</h3></Link>
+        </div>
+
+        <h4>{author}</h4>
+          {owner && (
+              <p>
+                {'Added by '}
+                <span style={{ fontWeight: 'bold' }}>
+                  {owner}
+                </span>
+              </p>)}
         <div className="iconList">
-          <i className="fas fa-lightbulb" />
+
+
           <p>
-            <span style={{ fontWeight: '600' }}>{lightbulbs || 0}</span>
+              <i className="fas fa-lightbulb" />
+            <span style={{ fontWeight: '700' }}>{lightbulbs || 0}</span>
             {pluralize(lightbulbs, ' insight')}
           </p>
-          <i className="fas fa-comments" />
+
           <p>
-            <span style={{ fontWeight: '600' }}>{contributions}</span>
+            <i className="fas fa-comments" />
+            <span style={{ fontWeight: '700' }}>{contributions}</span>
             {isDiscussion ?
               `${pluralize(contributions, ' comment')}`
               : `${pluralize(contributions, ' discussion')}`}
           </p>
+
+            <Button
+              label="View"
+              theme="highlight"
+              link={link}
+            />
         </div>
       </div>
-      <div className="column-2">
-        <Button
-          label="View"
-          theme="highlight"
-          link={link}
-        />
-      </div>
+
     </div>);
 };
 
@@ -85,51 +89,66 @@ Card.defaultProps = {
 export default styled(Card)`
   display: flex;
   flex-direction: row;
-  border: 1px solid ${theme.colors.grey};
+  box-shadow: ${theme.boxShadow};
+   transition: box-shadow 0.1s ease-in-out;
+  &:hover {
+    box-shadow: ${theme.strongBoxShadow};
+  }
   border-radius: ${theme.borderRadius}px;
   background-color: white;
   margin: 0px 0px;
   margin-bottom: 20px;
   padding: 20px;
-  h4 {
+  p {
+    margin: 0px 10px;
+  }
+  h3 {
     padding-left: 10px;
+    margin-bottom: 0;
+    padding: bottom: 0;
+  }
+  h4 {
+    font-size: 20px;
+    font-weight: 400;
+    color: ${theme.colors.black_75};
+    padding-left: 10px;
+    padding-bottom: 12px;
   }
   .column-1 {
     padding: 10px 10px 10px 20px;
-    width: 80%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-  }
-  .column-2 {
-    padding: 0 ${theme.baseMargin}px ${theme.baseMargin / 2}px 0;
-    width: 20%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    div:first-of-type {
-      margin-left: auto;
-      margin-right: 5px;
     }
   }
   i {
     margin: 5px 10px;
     color: ${theme.colors.light};
   }
-  p {
-    margin: 5px 5px;
-  }
+
   .iconList {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-  }
-  .owner {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
     p {
-      padding-top: 2px;
+      margin: 5px 0;
+    }
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    .Button {
+
+      margin-left: auto;
+      margin-right: 0;
+    }
+  @media(max-width: 768px) {
+    .Button {
+    margin-left: 0px;
+    margin right: 5px;
+  }
+  }
+    p {
+      line-height: 24px;
+      white-space: nowrap;
     }
   }
+
 `;

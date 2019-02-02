@@ -30,7 +30,7 @@ const Button = (props) => {
         {isLoading && "Loading"}
       </button>
     </div>) :
-    <div className={`${className} Button-link`}>
+    <div className={`${className} Button Button-link`}>
       <a href={link}>
         <button
           type={type}
@@ -91,8 +91,12 @@ export default styled(Button)`
   .success {
     background: ${theme.colors.success};
   }
+  .success:hover {
+    background: ${theme.colors.successSelect};
+  }
   .highlight {
-    background: ${theme.colors.light};
+      background: #0744DD;
+
   }
   .highlight:hover {
     background: ${theme.colors.primaryBright};
@@ -101,6 +105,7 @@ export default styled(Button)`
     background: ${theme.colors.danger};
   }
   .link {
+    box-shadow: none !important;
     background-color: transparent;
     color: ${theme.colors.primary};
     border: 2px solid ${theme.colors.grey};
@@ -114,8 +119,13 @@ export default styled(Button)`
     color: white;
   }
   button {
+    box-shadow: ${theme.boxShadow};
+     transition: box-shadow 0.3s ease-in-out;
+    &:hover {
+      box-shadow: ${theme.strongBoxShadow};
+    }
     display: flex;
-    height: 40px;
+    height: 35px;
     justify-content: center;
     background: ${theme.colors.success};
     font-size: 16px;

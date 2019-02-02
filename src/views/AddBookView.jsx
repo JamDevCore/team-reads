@@ -19,25 +19,11 @@ class AddBookView extends React.Component {
     }
   }
 
-  renderBooks() {
-    const { books } = this.props;
-    return books.length > 0 ? books.map(book => (
-      <Card
-        key={book._id}
-        bookId={book._id}
-        title={book.name}
-        readers={book.readers || ["Not read"]}
-        lightbulbs={book.lightbulbs || 0}
-        contributions={book.discussions.length}
-        author={book.author}
-        link={`/book/${book._id}`}
-      />)) : <NoResults isBook />
-  }
   render() {
     const { className, userId, addBookToState  } = this.props;
     return (
       <div className={className}>
-        <h2>Add a new book to your collection</h2>
+
         <div className="container">
         <CreateBookForm
           userId={userId}
@@ -69,8 +55,8 @@ export default styled(AddBookView)`
     max-width: 500px;
     margin: 40px auto;
 }
-  h2 {
-    text-align: center;
+  h1 {
+    text-align: left;
 
   }
 `;

@@ -21,6 +21,7 @@ code {
 a {
   text-decoration: none;
   font-weight: regular;
+  color: #484848;
 }
 
 h1 {
@@ -57,7 +58,6 @@ h5 {
   font-size: 18px;
   letter-spacing: .5px;
   margin: 0 0 10px;
-  text-transform: uppercase;
   font-weight: bold;
 }
 

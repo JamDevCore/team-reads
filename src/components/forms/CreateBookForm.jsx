@@ -15,6 +15,7 @@ import theme from '../../theme';
 
 const CreateBookForm = ({ className, isSubmitting }) => (
   <div className={className}>
+    <h2>Add a new book</h2>
     <Form>
       <Field
         name="title"
@@ -89,13 +90,25 @@ export default withFormik({
   },
 })(styled(CreateBookForm)`
 background-color: white;
-padding: 40px;
+padding: 50px;
 border: 1px solid ${theme.colors.grey};
-
+border-radius: ${theme.borderRadius}px;
+box-shadow: ${theme.boxShadow};
+&:hover {
+  box-shadow: ${theme.strongBoxShadow};
+}
+label {
+  margin-top: 12px;
+}
+input {
+  margin-bottom: 12px;
+}
 button {
-  margin-top: 10px;
+  margin-top: 24px;
 }
 h2 {
-  margin-left: 20px;
+  font-size: 38px;
+  margin-bottom: 24px;
+  font-weight: 700;
 }
 `);

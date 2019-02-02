@@ -38,16 +38,19 @@ const pulse = keyframes`
 }
 `;
 
-const IconButton =  styled(Button)`
-  background-color: transparent;
-  border: 1px solid ${theme.colors.grey};
-  color: ${theme.colors.primary};
+const IconButton =  styled.button`
+  background-color: white !important;
+  border: 1px solid ${theme.colors.light};
+  color: ${theme.colors.black} !important;
   min-width: 30px;
   padding: 0;
   height: 40px;
   width: 40px;
   border-radius: 50%;
+  margin: 10px 20px;
   i {
+    font-size: 18px;
+    color:${theme.colors.light}
     margin: 0px auto;
     width: auto;
   }
@@ -55,6 +58,7 @@ const IconButton =  styled(Button)`
   &:active,
   &:focus {
     animation: ${pulse} 1s 1;
+    outline: none;
   }
 `;
 

@@ -71,6 +71,7 @@ TextInput.defaultProps = {
 
 export default styled(TextInput)`
 margin: 0px 0px;
+
 i {
   position: relative;
   top: -30px;

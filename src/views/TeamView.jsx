@@ -103,7 +103,8 @@ TeamView.defaultProps = {
 export default styled(TeamView)`
 display: flex;
 .teamView {
-  margin-left: 320px;
+  margin-left: 300px;
+  margin-right: 5px;
   width: 100%;
   display: flex;
 }

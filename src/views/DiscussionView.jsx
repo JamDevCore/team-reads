@@ -10,9 +10,11 @@ import Divider from '../components/_common/Divider';
 import ButtonGroup from '../components/_common/ButtonGroup';
 import Button from '../components/_common/Button';
 import Select from '../components/_common/form-components/Select';
+import IconButton from '../components/_common/IconButton';
 import Comment from '../components/Comment';
 import CreateDiscussionForm from '../components/forms/CreateDiscussionForm';
 import AddCommentForm from '../components/forms/AddCommentForm';
+import theme from '../theme';
 
 
 const AmazonLink = styled.a`
@@ -115,6 +117,8 @@ class DiscussionView extends React.Component {
       discussionId,
       updateComments,
       removeComments,
+      ideas,
+      addInsight,
     } = this.props;
     const { isDeleting, isLoading } = this.state;
     console.log(comments)
@@ -130,20 +134,26 @@ class DiscussionView extends React.Component {
                 isLoading={isLoading}
                 onClick={() => this.addNote()}
               />
-              {ownerId === userId && (
+            {/*{ownerId === userId && (
                 <Button
                   status="secondary"
                   theme="danger"
                   label="Delete discussion"
                   isLoading={isDeleting}
                   onClick={() => this.deleteDiscussion()}
-                />)}
+                />)}*/}
             </ButtonGroup>
           </Panel>
         </div>
         <div className="right">
           <Panel>
             {userId === ownerId ? this.renderEditorView() : this.renderContributorView()}
+            <div className="ideas">
+              <IconButton
+                onClick={() => addInsight()}>
+                <i className="fas fa-lightbulb" />
+            </IconButton><p>{ideas}</p>
+            </div>
           </Panel>
           {comments && comments.length > 0
             ? comments.map(comment => (
@@ -186,9 +196,11 @@ DiscussionView.propTypes = {
   comments: PropTypes.arrayOf(PropTypes.object),
   title: PropTypes.string,
   note: PropTypes.string,
+  addInsight: PropTypes.func,
   updateDiscussion: PropTypes.func,
   updateComments: PropTypes.func,
   removeComments: PropTypes.func,
+  ideas: PropTypes.number,
 };
 
 DiscussionView.defaultProps = {
@@ -204,9 +216,11 @@ DiscussionView.defaultProps = {
   comments: undefined,
   title: undefined,
   note: undefined,
+  addInsight: undefined,
   updateDiscussion: undefined,
   updateComments: undefined,
   removeComments: undefined,
+  ideas: undefined,
 };
 
 export default styled(DiscussionView)`
@@ -214,7 +228,6 @@ display: flex;
 flex-direction: row;
 flex-wrap: wrap;
 width: 100%;
-
 .highlight {
   font-style: italic;
 }
@@ -224,6 +237,7 @@ li {
 .left {
   h4 {
     margin-top: 15px;
+    color: ${theme.colors.black_75};
     margin-bottom: 30px;
   }
   button { margin-bottom: 20px;}
@@ -242,11 +256,17 @@ li {
   position: relative;
   margin: 40px auto;
   margin-left: 550px;
-  .lightbulbs {
-    display: inline-block !important;
-    margin-left: 10px;
-    font-size: 16px;
-    font-family: 'Nunito';
+  .ideas {
+    position: absolute;
+    display: flex;
+    right: 50px;
+    bottom: 30px;
+    font-size: 24px;
+    p {
+      margin: auto 0;
+      font-weight: 800;
+    }
+
   }
 }
 @media(max-width: 1124px) {

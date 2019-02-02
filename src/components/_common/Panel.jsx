@@ -32,7 +32,7 @@ export default styled(Panel)`
   max-height: 600px;
   padding: 40px;
   background-color: white;
-  border: 1px solid ${theme.colors.grey};
+  box-shadow: ${theme.boxShadow};
   border-radius: ${theme.borderRadius}px;
   margin: 20px 10px;
 `;
